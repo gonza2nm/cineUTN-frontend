@@ -2,11 +2,60 @@
   <h1 class="text-2xl font-bold text-center">Menu de Encargados</h1>
   <p class="text-center mt-1">Seleccione una opcion para administrar</p>
 </div>
-<div class="grid grid-cols-2 grid-rows-3">
-  <p class="m-4 p-2">Peliculas</p>
-  <p class="m-4">Eventos</p>
-  <p class="p-4">Generos</p>
-  <p class="p-4">Encargados</p>
-  <p class="p-4">Salas</p>
-  <p class="p-4">Cines</p>
+
+<div class="grid grid-cols-2 gap-4">
+  <div class="flex flex-col place-items-center border-2 border-black pt-5" >
+    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-film" viewBox="0 0 16 16">
+      <path
+        d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm4 0v6h8V1zm8 8H4v6h8zM1 1v2h2V1zm2 3H1v2h2zM1 7v2h2V7zm2 3H1v2h2zm-2 3v2h2v-2zM15 1h-2v2h2zm-2 3v2h2V4zm2 3h-2v2h2zm-2 3v2h2v-2zm2 3h-2v2h2z" />
+    </svg>
+    <p class="p-2 text-xl font-semibold">Peliculas</p>
+  </div>
+
+  <div class="flex flex-col place-items-center border-2 border-black pt-5">
+    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-clock"
+      viewBox="0 0 16 16">
+      <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
+      <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0" />
+    </svg>
+    <p class="p-2 text-xl font-semibold">Eventos</p>
+  </div>
+
+  <div class="flex flex-col place-items-center border-2 border-black pt-5">
+    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-tag"
+      viewBox="0 0 16 16">
+      <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0" />
+      <path
+        d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1m0 5.586 7 7L13.586 9l-7-7H2z" />
+    </svg>
+    <p class="p-2 text-xl font-semibold">Generos</p>
+  </div>
+
+  <div class="flex flex-col place-items-center border-2 border-black pt-5">
+    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-people"
+      viewBox="0 0 16 16">
+      <path
+        d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4" />
+    </svg>
+    <p class="p-2 text-xl font-semibold">Encargados</p>
+  </div>
+
+  <div class="flex flex-col place-items-center border-2 border-black pt-5">
+    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24">
+      <path fill="black"
+        d="M5 21q-.425 0-.712-.288T4 20v-1q-1.25 0-2.125-.875T1 16v-5q0-1.25.875-2.125T4 8V6q0-1.25.875-2.125T7 3h10q1.25 0 2.125.875T20 6v2q1.25 0 2.125.875T23 11v5q0 1.25-.875 2.125T20 19v1q0 .425-.288.713T19 21t-.712-.288T18 20v-1H6v1q0 .425-.288.713T5 21m-1-4h16q.425 0 .713-.288T21 16v-5q0-.425-.288-.712T20 10t-.712.288T19 11v4H5v-4q0-.425-.288-.712T4 10t-.712.288T3 11v5q0 .425.288.713T4 17m3-4h10v-2q0-.675.275-1.225T18 8.8V6q0-.425-.288-.712T17 5H7q-.425 0-.712.288T6 6v2.8q.45.425.725.975T7 11zm5 2" />
+    </svg>
+    <p class="p-2 text-xl font-semibold">Salas</p>
+  </div>
+
+  <div class="flex flex-col place-items-center border-2 border-black pt-5">
+    <svg class=" text-black dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="100"
+      height="100" fill="none" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+        d="M6 4h12M6 4v16M6 4H5m13 0v16m0-16h1m-1 16H6m12 0h1M6 20H5M9 7h1v1H9V7Zm5 0h1v1h-1V7Zm-5 4h1v1H9v-1Zm5 0h1v1h-1v-1Zm-3 4h2a1 1 0 0 1 1 1v4h-4v-4a1 1 0 0 1 1-1Z" />
+    </svg>
+
+    <p class="p-2 text-xl font-semibold">Cines</p>
+  </div>
+
 </div>
