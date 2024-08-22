@@ -1,0 +1,53 @@
+<div class="relative inline-block w-64">
+  <div
+    (click)="toggleDropdown()"
+    class="flex items-center justify-between bg-white border border-gray-300 rounded px-4 py-2 cursor-pointer"
+  >
+    <span>{{ selectedGenre || "Seleccionar Género" }}</span>
+    <svg
+      *ngIf="!dropdownOpen"
+      class="w-4 h-4 transform rotate-0"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M19 9l-7 7-7-7"
+      ></path>
+    </svg>
+    <svg
+      *ngIf="dropdownOpen"
+      class="w-4 h-4 transform rotate-180"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M19 9l-7 7-7-7"
+      ></path>
+    </svg>
+  </div>
+
+  <div
+    *ngIf="dropdownOpen"
+    class="absolute z-10 w-full bg-white border border-gray-300 rounded mt-1"
+  >
+    <ul>
+      <li
+        *ngFor="let genre of genres"
+        (click)="selectGenre(genre)"
+        class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+      >
+        {{ genre }}
+      </li>
+    </ul>
+  </div>
+</div>

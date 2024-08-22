@@ -7,6 +7,9 @@ import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LoginComponent } from './login/login.component';
 import { ManagerHomeComponent } from './manager-home/manager-home.component';
+import { HomeComponent } from './home/home.component';
+import { SliderComponent } from './slider/slider.component';
+import { GenreSelectorComponent } from './genre-selector/genre-selector.component';
 
 
 @NgModule({
@@ -14,7 +17,10 @@ import { ManagerHomeComponent } from './manager-home/manager-home.component';
     AppComponent,
     NavBarComponent,
     LoginComponent,
-    ManagerHomeComponent
+    ManagerHomeComponent,
+    HomeComponent,
+    SliderComponent,
+    GenreSelectorComponent
   ],
   imports: [
     BrowserModule,
