@@ -6,7 +6,8 @@ import { ManagerHomeComponent } from './manager-home/manager-home.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
-  { path: "manager-home", component: ManagerHomeComponent }
+  { path: "manager-home", component: ManagerHomeComponent },
+  //{ path: "**", component: ManagerHomeComponent } cambiar por componente "home"
 ];
 
 @NgModule({
