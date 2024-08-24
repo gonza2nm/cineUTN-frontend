@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
@@ -9,8 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { ManagerHomeComponent } from './manager-home/manager-home.component';
 import { HomeComponent } from './home/home.component';
 import { SliderComponent } from './slider/slider.component';
-import { GenreSelectorComponent } from './genre-selector/genre-selector.component';
-
+import { SelectorComponent } from './selector/selector.component';
 
 @NgModule({
   declarations: [
@@ -20,16 +19,15 @@ import { GenreSelectorComponent } from './genre-selector/genre-selector.componen
     ManagerHomeComponent,
     HomeComponent,
     SliderComponent,
-    GenreSelectorComponent
+    SelectorComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

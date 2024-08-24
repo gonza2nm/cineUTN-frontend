@@ -1,9 +1,11 @@
 <div class="relative inline-block w-64">
+  <label>{{ filter }}</label>
   <div
+    name="dropdown"
     (click)="toggleDropdown()"
     class="flex items-center justify-between bg-white border border-gray-300 rounded px-4 py-2 cursor-pointer"
   >
-    <span>{{ selectedGenre || "Seleccionar Género" }}</span>
+    <span>{{ selectedItem || placeholder }}</span>
     <svg
       *ngIf="!dropdownOpen"
       class="w-4 h-4 transform rotate-0"
@@ -42,11 +44,17 @@
   >
     <ul>
       <li
-        *ngFor="let genre of genres"
-        (click)="selectGenre(genre)"
+        (click)="clearFilter()"
         class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
       >
-        {{ genre }}
+        {{ placeholder }}
+      </li>
+      <li
+        *ngFor="let item of items"
+        (click)="selectItem(item)"
+        class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+      >
+        {{ item.name }}
       </li>
     </ul>
   </div>
