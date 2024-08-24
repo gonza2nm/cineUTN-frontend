@@ -40,3 +40,9 @@ div.bg-black {
 div.mb-2 {
   margin-bottom: 0.5rem;
 }
+
+@media (min-width: 768px) {
+  .adpatar_tam_md {
+    max-height: calc(100vh - 70px);
+  }
+}

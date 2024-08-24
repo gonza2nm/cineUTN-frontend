@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HomeService } from '../services/home.service';
-import { Cinema, Genre } from '../interfaces/interfaces.js';
+import { HomeService } from '../home.service';
+import { Cinema, Genre, Movie } from '../interfaces/interfaces.js';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +10,7 @@ import { Cinema, Genre } from '../interfaces/interfaces.js';
 export class HomeComponent implements OnInit {
   cinemas: Cinema[] = [];
   genres: Genre[] = [];
+  movies: Movie[] = [];
   selectedCinema: Cinema | null = null;
   selectedGenre: Genre | null = null;
   constructor(private homeService: HomeService) {}
@@ -28,7 +29,7 @@ export class HomeComponent implements OnInit {
         }
       },
       (error) => {
-        /* activar un aviso de que no se encontraron cines*/
+        console.error('Ocurrio un error al hacer la consulta de Cinemas');
       }
     );
   }
@@ -41,13 +42,23 @@ export class HomeComponent implements OnInit {
           console.log(this.genres);
         }
       },
-      (error) => {}
+      (error) => {
+        console.error('Ocurrio un error al hacer la consulta de Genres');
+      }
     );
   }
   loadMovies(): void {
     this.homeService.getMovies().subscribe(
-      (response) => {},
-      (error) => {}
+      (response) => {
+        if ('data' in response) {
+          const { data } = response;
+          this.movies = data;
+          console.log(this.movies);
+        }
+      },
+      (error) => {
+        console.error('Ocurrio un error al hacer la consulta de Movies');
+      }
     );
   }
 

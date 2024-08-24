@@ -1,10 +1,10 @@
-<div class="relative w-full overflow-hidden">
+<div class="relative w-full adpatar_tam_md overflow-hidden">
   <div
     class="flex transition-transform duration-300 ease-in-out"
     [style.transform]="transform"
   >
     <div class="w-full flex-shrink-0" *ngFor="let image of images">
-      <img [src]="image" class="w-full object-cover" alt="Image" />
+      <img [src]="image" class="w-full max-h-screen object-cover" alt="Image" />
     </div>
   </div>
 

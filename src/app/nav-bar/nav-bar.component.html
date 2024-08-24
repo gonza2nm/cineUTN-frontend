@@ -1,9 +1,14 @@
 <nav
-  class="bg-blue-800 items-center flex flex-row flex-wrap justify-between py-4 md:flex-row lg:flex-row"
+  class="bg bg-blue-800 items-center z-50 w-full flex flex-row flex-wrap justify-between py-4 md:flex-row lg:flex-row"
 >
-  <p class="pl-4 text-2xl font-medium text-white">Cine UTN</p>
+  <p
+    class="pl-4 text-2xl font-medium text-white cursor-pointer"
+    [routerLink]="['/']"
+  >
+    Cine UTN
+  </p>
   <button
-    class="text-white focus:outline-none md:hidden"
+    class="text-white focus:outline-none lg:hidden"
     (click)="toggleMenu()"
   >
     <svg
@@ -31,17 +36,18 @@
     </svg>
   </button>
 
-  <!-- Menú -->
+  <!-- Menu -->
   <div
     [ngClass]="{
       block: isMenuOpen,
       hidden: !isMenuOpen
     }"
-    class="mt-1.5 w-full md:flex md:items-center md:w-auto hidden openmenu md:pr-4 lg:pr-4"
+    class="mt-1.5 w-full text-white lg:flex lg:items-center lg:w-auto hidden lg:pr-4"
   >
-    <div
+    <a
       *ngIf="isAuth === false"
-      class="flex flex-nowrap flex-row items-center pl-2"
+      class="flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit"
+      [routerLink]="['/login']"
     >
       <div class="w-8 h-8 flex items-center justify-center">
         <svg
@@ -59,17 +65,14 @@
           />
         </svg>
       </div>
-      <a
-        href="#"
-        routerLink="/login"
-        class="text-black block px-3 py-2 my-0.5 md:py-0 text-lg"
-      >
+      <p href="#" class="text-white block px-3 py-2 my-0.5 lg:py-0 text-lg">
         Iniciar sesion
-      </a>
-    </div>
-    <div
+      </p>
+    </a>
+    <a
       *ngIf="isAuth === true"
-      class="flex flex-nowrap flex-row items-center pl-2"
+      class="flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit"
+      [routerLink]="['/mi-cuenta']"
     >
       <div class="w-8 h-8 flex items-center justify-center">
         <svg
@@ -87,14 +90,14 @@
           />
         </svg>
       </div>
-      <a
-        href="#"
-        routerLink="/mi-cuenta"
-        class="text-black block px-3 py-2 my-0.5 md:py-0 text-lg"
-        >Mi cuenta</a
-      >
-    </div>
-    <div class="flex flex-nowrap flex-row items-center pl-2">
+      <p href="#" class="text-white block px-3 py-2 my-0.5 lg:py-0 text-lg">
+        Mi cuenta
+      </p>
+    </a>
+    <a
+      class="flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit"
+      [routerLink]="['/']"
+    >
       <div class="w-8 h-8 flex items-center justify-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -109,11 +112,13 @@
           />
         </svg>
       </div>
-      <a href="#" class="text-black block px-3 py-2 my-0.5 md:py-0 text-lg"
-        >Peliculas</a
-      >
-    </div>
-    <div class="flex flex-nowrap flex-row items-center pl-2">
+      <p href="#" class="text-white block px-3 py-2 my-0.5 lg:py-0 text-lg">
+        Cartelera
+      </p>
+    </a>
+    <a
+      class="flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit"
+    >
       <div class="w-8 h-8 flex items-center justify-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -164,11 +169,13 @@
           />
         </svg>
       </div>
-      <a href="#" class="text-black block px-3 py-2 my-0.5 md:py-0 text-lg"
-        >Comidas y Bebidas</a
-      >
-    </div>
-    <div class="flex flex-nowrap flex-row items-center pl-2">
+      <p href="#" class="text-white block px-3 py-2 my-0.5 lg:py-0 text-lg">
+        Comidas y Bebidas
+      </p>
+    </a>
+    <a
+      class="flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit"
+    >
       <div class="w-8 h-8 flex items-center justify-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -186,9 +193,9 @@
           />
         </svg>
       </div>
-      <a href="#" class="text-black block px-3 py-2 my-0.5 md:py-0 text-lg"
-        >Promociones</a
-      >
-    </div>
+      <p href="#" class="text-white block px-3 py-2 my-0.5 lg:py-0 text-lg">
+        Promociones
+      </p>
+    </a>
   </div>
 </nav>

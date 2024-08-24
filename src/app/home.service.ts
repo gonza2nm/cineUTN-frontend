@@ -7,7 +7,7 @@ import {
   ResponseGenre,
   ResponseMovie,
   ResponseWithError,
-} from '../interfaces/interfaces';
+} from './interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root',
