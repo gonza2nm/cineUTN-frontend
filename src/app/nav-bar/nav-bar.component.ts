@@ -8,6 +8,9 @@ import { Component } from '@angular/core';
 export class NavBarComponent {
   isMenuOpen = false;
   isAuth = false;
+  closeMenu() {
+    this.isMenuOpen = false;
+  }
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }

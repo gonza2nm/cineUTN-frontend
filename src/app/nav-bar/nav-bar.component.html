@@ -4,6 +4,7 @@
   <p
     class="pl-4 text-2xl font-medium text-white cursor-pointer"
     [routerLink]="['/']"
+    (click)="closeMenu()"
   >
     Cine UTN
   </p>
@@ -46,8 +47,9 @@
   >
     <a
       *ngIf="isAuth === false"
-      class="flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit"
+      class="flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit duration-300"
       [routerLink]="['/login']"
+      (click)="closeMenu()"
     >
       <div class="w-8 h-8 flex items-center justify-center">
         <svg
@@ -71,8 +73,9 @@
     </a>
     <a
       *ngIf="isAuth === true"
-      class="flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit"
+      class="flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit duration-300"
       [routerLink]="['/mi-cuenta']"
+      (click)="closeMenu()"
     >
       <div class="w-8 h-8 flex items-center justify-center">
         <svg
@@ -95,8 +98,9 @@
       </p>
     </a>
     <a
-      class="flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit"
+      class="flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit duration-300"
       [routerLink]="['/']"
+      (click)="closeMenu()"
     >
       <div class="w-8 h-8 flex items-center justify-center">
         <svg
@@ -117,7 +121,8 @@
       </p>
     </a>
     <a
-      class="flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit"
+      class="flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit duration-300"
+      (click)="closeMenu()"
     >
       <div class="w-8 h-8 flex items-center justify-center">
         <svg
@@ -174,7 +179,8 @@
       </p>
     </a>
     <a
-      class="flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit"
+      class="flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit duration-300"
+      (click)="closeMenu()"
     >
       <div class="w-8 h-8 flex items-center justify-center">
         <svg
