@@ -11,13 +11,13 @@
   <!-- Controles -->
   <button
     (click)="prev()"
-    class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white px-2 py-1"
+    class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white p-2 hover:bg-black hover:bg-opacity-80"
   >
     Prev
   </button>
   <button
     (click)="next()"
-    class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white px-2 py-1"
+    class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white p-2 hover:bg-black hover:bg-opacity-80"
   >
     Next
   </button>
@@ -27,7 +27,7 @@
     <div class="flex justify-center mb-2">
       <span
         *ngFor="let image of images; let i = index"
-        class="h-2 w-2 rounded-full mx-1 cursor-pointer mb-4"
+        class="h-3 w-3 rounded-full md:h-4 md:w-4 mx-1.5 cursor-pointer mb-4 transition-colors duration-300"
         [class.bg-gray-800]="i === currentIndex"
         [class.bg-gray-400]="i !== currentIndex"
         (click)="goToSlide(i)"
@@ -36,7 +36,9 @@
     </div>
 
     <!-- Caja negra con texto -->
-    <div class="bg-black bg-opacity-50 text-white w-full px-4 py-2 rounded">
+    <div
+      class="bg-black bg-opacity-50 text-white w-full px-4 py-2 rounded text-center"
+    >
       Pelicula
     </div>
   </div>
