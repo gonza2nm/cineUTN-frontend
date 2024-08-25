@@ -14,10 +14,6 @@ export class SliderComponent {
 
   currentIndex = 0;
 
-  get transform(): string {
-    return `translateX(-${this.currentIndex * 100}%)`;
-  }
-
   prev(): void {
     this.currentIndex =
       this.currentIndex === 0 ? this.images.length - 1 : this.currentIndex - 1;
