@@ -1,32 +1,52 @@
-<div class="relative w-full adpatar_tam_md overflow-hidden">
+<div class="relative w-full max-h-full overflow-hidden">
   <div
     class="flex transition-transform duration-300 ease-in-out"
     [style.transform]="transform"
   >
-    <div class="w-full flex-shrink-0" *ngFor="let image of images">
-      <img [src]="image" class="w-full max-h-screen object-cover" alt="Image" />
+    <div class="w-full flex-shrink-0" *ngFor="let movie of movies">
+      <img
+        src="{{ movie.imageLink }}"
+        class="w-full max-h-screen object-cover"
+        alt="{{ movie.name }}"
+      />
     </div>
   </div>
-
   <!-- Controles -->
   <button
     (click)="prev()"
-    class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white p-2 hover:bg-black hover:bg-opacity-80"
+    class="absolute left-0 top-1/2 transform -translate-y-1/2 w-10 h-10 text-gray-600 md:h-12 md:w-12 lg:w-14 lg:h-14 hover:text-opacity-80 hover:text-black"
   >
-    Prev
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      class="w-full h-full"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"
+      />
+    </svg>
   </button>
   <button
     (click)="next()"
-    class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white p-2 hover:bg-black hover:bg-opacity-80"
+    class="absolute right-0 top-1/2 transform -translate-y-1/2 w-10 h-10 text-gray-600 md:h-12 md:w-12 lg:w-14 lg:h-14 hover:text-opacity-80 hover:text-black"
   >
-    Next
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      class="w-full h-full"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
+      />
+    </svg>
   </button>
-
   <!-- Indicadores -->
   <div class="absolute bottom-0 left-0 right-0 flex flex-col items-center">
     <div class="flex justify-center mb-2">
       <span
-        *ngFor="let image of images; let i = index"
+        *ngFor="let movie of movies; let i = index"
         class="h-3 w-3 rounded-full md:h-4 md:w-4 mx-1.5 cursor-pointer mb-4 transition-colors duration-300"
         [class.bg-gray-800]="i === currentIndex"
         [class.bg-gray-400]="i !== currentIndex"
@@ -34,12 +54,11 @@
       >
       </span>
     </div>
-
-    <!-- Caja negra con texto -->
-    <div
-      class="bg-black bg-opacity-50 text-white w-full px-4 py-2 rounded text-center"
+    <h3
+      *ngIf="movies.length > 0"
+      class="bg-black bg-opacity-50 text-white w-full px-4 py-2 text-lg md:text-2xl"
     >
-      Pelicula
-    </div>
+      {{ movies[currentIndex].name }}
+    </h3>
   </div>
 </div>

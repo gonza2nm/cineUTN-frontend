@@ -35,5 +35,6 @@ export interface Movie {
   name: string;
   description: string;
   format: string;
+  imageLink: string;
   genres: Genre[];
 }

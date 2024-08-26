@@ -1,37 +1,35 @@
-<main>
-  <section>
-    <app-slider></app-slider>
-  </section>
-  <section>
-    <div
-      class="flex flex-row flex-wrap items-center justify-center gap-4 py-4 px-4"
-    >
-      <app-selector
-        filter="Cine"
-        placeholder="Seleccionar Cine"
-        [items]="cinemas"
-        (itemSelected)="handleItemSelected($event)"
-      ></app-selector>
-      <app-selector
-        filter="Genero"
-        placeholder="Seleccionar Genero"
-        [items]="genres"
-        (itemSelected)="handleItemSelected($event)"
-      ></app-selector>
-    </div>
-    <div>
-      <ul>
-        <li *ngFor="let movie of movies">
-          <img src="" alt="Pelicula: {{ movie.name }}" />
-          <h1>{{ movie.name }}</h1>
-          <p>{{ movie.description }}</p>
-          <div>
-            <ul>
-              <li *ngFor="let genre of movie.genres">{{ genre.name }}</li>
-            </ul>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </section>
-</main>
+<section>
+  <app-slider [movies]="movies"></app-slider>
+</section>
+<section>
+  <div
+    class="flex flex-row flex-wrap items-center justify-center gap-4 py-4 px-4"
+  >
+    <app-selector
+      filter="Cine"
+      placeholder="Seleccionar Cine"
+      [items]="cinemas"
+      (itemSelected)="handleItemSelected($event)"
+    ></app-selector>
+    <app-selector
+      filter="Genero"
+      placeholder="Seleccionar Genero"
+      [items]="genres"
+      (itemSelected)="handleItemSelected($event)"
+    ></app-selector>
+  </div>
+  <div>
+    <ul>
+      <li *ngFor="let movie of movies">
+        <img src="" alt="Pelicula: {{ movie.name }}" />
+        <h1>{{ movie.name }}</h1>
+        <p>{{ movie.description }}</p>
+        <div>
+          <ul>
+            <li *ngFor="let genre of movie.genres">{{ genre.name }}</li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
