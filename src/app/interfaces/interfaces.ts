@@ -6,6 +6,10 @@ export interface ResponseCinema {
   message: string;
   data: Cinema[];
 }
+export interface ReponseSingleCinema {
+  message: string;
+  data: Cinema;
+}
 export interface ResponseGenre {
   message: string;
   data: Genre[];

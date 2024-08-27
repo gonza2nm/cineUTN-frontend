@@ -13,14 +13,16 @@ export class HomeComponent implements OnInit {
   movies: Movie[] = [];
   selectedCinema: Cinema | null = null;
   selectedGenre: Genre | null = null;
-  constructor(private homeService: HomeService) {}
+  filteredMovies: Movie[] = [];
+  filteredGenres: Genre[] = [];
+  constructor(private service: HomeService) {}
   ngOnInit(): void {
     this.loadCinemas();
     this.loadGenres();
     this.loadMovies();
   }
   loadCinemas(): void {
-    this.homeService.getCinemas().subscribe(
+    this.service.getCinemas().subscribe(
       (response) => {
         if ('data' in response) {
           const { data } = response;
@@ -34,11 +36,12 @@ export class HomeComponent implements OnInit {
     );
   }
   loadGenres(): void {
-    this.homeService.getGenres().subscribe(
+    this.service.getGenres().subscribe(
       (response) => {
         if ('data' in response) {
           const { data } = response;
           this.genres = data;
+          this.filteredGenres = data;
           console.log(this.genres);
         }
       },
@@ -48,11 +51,12 @@ export class HomeComponent implements OnInit {
     );
   }
   loadMovies(): void {
-    this.homeService.getMovies().subscribe(
+    this.service.getMovies().subscribe(
       (response) => {
         if ('data' in response) {
           const { data } = response;
           this.movies = data;
+          this.filteredMovies = data;
           console.log(this.movies);
         }
       },
@@ -62,13 +66,43 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  loadCinema(id: number): Cinema | any {
+    this.service.getCinema(id).subscribe(
+      (response) => {
+        if ('data' in response) {
+          const { data } = response;
+          data;
+        }
+      },
+      (error) => {
+        console.error('Ocurrio un error al hacer la consulta de Movies');
+        return error;
+      }
+    );
+  }
+
   /* filtra las peliculas y le pasa el dato correspondiente a el componente que muestra las peliculas*/
-  filterMovies() {}
+  filterMovies() {
+    if (!this.selectedCinema && !this.selectedGenre) {
+      this.filteredMovies = this.movies;
+      this.filteredGenres = this.genres;
+    } else if (!this.selectedCinema && this.selectedGenre !== null) {
+      this.filteredMovies = this.movies.filter((movie) =>
+        movie.genres.some((genre) => genre.id === this.selectedGenre?.id)
+      );
+      this.filteredMovies.forEach((movie) => {
+        console.log(`Pelicula: ${movie.name}, id: ${movie.id}`);
+      });
+    } else if (!this.selectedGenre && this.selectedCinema !== null) {
+      const cinema = this.loadCinema(this.selectedCinema.id);
+      // Seguir con esto de la solicitud de cine, revisar bien que datos se reciben y como trabajar para hacer el filtro necesario
+    }
+  }
 
   /*recibe el objeto seleccionado del dropdown, segun si es cine o genero hace los filtos
   en caso de que devuelva un objeto que tiene el atributo clear ese contiene el nombre
   del filtro y anula los filtros*/
-  handleItemSelected(item: Cinema | Genre): void {
+  handleItemSelected(item: Cinema | Genre | { clear: string }): void {
     if ('clear' in item) {
       if (item.clear === 'Cine') {
         this.selectedCinema = null;

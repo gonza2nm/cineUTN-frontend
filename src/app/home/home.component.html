@@ -18,19 +18,31 @@
       (selectionChange)="handleItemSelected($event)"
     ></app-selector>
   </div>
-  <div>
-    <ul>
-      <li *ngFor="let movie of movies">
-        <img src="" alt="Pelicula: {{ movie.name }}" />
-        <h1>{{ movie.name }}</h1>
-        <p>{{ movie.description }}</p>
-        <div>
-          <ul>
-            <li *ngFor="let genre of movie.genres">{{ genre.name }}</li>
-          </ul>
-        </div>
-      </li>
-    </ul>
+  <div class="w-full">
+    <div class="flex flex-wrap flex-row justify-around my-6 mx-4 gap-6">
+      <p
+        *ngIf="filteredMovies.length === 0"
+        class="text-2xl text-red-700 text-center"
+      >
+        No se encuentran peliculas con este filtro
+      </p>
+      <a
+        class="flex flex-nowrap flex-col rounded-sm w-40 h-60 border-black m-4 cursor-pointer"
+        *ngFor="let movie of filteredMovies"
+        [title]="movie.name"
+        [routerLink]="['/movies', movie.id]"
+      >
+        <img
+          class="object-cover w-full h-full"
+          src="{{ movie.imageLink }}"
+          alt="{{ movie.name }}"
+        />
+        <p
+          class="bg-blue-900 text-center text-white min-w-full max-h-8 text-base py-0.5"
+        >
+          {{ movie.name }}
+        </p>
+      </a>
+    </div>
   </div>
-  <app-list-movies [movies]="movies"></app-list-movies>
 </section>

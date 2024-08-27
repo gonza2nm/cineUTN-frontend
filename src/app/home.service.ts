@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
-  Cinema,
   ResponseCinema,
   ResponseGenre,
   ResponseMovie,
   ResponseWithError,
+  ReponseSingleCinema,
 } from './interfaces/interfaces';
 
 @Injectable({
@@ -20,6 +20,11 @@ export class HomeService {
 
   getCinemas(): Observable<ResponseCinema | ResponseWithError> {
     return this.http.get<ResponseCinema | ResponseWithError>(this.urlCines);
+  }
+  getCinema(id: number): Observable<ReponseSingleCinema | ResponseWithError> {
+    return this.http.get<ReponseSingleCinema | ResponseWithError>(
+      `${this.urlCines}/${id}?genres=all`
+    );
   }
   getGenres(): Observable<ResponseGenre | ResponseWithError> {
     return this.http.get<ResponseGenre | ResponseWithError>(this.urlGenres);
