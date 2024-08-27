@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
     if ('clear' in item) {
       if (item.clear === 'Cine') {
         this.selectedCinema = null;
-        console.log(`cienma seleccionado ${this.selectedCinema}`);
+        console.log(`cinema seleccionado ${this.selectedCinema}`);
       } else {
         this.selectedGenre = null;
         console.log(`genero seleccionado ${this.selectedGenre}`);

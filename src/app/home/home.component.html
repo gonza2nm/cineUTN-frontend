@@ -9,13 +9,13 @@
       filter="Cine"
       placeholder="Seleccionar Cine"
       [items]="cinemas"
-      (itemSelected)="handleItemSelected($event)"
+      (selectionChange)="handleItemSelected($event)"
     ></app-selector>
     <app-selector
       filter="Genero"
       placeholder="Seleccionar Genero"
       [items]="genres"
-      (itemSelected)="handleItemSelected($event)"
+      (selectionChange)="handleItemSelected($event)"
     ></app-selector>
   </div>
   <div>
@@ -32,4 +32,5 @@
       </li>
     </ul>
   </div>
+  <app-list-movies [movies]="movies"></app-list-movies>
 </section>
