@@ -1,5 +1,4 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { Cinema, Genre } from '../interfaces/interfaces.js';
 
 @Component({
   selector: 'app-selector',
@@ -10,23 +9,16 @@ export class SelectorComponent {
   @Input({ required: true }) filter: string = '';
   @Input({ required: true }) items: any[] = [];
   @Input({ required: true }) placeholder: string = '';
-  @Output() itemSelected = new EventEmitter<any>();
-  selectedItem: string | null = null;
-  dropdownOpen: boolean = false;
+  @Output() selectionChange: EventEmitter<any> = new EventEmitter<any>();
+  selectedValue: any = null;
 
-  toggleDropdown(): void {
-    this.dropdownOpen = !this.dropdownOpen;
-  }
-
-  clearFilter() {
-    this.selectedItem = null;
-    this.toggleDropdown();
-    this.itemSelected.emit({ clear: this.filter });
-  }
-  selectItem(item: Cinema | Genre): void {
-    const { name } = item;
-    this.selectedItem = name;
-    this.toggleDropdown();
-    this.itemSelected.emit(item);
+  //avisa al componente home si se esta filtrando o limpiando el filtro de genero o cine
+  onSelectChange() {
+    if (!this.selectedValue) {
+      this.selectionChange.emit({ clear: this.filter });
+    } else {
+      this.selectionChange.emit(this.selectedValue);
+    }
+    console.log(this.selectedValue);
   }
 }
