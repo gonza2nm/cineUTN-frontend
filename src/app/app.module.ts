@@ -10,6 +10,7 @@ import { ManagerHomeComponent } from './manager-home/manager-home.component';
 import { HomeComponent } from './home/home.component';
 import { SliderComponent } from './slider/slider.component';
 import { SelectorComponent } from './selector/selector.component';
+import { CinemasComponent } from './cinemas/cinemas.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { SelectorComponent } from './selector/selector.component';
     HomeComponent,
     SliderComponent,
     SelectorComponent,
+    CinemasComponent,
   ],
   imports: [
     BrowserModule,
