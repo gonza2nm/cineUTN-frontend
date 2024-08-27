@@ -8,11 +8,11 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'manager-home', component: ManagerHomeComponent },
-  //{ path: "**", component: ManagerHomeComponent } cambiar por componente "home"
+  { path: "**", component: HomeComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
