@@ -11,6 +11,7 @@ import { ManagerHomeComponent } from './manager-home/manager-home.component';
 import { HomeComponent } from './home/home.component';
 import { SliderComponent } from './slider/slider.component';
 import { SelectorComponent } from './selector/selector.component';
+import { CinemasComponent } from './cinemas/cinemas.component';
 import { ListMoviesComponent } from './list-movies/list-movies.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 
@@ -23,6 +24,7 @@ import { MovieDetailsComponent } from './movie-details/movie-details.component';
     HomeComponent,
     SliderComponent,
     SelectorComponent,
+    CinemasComponent,
     ListMoviesComponent,
     MovieDetailsComponent,
   ],
