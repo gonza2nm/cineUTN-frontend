@@ -66,23 +66,33 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  loadCinema(id: number): Cinema | any {
-    this.service.getCinema(id).subscribe(
-      (response) => {
-        if ('data' in response) {
-          const { data } = response;
-          data;
+  loadCinema(id: number): Promise<Cinema | undefined> {
+    return new Promise((resolve, reject) => {
+      this.service.getCinema(id).subscribe(
+        (response) => {
+          if ('data' in response) {
+            const { data } = response;
+            this.selectedCinema = data;
+            console.log('cine con generos: ', data);
+            resolve(this.selectedCinema);
+          } else {
+            resolve(undefined);
+          }
+        },
+        (error) => {
+          console.error(
+            'Ocurrió un error al obtener el cine con sus películas y géneros'
+          );
+          reject(error);
         }
-      },
-      (error) => {
-        console.error('Ocurrio un error al hacer la consulta de Movies');
-        return error;
-      }
-    );
+      );
+    });
   }
 
   /* filtra las peliculas y le pasa el dato correspondiente a el componente que muestra las peliculas*/
-  filterMovies() {
+  /* el filtro de generos segun el cine es complejo, preguntar a gonza o copiar codigo y preguntarle a una IA
+  que es lo que hace ese codigo si es necesario*/
+  async filterMovies() {
     if (!this.selectedCinema && !this.selectedGenre) {
       this.filteredMovies = this.movies;
       this.filteredGenres = this.genres;
@@ -90,12 +100,21 @@ export class HomeComponent implements OnInit {
       this.filteredMovies = this.movies.filter((movie) =>
         movie.genres.some((genre) => genre.id === this.selectedGenre?.id)
       );
-      this.filteredMovies.forEach((movie) => {
-        console.log(`Pelicula: ${movie.name}, id: ${movie.id}`);
-      });
-    } else if (!this.selectedGenre && this.selectedCinema !== null) {
-      const cinema = this.loadCinema(this.selectedCinema.id);
-      // Seguir con esto de la solicitud de cine, revisar bien que datos se reciben y como trabajar para hacer el filtro necesario
+    } else if (this.selectedCinema !== null && !this.selectedGenre) {
+      await this.loadCinema(this.selectedCinema.id);
+      console.log('desde el filter: ', this.selectedCinema);
+      this.filteredGenres = this.selectedCinema.movies
+        .flatMap((movie) => movie.genres)
+        .filter(
+          (genre, indice, array) =>
+            indice === array.findIndex((genero) => genero.id === genre.id)
+        );
+      this.filteredMovies = this.selectedCinema.movies.filter((movie) =>
+        movie.genres.map((genre) => genre.id == this.selectedGenre?.id)
+      );
+      console.log(this.filteredMovies);
+    } else {
+      //hacer la parte de que tiene los dos filtros puestos
     }
   }
 

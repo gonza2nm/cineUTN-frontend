@@ -14,20 +14,16 @@
     <app-selector
       filter="Genero"
       placeholder="Seleccionar Genero"
-      [items]="genres"
+      [items]="filteredGenres"
       (selectionChange)="handleItemSelected($event)"
     ></app-selector>
   </div>
-  <div class="w-full">
-    <div class="flex flex-wrap flex-row justify-around my-6 mx-4 gap-6">
-      <p
-        *ngIf="filteredMovies.length === 0"
-        class="text-2xl text-red-700 text-center"
-      >
-        No se encuentran peliculas con este filtro
-      </p>
+  <div class="w-full flex justify-center">
+    <div
+      class="flex flex-wrap flex-row justify-around md:justify-center my-6 mx-4 gap-9"
+    >
       <a
-        class="flex flex-nowrap flex-col rounded-sm w-40 h-60 border-black m-4 cursor-pointer"
+        class="flex flex-nowrap flex-col rounded-sm w-40 h-60 border-black cursor-pointer"
         *ngFor="let movie of filteredMovies"
         [title]="movie.name"
         [routerLink]="['/movies', movie.id]"
