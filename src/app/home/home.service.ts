@@ -6,7 +6,7 @@ import {
   ResponseMovie,
   ResponseWithError,
   ReponseSingleCinema,
-} from './interfaces/interfaces';
+} from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root',
