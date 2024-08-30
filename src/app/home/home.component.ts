@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from './home.service';
 import { Cinema, Genre, Movie } from '../interfaces/interfaces.js';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -20,55 +21,44 @@ export class HomeComponent implements OnInit {
   }
   //solicita todos los cines y guarda en una variable para no volver a hacer la solicitud todo el tiempo
   loadCinemas(): void {
-    this.service.getCinemas().subscribe(
-      (response) => {
-        if ('data' in response) {
-          const { data } = response;
-          this.cinemas = data;
-          console.log(this.cinemas);
-        }
-      },
-      (error) => {
+    this.service.getCinemas().subscribe((response) => {
+      if ('data' in response) {
+        this.cinemas = response.data;
+        console.log(this.cinemas);
+      } else {
+        this.cinemas = [];
         console.error('Ocurrio un error al hacer la consulta de Cinemas');
       }
-    );
+    });
   }
   //solicita todas las peliculas y guarda en una variable para no volver a hacer la solicitud todo el tiempo
   loadMovies(): void {
-    this.service.getMovies().subscribe(
-      (response) => {
-        if ('data' in response) {
-          const { data } = response;
-          this.movies = data;
-          this.filteredMovies = data;
-          console.log(this.movies);
-        }
-      },
-      (error) => {
-        console.error('Ocurrio un error al hacer la consulta de Movies');
+    this.service.getMovies().subscribe((response) => {
+      if ('data' in response) {
+        this.movies = response.data;
+        this.filteredMovies = response.data;
+        console.log(this.movies);
+      } else {
+        console.log(response.message);
+        this.filteredMovies = [];
+        this.movies = [];
       }
-    );
+    });
   }
   //solicita el cine seleccinado y guarda en una variable
-  loadCinema(id: number): Promise<Cinema | undefined> {
+  loadCinema(id: number): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.service.getCinema(id).subscribe(
-        (response) => {
-          if ('data' in response) {
-            const { data } = response;
-            this.selectedCinema = data;
-            resolve(this.selectedCinema);
-          } else {
-            resolve(undefined);
-          }
-        },
-        (error) => {
-          console.error(
-            'Ocurrió un error al obtener el cine con sus películas y géneros'
-          );
-          reject(error);
+      this.service.getCinema(id, 'all').subscribe((response) => {
+        if ('data' in response) {
+          this.selectedCinema = response.data;
+          resolve();
+        } else {
+          console.log(response.message);
+          this.selectedCinema = null;
+          this.filteredMovies = [];
+          reject();
         }
-      );
+      });
     });
   }
 
@@ -88,7 +78,7 @@ export class HomeComponent implements OnInit {
   asigna null si no esta seleccionado y asigna el cine en caso de que si*/
   handleItemSelected(item: Cinema | null): void {
     this.selectedCinema = item;
-    console.log(`cinema seleccionado ${this.selectedCinema}`);
+    console.log('cinema seleccionado', this.selectedCinema);
     this.filterMovies();
   }
 
