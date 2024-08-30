@@ -9,16 +9,11 @@
       filter="Cine"
       placeholder="Seleccionar Cine"
       [items]="cinemas"
-      (selectionChange)="handleItemSelected($event)"
-    ></app-selector>
-    <app-selector
-      filter="Genero"
-      placeholder="Seleccionar Genero"
-      [items]="filteredGenres"
+      (change)="onSelect($event)"
       (selectionChange)="handleItemSelected($event)"
     ></app-selector>
   </div>
-  <div class="w-full flex justify-center">
+  <div class="w-full flex justify-center" id="movies">
     <div
       class="flex flex-wrap flex-row justify-around md:justify-center my-6 mx-4 gap-9"
     >
