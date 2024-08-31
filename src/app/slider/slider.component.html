@@ -1,6 +1,6 @@
 <div class="relative adpatar_tam_md w-full max-h-full overflow-hidden">
   <div
-    class="flex transition-transform duration-300 ease-in-out"
+    class="flex transition-transform duration-500 ease-in-out"
     [style.transform]="transform"
   >
     <div class="w-full flex-shrink-0" *ngFor="let movie of movies">
@@ -47,7 +47,7 @@
     <div class="flex justify-center mb-2">
       <span
         *ngFor="let movie of movies; let i = index"
-        class="h-3 w-3 rounded-full md:h-4 md:w-4 mx-1.5 cursor-pointer mb-4 transition-colors duration-300"
+        class="h-3 w-3 rounded-full md:h-4 md:w-4 mx-1.5 cursor-pointer mb-4 transition-colors duration-500"
         [class.bg-gray-800]="i === currentIndex"
         [class.bg-gray-400]="i !== currentIndex"
         (click)="goToSlide(i)"
