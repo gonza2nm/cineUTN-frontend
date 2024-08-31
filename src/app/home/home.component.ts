@@ -11,6 +11,8 @@ import { Observable } from 'rxjs';
 export class HomeComponent implements OnInit {
   cinemas: Cinema[] = [];
   movies: Movie[] = [];
+  genres: Genre[] = [];
+  selectedGenre: Genre | null = null;
   selectedCinema: Cinema | null = null;
   filteredMovies: Movie[] = [];
   constructor(private service: HomeService) {}
@@ -18,6 +20,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.loadCinemas();
     this.loadMovies();
+    this.loadGenres();
   }
   //solicita todos los cines y guarda en una variable para no volver a hacer la solicitud todo el tiempo
   loadCinemas(): void {
@@ -28,6 +31,18 @@ export class HomeComponent implements OnInit {
       } else {
         this.cinemas = [];
         console.error('Ocurrio un error al hacer la consulta de Cinemas');
+      }
+    });
+  }
+  //solicita los generos que existen en el sistema
+  loadGenres(): void {
+    this.service.getGenres().subscribe((response) => {
+      if ('data' in response) {
+        this.genres = response.data;
+        console.log(this.genres);
+      } else {
+        this.genres = [];
+        console.error('Ocurrio un erro al hacer la consulta de Genres');
       }
     });
   }
@@ -64,21 +79,47 @@ export class HomeComponent implements OnInit {
 
   /* filtra las peliculas y guarda las peliculas en una variable que luego se pasa a otro componente para mostrarlas*/
   async filterMovies() {
-    if (!this.selectedCinema) {
+    if (!this.selectedCinema && !this.selectedGenre) {
       this.filteredMovies = this.movies;
       console.log('1 movies,', this.filteredMovies);
-    } else if (this.selectedCinema) {
+    } else if (this.selectedCinema !== null) {
       await this.loadCinema(this.selectedCinema.id);
-      this.filteredMovies = this.selectedCinema.movies;
-      console.log('2 movies,', this.filteredMovies);
+      if (!this.selectedGenre) {
+        this.filteredMovies = this.selectedCinema.movies;
+        console.log('2 movies,', this.filteredMovies);
+      } else {
+        this.filteredMovies = this.selectedCinema.movies.filter((movie) =>
+          movie.genres.some((genre) => genre.id === this.selectedGenre?.id)
+        );
+        console.log('3 movies,', this.filteredMovies);
+      }
+    } else if (this.selectedGenre !== null && !this.selectedCinema) {
+      console.log('4 movies,', this.filteredMovies);
+      this.filteredMovies = this.movies.filter((movie) =>
+        movie.genres.some((genre) => genre.id === this.selectedGenre?.id)
+      );
     }
   }
 
   /*recibe el objeto seleccionado del dropdown y lo asigna al cine seleccionado para luego hacer los filtros
   asigna null si no esta seleccionado y asigna el cine en caso de que si*/
-  handleItemSelected(item: Cinema | null): void {
-    this.selectedCinema = item;
-    console.log('cinema seleccionado', this.selectedCinema);
+  handleItemSelected(item: Cinema | Genre | { clear: string }): void {
+    if ('clear' in item) {
+      if (item.clear === 'Cine') {
+        this.selectedCinema = null;
+      } else {
+        this.selectedGenre = null;
+      }
+    } else {
+      if ('address' in item) {
+        this.selectedCinema = item;
+        console.log('cinema seleccionado', this.selectedCinema);
+      } else {
+        this.selectedGenre = item;
+        console.log('genero seleccionado', this.selectedGenre);
+      }
+    }
+
     this.filterMovies();
   }
 

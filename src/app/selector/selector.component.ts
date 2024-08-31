@@ -12,9 +12,14 @@ export class SelectorComponent {
   @Output() selectionChange: EventEmitter<any> = new EventEmitter<any>();
   selectedValue: any = null;
 
-  //avisa al componente el filtro de cine que se esta haciendo
+  //avisa al componente padre si se cambio un valor de genero o de cine
   onSelectChange() {
-    this.selectionChange.emit(this.selectedValue);
-    console.log(this.selectedValue);
+    if (!this.selectedValue) {
+      //devuelve obj con un atributo clear que indica que filtro se esta limpiando
+      this.selectionChange.emit({ clear: this.filter });
+    } else {
+      //devuelve el obj sin especificar el tipo
+      this.selectionChange.emit(this.selectedValue);
+    }
   }
 }

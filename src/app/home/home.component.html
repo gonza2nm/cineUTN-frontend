@@ -12,11 +12,24 @@
       (change)="onSelect($event)"
       (selectionChange)="handleItemSelected($event)"
     ></app-selector>
+    <app-selector
+      filter="Genero"
+      placeholder="Seleccionar Genero"
+      [items]="genres"
+      (change)="onSelect($event)"
+      (selectionChange)="handleItemSelected($event)"
+    ></app-selector>
   </div>
   <div class="w-full flex justify-center" id="movies">
     <div
       class="flex flex-wrap flex-row justify-around md:justify-center my-6 mx-4 gap-9"
     >
+      <p
+        *ngIf="filteredMovies.length === 0"
+        class="text-xl py-32 text-red-600 text-center"
+      >
+        Lo lamento, no se encontraron peliculas que cumplan esta condicion
+      </p>
       <a
         class="flex flex-nowrap flex-col rounded-sm w-40 h-60 border-black cursor-pointer"
         *ngFor="let movie of filteredMovies"

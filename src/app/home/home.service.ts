@@ -10,6 +10,7 @@ import {
   ResponseMovie,
   ResponseWithError,
   ReponseSingleCinema,
+  ResponseGenre,
 } from '../interfaces/interfaces';
 
 @Injectable({
@@ -18,6 +19,7 @@ import {
 export class HomeService {
   readonly urlCines = 'http://localhost:3000/api/cinemas';
   readonly urlMovies = 'http://localhost:3000/api/movies';
+  readonly urlGenres = 'http://localhost:3000/api/genres';
   constructor(private http: HttpClient) {}
 
   private handleError(error: HttpErrorResponse) {
@@ -40,6 +42,11 @@ export class HomeService {
   getCinemas(): Observable<ResponseCinema | ResponseWithError> {
     return this.http
       .get<ResponseCinema | ResponseWithError>(this.urlCines)
+      .pipe(catchError(this.handleError));
+  }
+  getGenres(): Observable<ResponseGenre | ResponseWithError> {
+    return this.http
+      .get<ResponseGenre | ResponseWithError>(this.urlGenres)
       .pipe(catchError(this.handleError));
   }
   /*
