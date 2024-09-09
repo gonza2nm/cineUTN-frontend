@@ -19,8 +19,8 @@ export class CinemasComponent implements OnInit {
 
   loadCinemas() {
     this.cinemaService.getAllCinemas().subscribe(
-      (data: Cinema[]) => {
-        this.cinemas = data;
+      (response: { message: string; data: Cinema[] }) => {
+        this.cinemas = response.data;
         console.log(this.cinemas) //sacar esto
       },
       (error) => {

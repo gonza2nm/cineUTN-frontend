@@ -13,7 +13,7 @@ export class CinemaService {
   constructor(private http: HttpClient) { }
 
   //Hace una peticion get al URL de la api, y espera un observable que va a emitira un arreglo de elemento de tipo cinema 
-  getAllCinemas(): Observable<Cinema[]> {
-    return this.http.get<Cinema[]>(this.apiUrl);
+  getAllCinemas(): Observable<{ message: string; data: Cinema[] }> {
+    return this.http.get<{ message: string; data: Cinema[] }>(this.apiUrl);
   }
 }
