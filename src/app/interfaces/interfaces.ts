@@ -1,3 +1,5 @@
+// Permiten definir el tipo de datos que se espera recibir. Es util para usarlos en los observables ej: GetAllCinemas(): Observable<Cinema[]> {}. Aca estamos diciendo que esperamos un observable que emitira un arreglo de elementos de tipo Cinema
+
 export interface ResponseWithError {
   message: string;
   error: string;
