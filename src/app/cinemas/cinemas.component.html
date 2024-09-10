@@ -1,6 +1,23 @@
-<p>cinemas works!</p>
+<!-- Boton para volver-->
+<button type="button" routerLink="/manager-home" class="rounded-md border border-black mt-5 hover:bg-gray-300 ml-3 px-3 py-1">
+  &larr; Volver
+</button>
+
+<!--Texto superior-->
+<h1 class=" text-2xl font-bold text-center mb-5">Seleccione un cine para administrar</h1>
+
+<!--Lista de cines-->
 <ul>
-  <li *ngFor = "let cinema of cinemas" class= "">
-    {{cinema.name}}
+  <li *ngFor = "let cinema of cinemas" class= "border-2 border-black mx-3 mb-3">
+    <button class="w-full text-left hover:bg-gray-300 p-2">
+      <div class="ml-1">
+        {{cinema.name}}
+      </div>
+      <div class="ml-8">
+      {{cinema.address}}
+      </div>
+    </button>
   </li>
 </ul>
+
+<!--Todavia me faltan estilizarlo, esta en proceso, por ahora estoy haciendo que quede para mobile-->
