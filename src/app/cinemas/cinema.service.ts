@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
-import { Cinema, ResponseCinema, ResponseWithError } from '../interfaces/interfaces';
+import { ResponseSingleCinema, ResponseCinema, ResponseWithError } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,14 @@ export class CinemaService {
       .get<ResponseCinema>(this.apiUrl)  //Realiza la solicitud GET y espera una respuesta de tipo ResponseCinema
       .pipe(catchError(this.handleError)); //Si hay un error, llama al método handleError, .pipe() se usa para transformar o manejar el flujo del Observable.
   }
+
+  getOneCinema(id: number): Observable<ResponseSingleCinema | ResponseWithError> {
+    return this.http
+      .get<ResponseSingleCinema>(`${this.apiUrl}/${id}`)
+      .pipe(catchError(this.handleError));
+
+  }
+
 
   // HttpErrorResponse contiene info sobre el error HTTP
   private handleError(error: HttpErrorResponse) {
