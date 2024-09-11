@@ -79,7 +79,7 @@ export class CinemaEditComponent implements OnInit {
         this.cinemaService.updateCinema(this.cinemaId, this.cinemaData).subscribe(
           (response) => {
             if ('data' in response) {
-              this.errorMessage = null;
+              this.errorMessage = null; //borra el mensaje de error por si viene alguno viejo arrastrado
               this.router.navigate(['/manager-home/cinemas'])
             } else {
               this.errorMessage = response.message;
@@ -91,6 +91,21 @@ export class CinemaEditComponent implements OnInit {
           }
         );
       }
+    } else { //o sea si no esta en editMode entra al add
+      this.cinemaService.addCinema(this.cinemaData).subscribe(
+        (response) => {
+          if ('data' in response) {
+            this.errorMessage = null;
+            this.router.navigate(['/manager-home/cinemas'])
+          } else {
+            this.errorMessage = response.message;
+          }
+        },
+        (error) => {
+          this.errorMessage = 'An error occurred while saving the cinema.'
+          console.error('Error saving cinemas:', error);
+        }
+      )
     }
   }
 }

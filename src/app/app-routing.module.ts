@@ -13,8 +13,8 @@ const routes: Routes = [
   { path: 'movies/:id', component: MovieDetailsComponent },
   { path: 'manager-home', component: ManagerHomeComponent },
   { path: 'manager-home/cinemas', component: CinemasComponent },
-  { path: 'manager-home/cinemas/:id', component: CinemaEditComponent }, //uso mismo componente para editar y crear
-  { path: 'manager-home/cinemas/new', component: CinemaEditComponent },
+  { path: 'manager-home/cinemas/new', component: CinemaEditComponent },//uso mismo componente para editar y crear
+  { path: 'manager-home/cinemas/:id', component: CinemaEditComponent }, //cuidado! si la ruta del new queda abajo de la del id entonces toma a "new" como ID y no funciona.
   { path: "**", component: HomeComponent }
 
 ];

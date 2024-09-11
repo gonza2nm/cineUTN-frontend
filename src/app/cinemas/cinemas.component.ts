@@ -28,7 +28,7 @@ export class CinemasComponent implements OnInit {
       (response) => {
         if ('data' in response) { //si la respuesta tiene un campo data(o sea fue exitosa) se asigna la lista de cines a this.cinemas y el msj de error se reinicia a null
           this.cinemas = response.data;
-          this.errorMessage = null;
+          this.errorMessage = null; //borra el mensaje de error por si viene alguno viejo arrastrado
         } else {
           //si no hay data(o sea hay un problema en la response), se asigna el mensaje de error a this.errorMesaje (responseWithError), ej: message: cinemas not found
           this.errorMessage = response.message;

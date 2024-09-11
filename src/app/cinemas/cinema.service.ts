@@ -30,8 +30,14 @@ export class CinemaService {
 
   updateCinema(id: number, cinema: Cinema): Observable<ResponseSingleCinema | ResponseWithError> {
     return this.http
-      .put<ResponseSingleCinema>(`${this.apiUrl}/${id}`, cinema);
+      .put<ResponseSingleCinema>(`${this.apiUrl}/${id}`, cinema)
+      .pipe(catchError(this.handleError));
+  }
 
+  addCinema(cinema: Cinema): Observable<ResponseSingleCinema | ResponseWithError> {
+    return this.http
+      .post<ResponseSingleCinema>(this.apiUrl, cinema) //no hace falta el `${}` porque no se incluye ningun valor dinamico en al url
+      .pipe(catchError(this.handleError));
   }
 
   // HttpErrorResponse contiene info sobre el error HTTP
