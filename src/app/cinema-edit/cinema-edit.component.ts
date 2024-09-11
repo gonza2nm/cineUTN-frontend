@@ -71,11 +71,11 @@ export class CinemaEditComponent implements OnInit {
 
   saveCinema() {
     //Guardo los datos ingresados del form en el cinemaData
-    this.cinemaData.name = this.cinemaForm.get('name')?.value;
+    this.cinemaData.name = this.cinemaForm.get('name')?.value; //busca en el formGroup el formControl que se llame 'name' y con .value le agarra el valor.
     this.cinemaData.address = this.cinemaForm.get('address')?.value;
 
     if (this.isEditMode) {
-      if (this.cinemaId) {
+      if (this.cinemaId) { //sin este if no deja entrar al metodo porque dice que puede ser null
         this.cinemaService.updateCinema(this.cinemaId, this.cinemaData).subscribe(
           (response) => {
             if ('data' in response) {
