@@ -13,6 +13,7 @@ import { SliderComponent } from './slider/slider.component';
 import { SelectorComponent } from './selector/selector.component';
 import { CinemasComponent } from './cinemas/cinemas.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
+import { CinemaEditComponent } from './cinema-edit/cinema-edit.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { MovieDetailsComponent } from './movie-details/movie-details.component';
     SelectorComponent,
     CinemasComponent,
     MovieDetailsComponent,
+    CinemaEditComponent,
   ],
   imports: [
     BrowserModule,
