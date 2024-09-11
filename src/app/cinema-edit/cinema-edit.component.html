@@ -9,7 +9,7 @@
 <!--Texto superior si es new cinema-->
 <h1 *ngIf="!isEditMode" class=" text-2xl font-bold text-center mb-5">Complete los campos para crear el nuevo cine</h1>
 
-<form [formGroup]="cinemaForm" (ngSubmit)="onSubmit()"> <!--cambiar ese onSubmit a save cinema-->
+<form [formGroup]="cinemaForm" (ngSubmit)="saveCinema()">
   <label>Nombre:</label>
   <input type="text" formControlName = 'name' class=" border-2 border-black">
 
@@ -18,3 +18,5 @@
 
   <button type="submit" [disabled]="!cinemaForm.valid" class="border-2 border-black">{{ isEditMode ? 'Guardar Cambios' : 'Agregar Cine' }}</button>
 </form>
+
+<!--(Nota para mi) Falta mensaje de error o restriccion de que si no hay ningun cine no pueda entrar a manager-home/cinemas/1-->

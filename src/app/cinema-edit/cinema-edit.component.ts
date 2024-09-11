@@ -46,7 +46,7 @@ export class CinemaEditComponent implements OnInit {
   }
 
   loadOneCinema() {
-    if (this.cinemaId) {
+    if (this.cinemaId) { //sin este if no deja entrar al metodo porque dice que puede ser null
       this.cinemaService.getOneCinema(this.cinemaId).subscribe(
         (response) => {
           if ('data' in response) {
@@ -69,8 +69,28 @@ export class CinemaEditComponent implements OnInit {
     }
   }
 
-  onSubmit() { //cambiar esto a un saveCinema()
-    console.log(this.cinemaForm.value);
-  }
+  saveCinema() {
+    //Guardo los datos ingresados del form en el cinemaData
+    this.cinemaData.name = this.cinemaForm.get('name')?.value;
+    this.cinemaData.address = this.cinemaForm.get('address')?.value;
 
+    if (this.isEditMode) {
+      if (this.cinemaId) {
+        this.cinemaService.updateCinema(this.cinemaId, this.cinemaData).subscribe(
+          (response) => {
+            if ('data' in response) {
+              this.errorMessage = null;
+              this.router.navigate(['/manager-home/cinemas'])
+            } else {
+              this.errorMessage = response.message;
+            }
+          },
+          (error) => {
+            this.errorMessage = 'An error occurred while updating the cinema.'
+            console.error('Error updating cinemas:', error);
+          }
+        );
+      }
+    }
+  }
 }
