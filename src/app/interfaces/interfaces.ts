@@ -6,7 +6,7 @@ export interface ResponseCinema {
   message: string;
   data: Cinema[];
 }
-export interface ReponseSingleCinema {
+export interface ResponseSingleCinema {
   message: string;
   data: Cinema;
 }

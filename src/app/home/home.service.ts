@@ -9,7 +9,7 @@ import {
   ResponseCinema,
   ResponseMovie,
   ResponseWithError,
-  ReponseSingleCinema,
+  ResponseSingleCinema,
   ResponseGenre,
 } from '../interfaces/interfaces';
 
@@ -20,7 +20,7 @@ export class HomeService {
   readonly urlCines = 'http://localhost:3000/api/cinemas';
   readonly urlMovies = 'http://localhost:3000/api/movies';
   readonly urlGenres = 'http://localhost:3000/api/genres';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
@@ -57,14 +57,14 @@ export class HomeService {
   getCinema(
     id: number,
     populate: string
-  ): Observable<ReponseSingleCinema | ResponseWithError> {
+  ): Observable<ResponseSingleCinema | ResponseWithError> {
     populate = populate.trim();
 
     const options = populate
       ? { params: new HttpParams().set('genres', populate) }
       : {};
     return this.http
-      .get<ReponseSingleCinema | ResponseWithError>(
+      .get<ResponseSingleCinema | ResponseWithError>(
         `${this.urlCines}/${id}`,
         options
       )
