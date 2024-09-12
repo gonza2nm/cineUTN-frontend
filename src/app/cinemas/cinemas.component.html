@@ -1,6 +1,47 @@
-<p>cinemas works!</p>
-<ul>
-  <li *ngFor = "let cinema of cinemas" class= "">
-    {{cinema.name}}
-  </li>
-</ul>
+<!--Ancho maximo y centrado, para que se vea bien en diferentes pantallas-->
+<div class="max-w-4xl mx-auto "> 
+
+  <div class="flex justify-between">
+    <!-- Boton para volver-->
+    <button type="button" routerLink="/manager-home" class="rounded-md border border-black mt-5 hover:bg-gray-300 ml-3 px-3 py-1">
+      &larr; Volver
+    </button>
+
+    <!-- Boton para new cinema-->
+    <button type="button" routerLink="/manager-home/cinemas/new"
+      class="rounded-md border border-black mt-5 hover:bg-gray-300 mr-3 px-3 py-1">
+      Agregar Nuevo Cine
+    </button>
+  </div>
+
+  <!--Texto superior-->
+  <h1 class=" text-2xl font-bold text-center mb-5">Seleccione un cine para administrar</h1>
+
+  <!--Lista de cines-->
+  <ul>
+    <li *ngFor = "let cinema of cinemas" class= "border-2 border-black mx-3 mb-3">
+      <!-- esta forma de escribir el router link permite construir una URL combinando la parte /manager-home/cinemas y dinámicamente el valor de cinema.id-->
+      <button [routerLink]="['/manager-home/cinemas', cinema.id]"  class="w-full text-left hover:bg-gray-300 p-2"> <!--ese cinema.id es la variable que defini en el ngFor-->
+        <div class="ml-1">
+          {{cinema.name}}
+        </div>
+        <div class="ml-8">
+        {{cinema.address}}
+        </div>
+      </button>
+    </li>
+  </ul>
+
+  <!--Muestra mensaje si no hay cines-->
+  <p *ngIf="cinemas.length === 0 && !errorMessage && !loading" class="text-xl  text-red-600 text-center">
+    No existen cines creados. Por favor, intente crear uno.
+  </p>
+
+  <!--Muestra mensaje de error si hay algun error-->
+  <p *ngIf="errorMessage && !loading" class="text-xl  text-red-600 text-center">
+    {{ errorMessage }}
+  </p>
+
+</div>
+
+<!--Todavia me faltan estilizarlo, esta en proceso, por ahora estoy haciendo que quede para mobile-->
