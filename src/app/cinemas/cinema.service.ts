@@ -40,6 +40,12 @@ export class CinemaService {
       .pipe(catchError(this.handleError));
   }
 
+  deleteCinema(id: number): Observable<ResponseSingleCinema | ResponseWithError> {
+    return this.http
+      .delete<ResponseSingleCinema>(`${this.apiUrl}/${id}`)
+      .pipe(catchError(this.handleError))
+  }
+
   // HttpErrorResponse contiene info sobre el error HTTP
   private handleError(error: HttpErrorResponse) {
     // Si el código de estado es 0, indica que ocurrió un error en la red o en el lado del cliente

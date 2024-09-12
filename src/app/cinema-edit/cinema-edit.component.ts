@@ -63,7 +63,7 @@ export class CinemaEditComponent implements OnInit {
         },
         (error) => {
           this.errorMessage = 'An error occurred while fetching the cinema.'
-          console.error('Error getting cinemas:', error);
+          console.error('Error getting cinemaa:', error);
         }
       );
     }
@@ -87,7 +87,7 @@ export class CinemaEditComponent implements OnInit {
           },
           (error) => {
             this.errorMessage = 'An error occurred while updating the cinema.'
-            console.error('Error updating cinemas:', error);
+            console.error('Error updating cinema:', error);
           }
         );
       }
@@ -103,7 +103,26 @@ export class CinemaEditComponent implements OnInit {
         },
         (error) => {
           this.errorMessage = 'An error occurred while saving the cinema.'
-          console.error('Error saving cinemas:', error);
+          console.error('Error saving cinema:', error);
+        }
+      )
+    }
+  }
+
+  deleteCinema() {
+    if (this.cinemaId) {
+      this.cinemaService.deleteCinema(this.cinemaId).subscribe(
+        (response) => {
+          if ('data' in response) {
+            this.errorMessage = null;
+            this.router.navigate(['/manager-home/cinemas'])
+          } else {
+            this.errorMessage = response.message;
+          }
+        },
+        (error) => {
+          this.errorMessage = 'An error occurred while deleting the cinema.'
+          console.error('Error deleting cinema:', error);
         }
       )
     }
