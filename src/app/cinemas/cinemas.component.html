@@ -32,18 +32,16 @@
     </li>
   </ul>
 
-  <!--Muestra mensaje si no hay cines--> <!--FALTA PONERLE TIEMPO PARA QUE NO APARERESCA POR UNOS MILISEGUNDOS AL APRETAR EL MENU-->
-  <p *ngIf="cinemas.length === 0 && !errorMessage" class="text-xl  text-red-600 text-center">
+  <!--Muestra mensaje si no hay cines-->
+  <p *ngIf="cinemas.length === 0 && !errorMessage && !loading" class="text-xl  text-red-600 text-center">
     No existen cines creados. Por favor, intente crear uno.
   </p>
 
   <!--Muestra mensaje de error si hay algun error-->
-  <p *ngIf="errorMessage" class="text-xl  text-red-600 text-center">
+  <p *ngIf="errorMessage && !loading" class="text-xl  text-red-600 text-center">
     {{ errorMessage }}
   </p>
 
 </div>
-
-
 
 <!--Todavia me faltan estilizarlo, esta en proceso, por ahora estoy haciendo que quede para mobile-->

@@ -8,10 +8,10 @@ import { CinemaService } from './cinema.service';
   styleUrls: ['./cinemas.component.css']
 })
 export class CinemasComponent implements OnInit {
-  //array vacio de tipo Cinema[]
-  cinemas: Cinema[] = [];
-  //una variable que puede tener un msj de error o null
-  errorMessage: string | null = null;
+
+  cinemas: Cinema[] = []; //array vacio de tipo Cinema[]
+  errorMessage: string | null = null; //una variable que puede tener un msj de error o null
+  loading: boolean = true //Sirve para que no se muestren los mensajes de error mientras todavia esta cargando el loadCinemas
 
   //recibe una instancia de CinemaService
   constructor(private cinemaService: CinemaService) { }
@@ -29,15 +29,18 @@ export class CinemasComponent implements OnInit {
         if ('data' in response) { //si la respuesta tiene un campo data(o sea fue exitosa) se asigna la lista de cines a this.cinemas y el msj de error se reinicia a null
           this.cinemas = response.data;
           this.errorMessage = null; //borra el mensaje de error por si viene alguno viejo arrastrado
+          this.loading = false;
         } else {
           //si no hay data(o sea hay un problema en la response), se asigna el mensaje de error a this.errorMesaje (responseWithError), ej: message: cinemas not found
           this.errorMessage = response.message;
+          this.loading = false;
         }
       },
       (error) => {  //el observable emitio un error 
         //Si ocurre un error durante la solicitud HTTP, se asigna un mensaje genérico a errorMessage, y el error se imprime en la consola
         this.errorMessage = 'An error occurred while fetching cinemas.';
         console.error('Error getting cinemas:', error);
+        this.loading = false;
       }
     );
   }
