@@ -1,4 +1,6 @@
 # CineUTNFrontend
+link deploy:
+https://cine-utn-frontend-cku0yr6fk-gonzalo-mansillas-projects.vercel.app
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.5.
 
