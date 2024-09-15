@@ -14,6 +14,7 @@ import { SelectorComponent } from './selector/selector.component';
 import { CinemasComponent } from './cinemas/cinemas.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { CinemaEditComponent } from './cinema-edit/cinema-edit.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { CinemaEditComponent } from './cinema-edit/cinema-edit.component';
     CinemasComponent,
     MovieDetailsComponent,
     CinemaEditComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 <p>login works!</p>
-<button (click)="loadOneUser()">ver</button>
+<button (click)="getUser()">ver</button>
 
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <Label>
@@ -12,4 +12,5 @@
   </Label>
   
   <button type="submit" [disabled]="!loginForm.valid">Login</button>
+  <a [routerLink]="['/register']">Registrarse</a>
 </form>
