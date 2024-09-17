@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   selectedGenre: Genre | null = null;
   selectedCinema: Cinema | null = null;
   filteredMovies: Movie[] = [];
-  constructor(private service: HomeService) {}
+  constructor(private service: HomeService) { }
 
   ngOnInit(): void {
     this.loadCinemas();
@@ -24,11 +24,13 @@ export class HomeComponent implements OnInit {
   }
   //solicita todos los cines y guarda en una variable para no volver a hacer la solicitud todo el tiempo
   loadCinemas(): void {
-    this.service.getCinemas().subscribe((response) => {
-      if ('data' in response) {
-        this.cinemas = response.data;
-        console.log(this.cinemas);
-      } else {
+    this.service.getCinemas().subscribe({
+      next: (response) => {
+        if ('data' in response) {
+          this.cinemas = response.data;
+          console.log(this.cinemas);
+        }
+      }, error: () => {
         this.cinemas = [];
         console.error('Ocurrio un error al hacer la consulta de Cinemas');
       }
