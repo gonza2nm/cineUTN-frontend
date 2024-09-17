@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LoginService } from './login.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,30 +10,33 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class LoginComponent {
 
-  constructor(private service: LoginService) {}
+  constructor(private service: LoginService, private router: Router
+  ) {}
 
   band = true;
   messageError:string = '';
 
-  onSubmit() {
-    console.log(this.loginForm.value);
-  }
-
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [Validators.required]),
     password: new FormControl(''),
   });
 
+
   getUser(): void {
-    this.service.getUser(1).subscribe({
+    const {email, password} = this.loginForm.value
+    this.service.getUser(email, password).subscribe({
       next: (response) => {
-        console.log("aca", response);
+        this.service.setUser(response.data); //Le pasa el valor al service y el service se lo pasa al my-account.
+        this.router.navigate(['/my-account']);
+        console.log(response);
       },
 
       error: (error) => {
+        this.band = false
         this.messageError = 'Ocurrio un error, por favor intente mas tarde.';
         console.error('Ocurrio un error.');
       }
     })
   }
+
 }

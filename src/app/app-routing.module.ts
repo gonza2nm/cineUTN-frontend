@@ -7,6 +7,7 @@ import { CinemasComponent } from './cinemas/cinemas.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { CinemaEditComponent } from './cinema-edit/cinema-edit.component';
 import { RegisterComponent } from './register/register.component';
+import { MyAccountComponent } from './my-account/my-account.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'manager-home/cinemas/new', component: CinemaEditComponent },//uso mismo componente para editar y crear
   { path: 'manager-home/cinemas/:id', component: CinemaEditComponent }, //cuidado! si la ruta del new queda abajo de la del id entonces toma a "new" como ID y no funciona.
   { path: 'register', component: RegisterComponent},
+  { path: 'my-account', component: MyAccountComponent},
   { path: "**", component: HomeComponent }
 
 ];
