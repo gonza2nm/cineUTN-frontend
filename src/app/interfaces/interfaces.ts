@@ -2,21 +2,13 @@ export interface ResponseWithError {
   message: string;
   error: string;
 }
-export interface ResponseCinema {
-  message: string;
-  data: Cinema[];
+export interface ResponseList<T>{
+  message : string;
+  data: T[];
 }
-export interface ResponseSingleCinema {
-  message: string;
-  data: Cinema;
-}
-export interface ResponseGenre {
-  message: string;
-  data: Genre[];
-}
-export interface ResponseMovie {
-  message: string;
-  data: Movie[];
+export interface ResponseOne<T>{
+  message : string;
+  data: T;
 }
 export interface Cinema {
   id: number;
@@ -41,4 +33,49 @@ export interface Movie {
   format: string;
   imageLink: string;
   genres: Genre[];
+  formats : Format[];
+  languages : Language[];
 }
+export interface Show {
+  id: number;
+  dayAndTime: Date;
+  finishTime: Date;
+  theater: Theater;
+  movie: Movie;
+  tickets : Ticket[];
+  format : Format;
+  language: Language;
+}
+export interface Format {
+  id: number;
+  formatName: string;
+}
+export interface Language {
+  id: number;
+  languageName: string;  
+}
+export interface Ticket {
+  id: number;
+  show: Show[];
+  buy: Buy;
+}
+export interface Buy{
+  id: number;
+  description: string;
+  total: number;
+  fechaHora : Date;
+  user: User;
+  tickets : Ticket[];
+}
+export interface User {
+  id: number;
+  dni: string;
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
+  type: "user" | "manager";  
+  cinema: Cinema;
+  buys : Buy[];
+}
+

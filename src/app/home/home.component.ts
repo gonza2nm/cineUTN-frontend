@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from './home.service';
 import { Cinema, Genre, Movie } from '../interfaces/interfaces.js';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +13,7 @@ export class HomeComponent implements OnInit {
   genres: Genre[] = [];
   selectedGenre: Genre | null = null;
   selectedCinema: Cinema | null = null;
-  filteredMovies: Movie[] = [];
+  filteredMovies: Movie[] | null = [];
   constructor(private service: HomeService) { }
 
   ngOnInit(): void {
@@ -26,10 +25,8 @@ export class HomeComponent implements OnInit {
   loadCinemas(): void {
     this.service.getCinemas().subscribe({
       next: (response) => {
-        if ('data' in response) {
           this.cinemas = response.data;
           console.log(this.cinemas);
-        }
       }, error: () => {
         this.cinemas = [];
         console.error('Ocurrio un error al hacer la consulta de Cinemas');
@@ -38,11 +35,11 @@ export class HomeComponent implements OnInit {
   }
   //solicita los generos que existen en el sistema
   loadGenres(): void {
-    this.service.getGenres().subscribe((response) => {
-      if ('data' in response) {
+    this.service.getGenres().subscribe({
+      next: (response) => {
         this.genres = response.data;
         console.log(this.genres);
-      } else {
+      }, error: () => {
         this.genres = [];
         console.error('Ocurrio un erro al hacer la consulta de Genres');
       }
@@ -50,27 +47,28 @@ export class HomeComponent implements OnInit {
   }
   //solicita todas las peliculas y guarda en una variable para no volver a hacer la solicitud todo el tiempo
   loadMovies(): void {
-    this.service.getMovies().subscribe((response) => {
-      if ('data' in response) {
+    this.service.getMovies().subscribe({
+      next: (response) =>{
         this.movies = response.data;
         this.filteredMovies = response.data;
+        console.log("movies");
         console.log(this.movies);
-      } else {
-        console.log(response.message);
+      },error:() =>{
         this.filteredMovies = [];
         this.movies = [];
+        console.error('Ocurrio un erro al hacer la consulta de Movies');
       }
     });
   }
   //solicita el cine seleccinado y guarda en una variable
   loadCinema(id: number): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.service.getCinema(id, 'all').subscribe((response) => {
-        if ('data' in response) {
+      this.service.getCinema(id, 'all').subscribe({
+        next: (response) =>{
           this.selectedCinema = response.data;
           resolve();
-        } else {
-          console.log(response.message);
+        },error:() =>{
+          console.log('Ocurrio un error al buscar el cine seleccionado');
           this.selectedCinema = null;
           this.filteredMovies = [];
           reject();
