@@ -15,28 +15,28 @@ export class CinemaService {
   constructor(private http: HttpClient) { }
 
   //el Observable emitirá un objeto de tipo ResponseList<Cinema> si la solicitud es exitosa o ResponseWithError si ocurre un error.
-  getAllCinemas(): Observable<ResponseList<Cinema> | ResponseWithError> {
+  getAllCinemas(): Observable<any> {
     return this.http
-      .get<ResponseList<Cinema>>(this.apiUrl)  //Realiza la solicitud GET y espera una respuesta de tipo ResponseList<Cinema>
+      .get<ResponseList<Cinema> | ResponseWithError>(this.apiUrl)  //Realiza la solicitud GET y espera una respuesta de tipo ResponseList<Cinema>
   }
 
-  getOneCinema(id: number): Observable<ResponseOne<Cinema> | ResponseWithError> {
+  getOneCinema(id: number): Observable<any> {
     return this.http
-      .get<ResponseOne<Cinema>>(`${this.apiUrl}/${id}`)
+      .get<ResponseOne<Cinema> | ResponseWithError>(`${this.apiUrl}/${id}`)
   }
 
-  updateCinema(id: number, cinema: Cinema): Observable<ResponseOne<Cinema> | ResponseWithError> {
+  updateCinema(id: number, cinema: Cinema): Observable<any> {
     return this.http
-      .put<ResponseOne<Cinema>>(`${this.apiUrl}/${id}`, cinema)
+      .put<ResponseOne<Cinema> | ResponseWithError>(`${this.apiUrl}/${id}`, cinema)
   }
 
-  addCinema(cinema: Cinema): Observable<ResponseOne<Cinema> | ResponseWithError> {
+  addCinema(cinema: Cinema): Observable<any> {
     return this.http
-      .post<ResponseOne<Cinema>>(this.apiUrl, cinema) //no hace falta el `${}` porque no se incluye ningun valor dinamico en al url
+      .post<ResponseOne<Cinema> | ResponseWithError>(this.apiUrl, cinema) //no hace falta el `${}` porque no se incluye ningun valor dinamico en al url
   }
 
-  deleteCinema(id: number): Observable<ResponseOne<Cinema> | ResponseWithError> {
+  deleteCinema(id: number): Observable<any> {
     return this.http
-      .delete<ResponseOne<Cinema>>(`${this.apiUrl}/${id}`)
+      .delete<ResponseOne<Cinema> | ResponseWithError>(`${this.apiUrl}/${id}`)
   }
 }

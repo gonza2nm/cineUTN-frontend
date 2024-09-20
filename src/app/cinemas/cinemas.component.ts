@@ -26,20 +26,14 @@ export class CinemasComponent implements OnInit {
     //Se llama al método getAllCinemas() del servicio CinemaService, que devuelve un Observable que se suscribe, puede devolver (response) o (error).
     this.cinemaService.getAllCinemas().subscribe({
       next: (response) => {
-        if ('data' in response) { //si la respuesta tiene un campo data(o sea fue exitosa) se asigna la lista de cines a this.cinemas y el msj de error se reinicia a null
           this.cinemas = response.data;
           this.errorMessage = null; //borra el mensaje de error por si viene alguno viejo arrastrado
           this.loading = false;
-        } else {
-          //si no hay data(o sea hay un problema en la response), se asigna el mensaje de error a this.errorMesaje (responseWithError), ej: message: cinemas not found
-          this.errorMessage = response.message;
-          this.loading = false;
-        }
       },
-      error: (error) => {  //el observable emitio un error 
+      error: () => {  //el observable emitio un error 
         //Si ocurre un error durante la solicitud HTTP, se asigna un mensaje genérico a errorMessage, y el error se imprime en la consola
         this.errorMessage = 'An error occurred while fetching cinemas.';
-        console.error('Error getting cinemas:', error);
+        console.error('Error getting cinemas:');
         this.loading = false;
       }
     });
