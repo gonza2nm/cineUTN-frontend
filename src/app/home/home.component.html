@@ -9,6 +9,7 @@
       filter="Cine"
       placeholder="Seleccionar Cine"
       [items]="cinemas"
+      [selectedValue]="null"
       (change)="onSelect($event)"
       (selectionChange)="handleItemSelected($event)"
     ></app-selector>
@@ -16,6 +17,7 @@
       filter="Genero"
       placeholder="Seleccionar Genero"
       [items]="genres"
+      [selectedValue]="null"
       (change)="onSelect($event)"
       (selectionChange)="handleItemSelected($event)"
     ></app-selector>
@@ -34,7 +36,7 @@
         class="flex flex-nowrap flex-col rounded-sm w-40 h-60 border-black cursor-pointer"
         *ngFor="let movie of filteredMovies"
         [title]="movie.name"
-        [routerLink]="['/movies', movie.id]"
+        (click)="navigateToMovie(movie)"
       >
         <img
           class="object-cover w-full h-full"

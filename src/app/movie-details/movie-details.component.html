@@ -1,1 +1,65 @@
-<p>movie-details works!</p>
+<section>
+  <h1 *ngIf="movie != null" class="text-center text-2xl font-bold bg-black text-white px-12 py-4 md:text-4xl md:py-7">{{movie.name}}</h1>
+  <div *ngIf="movie != null" class="mx-4 sm:mx-8">
+    <img src="{{movie.imageLink}}"alt="{{movie.name}}" [title]="movie.name"/>
+    <h2 class="font-bold text-xl">Descripcion</h2>
+    <p>{{movie.description}}</p>
+    <div>
+      <p>cosas como se puede ver</p>
+      <div>
+        <h3 class="font-bold text-lg">Genres</h3>
+        <ul>
+          <li *ngFor="let genre of movie.genres">{{genre.name}}</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-bold text-lg">Languages</h3>
+        <ul>
+          <li *ngFor="let language of movie.languages">{{language.languageName}}</li>
+        </ul>
+      </div>
+      <div>
+          <h3 class="font-bold text-lg">Formats</h3>
+        <ul>
+          <li *ngFor="let format of movie.formats">{{format.formatName}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col gap-1 mt-4 mx-4 sm:mx-8">
+    <h4>ELEGIR PELICULA POR:</h4>
+    <div class="flex flex-row gap-2">
+      <p class="hidden font-bold bg-gray-500 text-white p-2 w-24 sm:block">Cine</p>
+      <app-selector
+      *ngIf="cinemas.length > 0"
+      filter=""
+      placeholder="Seleccionar Cine"
+      [items]="cinemas"
+      [selectedValue]="(selectedCinema$ | async)"
+      (selectionChange)="handleItemSelected($event)"
+    ></app-selector>
+    </div>
+    <div class="flex flex-row gap-2">
+      <p class="hidden font-bold bg-gray-500 text-white p-2 w-24 sm:block">Idioma</p>
+      <ul *ngIf="languages.length != 0" class="flex flex-row items-center">
+        <li *ngFor="let language of languages" class="cursor-pointer px-4 py-2 rounded-sm hover:bg-gray-300">{{language.languageName}}</li>
+      </ul>
+    </div>
+    <div class="flex flex-row gap-2">
+      <p class="hidden font-bold bg-gray-500 text-white p-2 w-24 sm:block">Formato</p>
+      <ul class="flex flex-row items-center">
+        <li *ngFor="let format of formats" class="cursor-pointer px-4 py-2 rounded-sm hover:bg-gray-300">{{format.formatName}}</li>
+      </ul>
+    </div>
+    <div>
+      <ul class="flex flex-row">
+        <li *ngFor="let day of days" class="cursor-pointer p-2 rounded-sm hover:bg-gray-300">{{day}}</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li *ngFor="let show of shows">{{show.dayAndTime}}</li>
+      </ul>
+    </div>
+  </div>
+</section>

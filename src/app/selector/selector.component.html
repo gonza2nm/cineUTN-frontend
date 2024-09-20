@@ -1,5 +1,5 @@
 <div class="w-60">
-  <label>{{ filter }}</label>
+  <label *ngIf="filter != '' ">{{ filter }}</label>
   <select
     (change)="onSelectChange()"
     [(ngModel)]="selectedValue"

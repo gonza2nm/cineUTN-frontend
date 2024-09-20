@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from './home.service';
 import { Cinema, Genre, Movie } from '../interfaces/interfaces.js';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,12 +15,24 @@ export class HomeComponent implements OnInit {
   selectedGenre: Genre | null = null;
   selectedCinema: Cinema | null = null;
   filteredMovies: Movie[] = [];
-  constructor(private service: HomeService) { }
+  constructor(private service: HomeService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadCinemas();
     this.loadMovies();
     this.loadGenres();
+  }
+
+  navigateToMovie(movie: Movie): void {
+    const queryParams: any = {};
+
+    if (this.selectedCinema) {
+      queryParams.cinemaId = this.selectedCinema.id;
+    }
+    // Navegamos a la página de detalles de la película con los query params
+    this.router.navigate(['/movies', movie.id], {
+      queryParams: queryParams,
+    });
   }
   //solicita todos los cines y guarda en una variable para no volver a hacer la solicitud todo el tiempo
   loadCinemas(): void {
