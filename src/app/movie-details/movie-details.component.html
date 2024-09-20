@@ -2,27 +2,68 @@
   <h1 *ngIf="movie != null" class="text-center text-2xl font-bold bg-black text-white px-12 py-4 md:text-4xl md:py-7">{{movie.name}}</h1>
   <div *ngIf="movie != null" class="mx-4 sm:mx-8">
     <img src="{{movie.imageLink}}"alt="{{movie.name}}" [title]="movie.name"/>
-    <h2 class="font-bold text-xl">Descripcion</h2>
-    <p>{{movie.description}}</p>
-    <div>
-      <p>cosas como se puede ver</p>
-      <div>
-        <h3 class="font-bold text-lg">Genres</h3>
-        <ul>
-          <li *ngFor="let genre of movie.genres">{{genre.name}}</li>
-        </ul>
+    <div class="mt-4">
+      <ul class="flex flex-row">
+        <li 
+          class="font-bold text-xl px-4 py-2 cursor-pointer border-gray-400"
+          [ngClass]="!isDetailsOpen
+            ? 'border-2 border-b-0 ' 
+            : 'border-0 border-b-2' "
+          (click)="handleChangeOption(false)"
+        >Descripción</li>
+        <li 
+          class="font-bold text-xl px-4 py-2 cursor-pointer w-min border-gray-400"
+          [ngClass]="isDetailsOpen
+            ? 'border-2 border-b-0' 
+            : 'border-0 border-b-2' "
+          (click)="handleChangeOption(true)"
+          >Detalles</li>
+        <span
+          class="w-full border-gray-400 border-b-2">
+        </span>
+      </ul>
+      <div 
+        class="pt-4"
+        [ngClass]="!isDetailsOpen
+          ? 'block'
+          : 'hidden' "
+      >
+        {{movie.description}}
       </div>
-      <div>
-        <h3 class="font-bold text-lg">Languages</h3>
-        <ul>
-          <li *ngFor="let language of movie.languages">{{language.languageName}}</li>
-        </ul>
-      </div>
-      <div>
-          <h3 class="font-bold text-lg">Formats</h3>
-        <ul>
-          <li *ngFor="let format of movie.formats">{{format.formatName}}</li>
-        </ul>
+      <div 
+      class="pt-4"
+        [ngClass]="isDetailsOpen
+          ? 'block'
+          : 'hidden' "
+      >
+        <div class="flex flex-row gap-2 items-center">
+          <strong class="text-base">Generos:</strong>
+          <ul class="flex flex-row gap-3">
+            <li 
+              *ngFor="let genre of movie.genres"
+              class="text-base"
+            >{{genre.name}}</li>
+          </ul>
+        </div>
+        <div class="flex flex-row gap-2 items-center">
+          <strong class="text-base">Idiomas:</strong>
+          <ul class="flex flex-row gap-3">
+            <li 
+              *ngFor="let language of movie.languages"
+              class="text-base"
+            >{{language.languageName}}</li>
+          </ul>
+        </div>
+        <div class="flex flex-row gap-2 items-center">
+            <strong class="text-base">Formatos:</strong>
+          <ul class="flex flex-row gap-3">
+            <li 
+              *ngFor="let format of movie.formats"
+              class="text-base"
+            >{{format.formatName}}
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -42,23 +83,47 @@
     <div class="flex flex-row gap-2">
       <p class="hidden font-bold bg-gray-500 text-white p-2 w-24 sm:block">Idioma</p>
       <ul *ngIf="languages.length != 0" class="flex flex-row items-center">
-        <li *ngFor="let language of languages" class="cursor-pointer px-4 py-2 rounded-sm hover:bg-gray-300">{{language.languageName}}</li>
+        <li *ngFor="let language of languages" class="cursor-pointer px-4 py-2 rounded-sm select-none hover:bg-gray-300">{{language.languageName}}</li>
       </ul>
     </div>
     <div class="flex flex-row gap-2">
       <p class="hidden font-bold bg-gray-500 text-white p-2 w-24 sm:block">Formato</p>
       <ul class="flex flex-row items-center">
-        <li *ngFor="let format of formats" class="cursor-pointer px-4 py-2 rounded-sm hover:bg-gray-300">{{format.formatName}}</li>
+        <li *ngFor="let format of formats" class="cursor-pointer px-4 py-2 rounded-sm select-none hover:bg-gray-300">{{format.formatName}}</li>
       </ul>
     </div>
     <div>
-      <ul class="flex flex-row">
-        <li *ngFor="let day of days" class="cursor-pointer p-2 rounded-sm hover:bg-gray-300">{{day}}</li>
+      <ul class="flex flex-row flex-wrap items-center justify-start md:flex-nowrap">
+        <li 
+          *ngFor="let day of days" 
+          class="cursor-pointer py-2 px-4 w-28 rounded-sm hover:bg-gray-300 select-none"
+          [ngClass]="daySelected === day.name ? 'bg-blue-600 hover:bg-blue-600' : '' "
+          (click)="handleDaySelected(day.name)"
+          >
+          {{day.name}}
+        </li>
       </ul>
     </div>
     <div>
-      <ul>
-        <li *ngFor="let show of shows">{{show.dayAndTime}}</li>
+      <p>Filtradas</p>
+      <ul class="flex flex-row flex-wrap sm:flex-row">
+        <li 
+          *ngFor="let show of filteredShows" 
+          class="flex flex-col border-2 rounded-md border-gray-500 px-4 py-2 w-40"
+        >
+          <div class="flex flex-row gap-1">
+            <div>
+              {{show.format.formatName}}
+            </div>
+            <strong> · </strong>
+            <div>
+              {{show.language.languageName}}
+            </div>
+          </div>         
+          <div class="bg-green-500 text-white px-2 py-1 w-min select-none hover:bg-green-700 transition-all cursor-pointer rounded-md">
+             {{getShowHourAndDay(show)}}
+          </div>
+        </li>
       </ul>
     </div>
   </div>

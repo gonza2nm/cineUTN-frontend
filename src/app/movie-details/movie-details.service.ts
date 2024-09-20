@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { Cinema, Format, Language, Movie, ResponseList, ResponseOne, ResponseWithError} from '../interfaces/interfaces';
+import { Cinema, Format, Language, Movie, ResponseList, ResponseOne, ResponseWithError, Show} from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +30,11 @@ export class MovieDetailsService {
   }
   getAllLanguages(){
     return this.http.get<ResponseList<Language>>(this.urlLanguages).pipe(map(response=> response.data));
+  }
+  getAllShowsByMovieAndCinema(movieID: number, cinemaID: number){
+    return this.http.post<ResponseList<Show>>(`${this.urlShows}/showtimes`,{
+      movieId: movieID,
+      cinemaId: cinemaID
+    }).pipe(map(response=> response.data));
   }
 }

@@ -14,11 +14,14 @@ export class MovieDetailsComponent implements OnInit {
   movie : Movie | null = null;
   cinemas : Cinema[] = [];
   shows : Show[] = [];
-  days: string[] = [];
+  days: {name:string, date: Date}[] = [];
   formats: Format[] = [];
   languages: Language[] = [];
   cinema: Cinema | null = null;
   isCinemaLoaded: boolean = false;
+  isDetailsOpen : boolean = false;
+  daySelected : string = "Hoy";
+  filteredShows : Show[] = [];
 
   constructor(
     private service : MovieDetailsService,
@@ -30,6 +33,9 @@ export class MovieDetailsComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.cinemaId = params['cinemaId'] ? Number(params['cinemaId']) : null;
     });
+    if(!this.cinemaId){
+      this.isCinemaLoaded = true
+    }
     this.loadMovieDetails(this.movieId);
     this.loadDataSelector();
     this.days = this.getNextDays();
@@ -41,13 +47,11 @@ export class MovieDetailsComponent implements OnInit {
     this.service.getAllCinemasByMovie(this.movieId).subscribe({
       next: (cinemas) => {
         this.cinemas = cinemas
-        console.log(cinemas)
-        console.log("cinemas desde el loadCinemas ",this.cinemas);
-          if(this.cinemaId != null){
-            this.cinema = this.cinemas.find(cinema => cinema.id == this.cinemaId)||null;
-            this.isCinemaLoaded = true;
-            this.loadShows(this.movieId, this.cinemaId);
-          }
+        if(this.cinemaId != null){
+          this.cinema = this.cinemas.find(cinema => cinema.id == this.cinemaId)||null;
+          this.isCinemaLoaded = true;
+          this.loadShows(this.movieId, this.cinemaId);
+        }
       },
       error: () => {  
         console.error('Error loading Data:');
@@ -56,22 +60,37 @@ export class MovieDetailsComponent implements OnInit {
     });  
   }
 
-  getNextDays():string[]{
-    const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
+  getNextDays():{name: string, date: Date}[]{
+    const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    const daysArray: { name: string, date: Date }[] = [];
     const today = new Date();
-    const todayIndex = today.getDay();
-    const daysArray: string[] = []
-    for(let i = 0; i < 7 ; i++){
-      const nextDayIndex = (todayIndex + i) % 7;
-      daysArray.push(daysOfWeek[nextDayIndex]);
+    const todayIndex = today.getDay(); 
+    let currentDate = new Date(today);
+    daysArray.push({ name: "Hoy", date: new Date(today) });
+    currentDate.setDate(today.getDate() + 1);
+    daysArray.push({ name: "Mañana", date: new Date(currentDate)});
+    for (let i = 2; i <= 7; i++) {
+      currentDate.setDate(today.getDate() + i);
+        const nextDayIndex = (todayIndex + i) % 7;
+        daysArray.push({
+          name: daysOfWeek[nextDayIndex], 
+          date: new Date(currentDate)
+        });
     }
-    daysArray[0]="Hoy";
-    daysArray[1]="Mañana"
     return daysArray;
   }
 
   loadShows(movieId: number, cinemaId: number){
-    
+    this.service.getAllShowsByMovieAndCinema(movieId,cinemaId).subscribe({
+      next:(shows)=>{
+        this.shows = shows;
+        this.filterShows();
+        console.log("Shows: ",shows)
+      },
+      error: ()=>{
+        console.log('Ocurrio un error al buscar el cine seleccionado');   
+      }
+    }) 
   }
 
   loadMovieDetails(id: number){
@@ -79,7 +98,7 @@ export class MovieDetailsComponent implements OnInit {
         next: (movie) =>{
           this.movie = movie
         },error:() =>{
-          console.log('Ocurrio un error al buscar el cine seleccionado');
+          console.log('Ocurrio un error al buscar la pelicula');
           this.movie = null;
         }
       });
@@ -106,6 +125,22 @@ export class MovieDetailsComponent implements OnInit {
     });    
   }
 
+  filterShows(){
+    const day = this.days.find(day=> day.name === this.daySelected)
+    this.filteredShows = this.shows.filter(show => new Date(show.dayAndTime).getDate() === day?.date.getDate());
+    if(this.filteredShows.length === 0){
+      console.log("no se encontraron funciones que cumplan esas caracteristicas");
+    }
+  }
+
+  getShowHourAndDay(show: Show){
+    let date = new Date(show.dayAndTime)
+    let hour = date.getUTCHours().toString().padStart(2,'0');
+    let minutes = date.getUTCMinutes().toString().padStart(2,'0');
+    const dateString = `${hour}:${minutes}`
+    return dateString
+  }
+
   handleItemSelected(item: Cinema | { clear: string }): void {
     if ('clear' in item) {
       this.cinema = null
@@ -113,6 +148,14 @@ export class MovieDetailsComponent implements OnInit {
       this.cinema = item
       console.log('cinema seleccionado en handle', item)  
     }
+  }
+  handleChangeOption(option: boolean){
+    this.isDetailsOpen = option
+  }
+  
+  handleDaySelected(day: string){
+    this.daySelected = day
+    this.filterShows()
   }
 
 }
