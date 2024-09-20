@@ -30,7 +30,8 @@ export class HomeService {
       ? { params: new HttpParams().set('genres', populate) }
       : {};
     return this.http.get<ResponseOne<Cinema> | ResponseWithError>(`${this.urlCines}/${id}`,options);
-    /*
+    /* 
+    lo de arriba es lo mismo que hacer esto:
     return this.http.get<ReponseSingleCinema | ResponseWithError>(
       `${this.urlCines}/${id}?genres=all`
     );

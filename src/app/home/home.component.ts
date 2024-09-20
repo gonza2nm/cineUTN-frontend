@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   genres: Genre[] = [];
   selectedGenre: Genre | null = null;
   selectedCinema: Cinema | null = null;
-  filteredMovies: Movie[] | null = [];
+  filteredMovies: Movie[] = [];
   constructor(private service: HomeService) { }
 
   ngOnInit(): void {
