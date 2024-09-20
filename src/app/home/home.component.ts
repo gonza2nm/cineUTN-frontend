@@ -39,7 +39,6 @@ export class HomeComponent implements OnInit {
     this.service.getCinemas().subscribe({
       next: (response) => {
           this.cinemas = response.data;
-          console.log(this.cinemas);
       }, error: () => {
         this.cinemas = [];
         console.error('Ocurrio un error al hacer la consulta de Cinemas');
@@ -51,7 +50,6 @@ export class HomeComponent implements OnInit {
     this.service.getGenres().subscribe({
       next: (response) => {
         this.genres = response.data;
-        console.log(this.genres);
       }, error: () => {
         this.genres = [];
         console.error('Ocurrio un erro al hacer la consulta de Genres');
@@ -64,8 +62,6 @@ export class HomeComponent implements OnInit {
       next: (response) =>{
         this.movies = response.data;
         this.filteredMovies = response.data;
-        console.log("movies");
-        console.log(this.movies);
       },error:() =>{
         this.filteredMovies = [];
         this.movies = [];
@@ -94,20 +90,16 @@ export class HomeComponent implements OnInit {
   async filterMovies() {
     if (!this.selectedCinema && !this.selectedGenre) {
       this.filteredMovies = this.movies;
-      console.log('1 movies,', this.filteredMovies);
     } else if (this.selectedCinema !== null) {
       await this.loadCinema(this.selectedCinema.id);
       if (!this.selectedGenre) {
         this.filteredMovies = this.selectedCinema.movies;
-        console.log('2 movies,', this.filteredMovies);
       } else {
         this.filteredMovies = this.selectedCinema.movies.filter((movie) =>
           movie.genres.some((genre) => genre.id === this.selectedGenre?.id)
         );
-        console.log('3 movies,', this.filteredMovies);
       }
     } else if (this.selectedGenre !== null && !this.selectedCinema) {
-      console.log('4 movies,', this.filteredMovies);
       this.filteredMovies = this.movies.filter((movie) =>
         movie.genres.some((genre) => genre.id === this.selectedGenre?.id)
       );
@@ -126,10 +118,8 @@ export class HomeComponent implements OnInit {
     } else {
       if ('address' in item) {
         this.selectedCinema = item;
-        console.log('cinema seleccionado', this.selectedCinema);
       } else {
         this.selectedGenre = item;
-        console.log('genero seleccionado', this.selectedGenre);
       }
     }
 

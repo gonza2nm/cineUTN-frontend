@@ -31,11 +31,11 @@
     <div class="flex flex-row gap-2">
       <p class="hidden font-bold bg-gray-500 text-white p-2 w-24 sm:block">Cine</p>
       <app-selector
-      *ngIf="cinemas.length > 0"
+      *ngIf="isCinemaLoaded"
       filter=""
       placeholder="Seleccionar Cine"
       [items]="cinemas"
-      [selectedValue]="(selectedCinema$ | async)"
+      [selectedValue]="cinema"
       (selectionChange)="handleItemSelected($event)"
     ></app-selector>
     </div>
