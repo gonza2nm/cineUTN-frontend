@@ -30,9 +30,9 @@ export class RegisterComponent {
 
   //Registra un usuario en la base de datos
 
-  loadUser() {
+  addUser() {
     //this.isSubmmited = true;
-    this.service.loadUser(this.registerForm.value).subscribe({
+    this.service.addUser(this.registerForm.value).subscribe({
       next: (response) => {
         this.messageError = '¡Se ha registrado exitosamente!';
         console.log(response);

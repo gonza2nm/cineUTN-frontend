@@ -1,8 +1,3 @@
-<!-- 
-<p>login works!</p>
-<button (click)="getUser()">ver</button>
-
--->
 
 <div class="flex justify-center items-center h-[calc(100vh-70px)] w-full">
 
@@ -21,7 +16,7 @@
 
       <Label class="flex flex-col w-full my-5 mt-2">
         Email:
-        <input type="text" formControlName="email" class="border border-gray-600 bg-gray-50 rounded-md p-2 mt-1">
+        <input type="email" formControlName="email" class="border border-gray-600 bg-gray-50 rounded-md p-2 mt-1">
       </Label>
 
       <Label class="flex flex-col w-full mb-5">
@@ -35,7 +30,6 @@
         Iniciar sesion
       </button>
 
-      <!-- [disabled]="!loginForm.valid" -->
     </form>
 
     <div class="mb-2 text-center">

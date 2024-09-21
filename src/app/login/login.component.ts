@@ -23,10 +23,10 @@ export class LoginComponent {
 
 
   getUser(): void {
-    const {email, password} = this.loginForm.value
-    this.service.getUser(email, password).subscribe({
+    this.service.getUser(this.loginForm.value).subscribe({
       next: (response) => {
         this.service.setUser(response.data); //Le pasa el valor al service y el service se lo pasa al my-account.
+        this.service.login();
         this.router.navigate(['/my-account']);
         console.log(response);
       },
@@ -38,5 +38,10 @@ export class LoginComponent {
       }
     })
   }
+
+
+  //---------------------------------------------------------------
+
+
 
 }

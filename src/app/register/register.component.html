@@ -14,7 +14,7 @@
 
     <h4 class="text-center text-xl font-medium text-blue-700 pb-2">Crea tu cuenta</h4>
 
-    <form [formGroup]="registerForm" (ngSubmit)="loadUser()"
+    <form [formGroup]="registerForm" (ngSubmit)="addUser()"
       class=" flex flex-col items-center justify-center px-5 py-5 md:px-7">
 
       <div class="flex flex-col w-full my-3">
@@ -40,12 +40,12 @@
       -->
 
       <div class="flex flex-col w-full my-3">
-        <input type="text" formControlName="email" placeholder="Email"
+        <input type="email" formControlName="email" placeholder="Email"
           class="border border-gray-600 bg-gray-50 rounded-full p-2 mt-1 placeholder-gray-500 text-center">
       </div>
 
       <div class="flex flex-col w-full my-3">
-        <input type="text" formControlName="password" placeholder="Contraseña"
+        <input type="password" formControlName="password" placeholder="Contraseña"
           class="border border-gray-600 bg-gray-50 rounded-full p-2 mt-1 placeholder-gray-500 text-center">
       </div>
 

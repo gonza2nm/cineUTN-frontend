@@ -17,52 +17,64 @@ interface User {
   providedIn: 'root',
 })
 export class LoginService {
+
   readonly url = 'http://localhost:3000/api/users';
 
   constructor(private http: HttpClient) {}
 
   user!: User;
+  
 
+  //Metodos para la base de datos ---------------------------------------
 
-  //Obtiene
-  getUser(email: string | undefined | null, password: string | undefined | null): Observable<any> {
-    return this.http.get(`${this.url}/${email}/${password}`);
-    //Esto, por seguridad, se hace con un post. Buscar como.
+  //Obtiene el usuario para el login
+  getUser(userData: any): Observable<any> {
+    return this.http.post(`${this.url}/login`, userData);
   }
 
 
-  //Registra
-  loadUser(userData: any): Observable<any> {
-    return this.http.post(this.url, userData)
+  //Registra el usuario
+  addUser(userData: any): Observable<any> {
+    return this.http.post(`${this.url}/register`, userData)
   }
 
+  //Actualiza los datos del usuario.
+  updateUser() {
 
-  // Método para actualizar el valor del usuario.
+  }
+
+  //Elimina la cuenta del usuario.
+  deleteUser() {
+
+  }
+
+  //-----------------------------------------------------------------------------
+
+
+  // Método para actualizar el valor del usuario y pasarle a my-account
   setUser(user: User):void {
-    this.user = user
+    this.user = user;
   }
 
   getOneUser(): User {
     return this.user;
   }
 
+  //--------------------------------------------------------------------------
 
+  //Para cambiar el estado del navbar de "inicion sesion" a  "mi cuenta".
 
+  private isAuthenticated = new BehaviorSubject<boolean>(false);
 
+  isAuthenticated$ = this.isAuthenticated.asObservable();
 
-  // Otra forma de hacerlo ------------------------- 
+  login() {
+    this.isAuthenticated.next(true);
+  }
 
-  // BehaviorSubject para almacenar el valor del usuario
-  //private userSource = new BehaviorSubject<any>(null);
-  
-  // Observable que expone el valor del usuario
-  //currentUser = this.userSource.asObservable();
-
-  // Método para actualizar el valor del usuario.
-  //setUser(user: any) {
-    //this.userSource.next(user);
-  //}
-
+  logout() {
+    this.isAuthenticated.next(false);
+  }
 
 
 

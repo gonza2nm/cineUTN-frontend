@@ -47,9 +47,9 @@
     class="mt-1.5 w-full text-white lg:flex lg:items-center lg:w-auto hidden lg:pr-4"
   >
     <a
-      *ngIf="isAuth === false"
+      
       class="text-white px-3 gap-3 py-2 lg:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit lg:hover:text-slate-900 lg:hover: duration-300 lg:pl-0 lg:ml-4"
-      [routerLink]="['/login']"
+      [routerLink]="isAuth ? ['/my-account'] : ['/login']"
       (click)="closeMenu()"
     >
       <div class="w-8 h-8 flex items-center justify-center">
@@ -68,12 +68,13 @@
           />
         </svg>
       </div>
-      Iniciar sesion
+      {{isAuth ? 'Mi cuenta' : 'Iniciar sesion'}}       
     </a>
+    <!-- 
     <a
       *ngIf="isAuth === true"
       class="text-white px-3 gap-3 py-2 lg:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit lg:hover:text-slate-900 lg:hover: duration-300 lg:pl-0 lg:ml-4"
-      [routerLink]="['/mi-cuenta']"
+      [routerLink]="['/my-account']"
       (click)="closeMenu()"
     >
       <div class="w-8 h-8 flex items-center justify-center">
@@ -94,6 +95,7 @@
       </div>
       Mi cuenta
     </a>
+    -->
     <a
       class="text-white px-3 gap-3 py-2 lg:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit lg:hover:text-slate-900 lg:hover: duration-300 lg:pl-0 lg:ml-4"
       [routerLink]="['/']"
@@ -193,6 +195,13 @@
         </svg>
       </div>
       Promociones
+    </a>
+
+    <a *ngIf="isAuth" 
+    class="text-white px-3 gap-3 py-2 lg:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit lg:hover:text-slate-900 lg:hover: duration-300 lg:pl-0 lg:ml-4"
+    [routerLink]="['/login']" (click)= "logout()" (click)="closeMenu()">
+      
+      Cerrar sesión
     </a>
   </div>
 </nav>
