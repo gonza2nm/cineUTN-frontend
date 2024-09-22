@@ -49,21 +49,22 @@ export class CinemaEditComponent implements OnInit {
     if (this.cinemaId) { //sin este if no deja entrar al metodo porque dice que puede ser null
       this.cinemaService.getOneCinema(this.cinemaId).subscribe({
         next: (response) => {
-          if ('data' in response) {
-            this.cinemaData = response.data
-            this.errorMessage = null;
-            //Pongo los datos del cinema en el form
-            this.cinemaForm.setValue({
-              name: this.cinemaData.name,
-              address: this.cinemaData.address
-            });
-          } else {
-            this.errorMessage = response.message;
-          }
+          this.cinemaData = response.data
+          this.cinemaData.movies = [];
+          this.cinemaData.theaters = [];
+          /*    COMENTARIO DE GONZA
+          dejar en vacio el array es porque al actualizarlo detecta que estamos tratando de agregar la mismas peliculas
+           y salas al cine que ya existe y devuelve error */
+          this.errorMessage = null;
+          //Pongo los datos del cinema en el form
+          this.cinemaForm.setValue({
+            name: this.cinemaData.name,
+            address: this.cinemaData.address
+          });
         },
-        error: (error) => {
+        error: () => {
           this.errorMessage = 'An error occurred while fetching the cinema.'
-          console.error('Error getting cinemaa:', error);
+          console.error('Error getting cinema:');
         }
       });
     }
@@ -76,34 +77,27 @@ export class CinemaEditComponent implements OnInit {
 
     if (this.isEditMode) {
       if (this.cinemaId) { //sin este if no deja entrar al metodo porque dice que puede ser null
+        console.log(this.cinemaData)
         this.cinemaService.updateCinema(this.cinemaId, this.cinemaData).subscribe({
-          next: (response) => {
-            if ('data' in response) {
+          next: () => {
               this.errorMessage = null; //borra el mensaje de error por si viene alguno viejo arrastrado
               this.router.navigate(['/manager-home/cinemas'])
-            } else {
-              this.errorMessage = response.message;
-            }
           },
-          error: (error) => {
+          error: () => {
             this.errorMessage = 'An error occurred while updating the cinema.'
-            console.error('Error updating cinema:', error);
+            console.error('Error updating cinema:');
           }
         });
       }
     } else { //o sea si no esta en editMode entra al add
       this.cinemaService.addCinema(this.cinemaData).subscribe({
-        next: (response) => {
-          if ('data' in response) {
+        next: () => {
             this.errorMessage = null;
             this.router.navigate(['/manager-home/cinemas'])
-          } else {
-            this.errorMessage = response.message;
-          }
         },
-        error: (error) => {
+        error: () => {
           this.errorMessage = 'An error occurred while saving the cinema.'
-          console.error('Error saving cinema:', error);
+          console.error('Error saving cinema:');
         }
       })
     }
@@ -112,17 +106,13 @@ export class CinemaEditComponent implements OnInit {
   deleteCinema() {
     if (this.cinemaId) {
       this.cinemaService.deleteCinema(this.cinemaId).subscribe({
-        next: (response) => {
-          if ('data' in response) {
+        next: () => {
             this.errorMessage = null;
             this.router.navigate(['/manager-home/cinemas'])
-          } else {
-            this.errorMessage = response.message;
-          }
         },
-        error: (error) => {
+        error: () => {
           this.errorMessage = 'An error occurred while deleting the cinema.'
-          console.error('Error deleting cinema:', error);
+          console.error('Error deleting cinema:');
         }
       })
     }

@@ -10,7 +10,7 @@ export class SelectorComponent {
   @Input({ required: true }) items: any[] = [];
   @Input({ required: true }) placeholder: string = '';
   @Output() selectionChange: EventEmitter<any> = new EventEmitter<any>();
-  selectedValue: any = null;
+  @Input({ required: true })selectedValue: any = null;
 
   //avisa al componente padre si se cambio un valor de genero o de cine
   onSelectChange() {
