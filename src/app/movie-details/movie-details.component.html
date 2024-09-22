@@ -101,10 +101,10 @@
         </ul>
       </div>
       <div>
-        <ul class="flex flex-row flex-wrap items-center justify-start">
+        <ul class="flex flex-row flex-wrap gap-1 items-center justify-start">
           <li 
             *ngFor="let day of days" 
-            class="cursor-pointer py-2 px-4 w-28 rounded-sm select-none"
+            class="cursor-pointer py-2 px-4 w-28 rounded-sm select-none border-gray-400 border-x border-y"
             [ngClass]="daySelected === day.name ? 'bg-blue-600 hover:bg-blue-600' : 'hover:bg-blue-400' "
             (click)="handleDaySelected(day.name)"
             >
@@ -113,7 +113,10 @@
         </ul>
       </div>
       <div>
-        <p>Filtradas</p>
+        <p 
+          class="text-red-600"
+          *ngIf="filteredShows.length === 0"
+        >No se encontraron funciones que cumplan con todos esos filtros</p>
         <ul class="flex flex-row flex-wrap sm:flex-row">
           <li 
             *ngFor="let show of filteredShows" 

@@ -93,7 +93,6 @@ export class MovieDetailsComponent implements OnInit {
       next:(shows)=>{
         this.shows = shows;
         this.filterShows();
-        console.log("Shows: ",shows)
       },
       error: ()=>{
         console.log('Ocurrio un error al buscar el cine seleccionado');   
@@ -136,8 +135,6 @@ export class MovieDetailsComponent implements OnInit {
   filterShows(){
     const day = this.days.find(day=> day.name === this.daySelected)
     this.filteredShows = this.shows.filter(show => new Date(show.dayAndTime).getDate() === day?.date.getDate());
-    console.log("Filtradas")
-    console.log(this.filteredShows);
     if(this.filteredShows.length === 0){
       console.log("no se encontraron funciones que cumplan esas caracteristicas");
     }
@@ -156,7 +153,6 @@ export class MovieDetailsComponent implements OnInit {
       this.cinema = null
     } else {
       this.cinema = item
-      console.log('cinema seleccionado en handle', item);
       this.loadShows(this.movieId,this.cinema.id); 
     }
   }
@@ -164,7 +160,7 @@ export class MovieDetailsComponent implements OnInit {
   handleChangeOption(option: boolean){
     this.isDetailsOpen = option
   }
-  
+
   handleDaySelected(day: string){
     this.daySelected = day
     this.filterShows()
