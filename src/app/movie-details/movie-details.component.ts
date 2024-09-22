@@ -23,6 +23,14 @@ export class MovieDetailsComponent implements OnInit {
   daySelected : string = "Hoy";
   filteredShows : Show[] = [];
 
+
+
+  //Falta Tener en cuenta que cuando cambia el cine hay que hacer otra busqueda de shows y otros filtrados
+  //obviamente tambien revisar que al ingresar a una pelicula sin seleccionar cine no haga la peticion sin sentido
+
+
+
+
   constructor(
     private service : MovieDetailsService,
     private route: ActivatedRoute,
@@ -128,6 +136,8 @@ export class MovieDetailsComponent implements OnInit {
   filterShows(){
     const day = this.days.find(day=> day.name === this.daySelected)
     this.filteredShows = this.shows.filter(show => new Date(show.dayAndTime).getDate() === day?.date.getDate());
+    console.log("Filtradas")
+    console.log(this.filteredShows);
     if(this.filteredShows.length === 0){
       console.log("no se encontraron funciones que cumplan esas caracteristicas");
     }
@@ -146,9 +156,11 @@ export class MovieDetailsComponent implements OnInit {
       this.cinema = null
     } else {
       this.cinema = item
-      console.log('cinema seleccionado en handle', item)  
+      console.log('cinema seleccionado en handle', item);
+      this.loadShows(this.movieId,this.cinema.id); 
     }
   }
+
   handleChangeOption(option: boolean){
     this.isDetailsOpen = option
   }
