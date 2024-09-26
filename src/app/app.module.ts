@@ -16,6 +16,7 @@ import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { CinemaEditComponent } from './cinema-edit/cinema-edit.component';
 import { RegisterComponent } from './register/register.component';
 import { MyAccountComponent } from './my-account/my-account.component';
+import { NextReleasesSliderComponent } from './next-releases-slider/next-releases-slider.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MyAccountComponent } from './my-account/my-account.component';
     CinemaEditComponent,
     RegisterComponent,
     MyAccountComponent,
+    NextReleasesSliderComponent,
   ],
   imports: [
     BrowserModule,

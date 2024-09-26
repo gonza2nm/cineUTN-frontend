@@ -53,13 +53,8 @@
   </div>
 </section>
 
-<section class="my-5">
-  <h1 class="text-2xl font-bold text-center">Proximos Estrenos</h1>
-  <ul>
-    <li *ngFor = "let nextRelease of nextReleases">
-      {{nextRelease.name}}
-    </li>
-  </ul>
+<section>
+  <app-next-releases-slider></app-next-releases-slider>
 </section>
 
 <section>
@@ -71,7 +66,7 @@
         total despues en las siguientes paginas cuando ingresen a ver los detalles o a sacar entradas
         yo voy a hacer que seleccionen un cine(mostrar solo en los cines que se encuentra esa pelicula 
         o en el caso de los estrenos los cines donde se estrena esa pelicula con su respectivo dia)
-        sino seleccionaron un cine antes de ir a los detalles, y si lo seleccionaron no lo voy a pedir
+        sino seleccionaron un cine antes de ir as los detalles, y si lo seleccionaron no lo voy a pedir
         ya va a estar marcado.
       </li>
       <li>2. Hacer NGFor con los proximos estrenos y luego darle estilo</li>

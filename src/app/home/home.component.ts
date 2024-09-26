@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   cinemas: Cinema[] = [];
   movies: Movie[] = [];
-  nextReleases: Movie[] = [];
   genres: Genre[] = [];
   selectedGenre: Genre | null = null;
   selectedCinema: Cinema | null = null;
@@ -22,7 +21,6 @@ export class HomeComponent implements OnInit {
     this.loadCinemas();
     this.loadMovies();
     this.loadGenres();
-    this.loadNextReleases();
   }
 
   navigateToMovie(movie: Movie): void {
@@ -71,23 +69,6 @@ export class HomeComponent implements OnInit {
       }
     });
   }
-
-  //carga los proximos estrenos (no terminado hasta que meca me responda lo anterior, voy a darle estilo con un getallmovies)
-  loadNextReleases() {
-    this.service.getMovies().subscribe({
-      next: (response) => {
-        this.nextReleases = response.data;
-        // this.errorMessage = null; no hay errorMessage aca pero podria ser una buena idea agregarlo
-        // this.loading = false; por si metemos errores que no aparesca antes de que cargue.
-      },
-      error: () => {
-        //this.errorMessage = 'An error occurred while fetching next realeases.';
-        console.error('Error getting next realeases:');
-        //this.loading = false;
-      }
-    });
-  }
-
   //solicita el cine seleccinado y guarda en una variable
   loadCinema(id: number): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -104,7 +85,6 @@ export class HomeComponent implements OnInit {
       });
     });
   }
-
   /* filtra las peliculas y guarda las peliculas en una variable que luego se pasa a otro componente para mostrarlas*/
   async filterMovies() {
     if (!this.selectedCinema && !this.selectedGenre) {
