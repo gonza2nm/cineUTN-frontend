@@ -21,15 +21,15 @@ export class NextReleasesSliderComponent implements OnInit {
 
   //carga los proximos estrenos (no terminado hasta que meca me responda lo anterior, voy a darle estilo usando un getallmovies como para avanzar con algo)
   loadNextReleases() {
-    this.movieService.getMovies().subscribe({
+    this.movieService.getNextReleases().subscribe({
       next: (response) => {
         this.nextReleases = response.data;
         // this.errorMessage = null; no hay errorMessage aca pero podria ser una buena idea agregarlo
         // this.loading = false; por si metemos errores que no aparesca antes de que cargue.
       },
-      error: () => {
+      error: (err) => {
         //this.errorMessage = 'An error occurred while fetching next realeases.';
-        console.error('Error getting next realeases:');
+        console.error('Error getting next realeases:', err.error);
         //this.loading = false;
       }
     });
