@@ -1,6 +1,6 @@
 <section>
   <h1 *ngIf="movie != null" class="text-center text-2xl font-bold bg-black text-white w-full px-12 py-4 md:text-4xl md:py-7">{{movie.name}}</h1>
-  <div class=" mx-4 flex flex-col items-start gap-4 md:justify-center md:flex-row sm:mx-8">
+  <div class=" mx-4 pb-6 flex flex-col items-start gap-4 md:justify-center md:flex-row sm:mx-8">
     <div 
       *ngIf="movie != null" 
       class="mt-6 flex flex-col gap-4 md:max-w-lg"
@@ -35,40 +35,46 @@
           {{movie.description}}
         </div>
         <div 
-        class="pt-4"
+        class="pt-4 flex flex-col flex-nowrap gap-1"
           [ngClass]="isDetailsOpen
             ? 'block'
             : 'hidden' "
         >
-          <div class="flex flex-row gap-2 items-center">
-            <strong class="text-base">Titulo Original:</strong>
-            <p>{{movie.name}}</p>
+          <div class="flex">
+            <p><strong class="text-base">Titulo Original:&nbsp;</strong>{{movie.name}}</p>
           </div> 
-          <div class="flex flex-row gap-2 items-center">
-            <strong class="text-base">Generos:</strong>
-            <ul class="flex flex-row gap-3">
+          <div class="flex">
+            <ul class="flex flex-row flex-wrap">
+              <li>
+                <strong class="text-base">Generos:&nbsp;</strong>
+              </li>
               <li 
                 *ngFor="let genre of movie.genres"
-                class="text-base"
-              >-{{genre.name}}-</li>
+                class="text-base list-none"
+              >{{genre.name}}&emsp;
+              </li>                                         
             </ul>
           </div>
-          <div class="flex flex-row gap-2 items-center">
-            <strong class="text-base">Idiomas:</strong>
-            <ul class="flex flex-row gap-3">
+          <div class="flex">
+            <ul class="flex flex-row flex-wrap">
+              <li>
+                <strong class="text-base">Idiomas:&nbsp;</strong>
+              </li>
               <li 
                 *ngFor="let language of movie.languages"
                 class="text-base"
-              >-{{language.languageName}}-</li>
+              >{{language.languageName}}&emsp;</li>
             </ul>
           </div>
-          <div class="flex flex-row gap-2 items-center">
-              <strong class="text-base">Formatos:</strong>
-            <ul class="flex flex-row gap-3">
+          <div class="flex">
+            <ul class="flex flex-row flex-wrap">
+              <li>
+                <strong class="text-base">Formatos:&nbsp;</strong>
+              </li>
               <li 
                 *ngFor="let format of movie.formats"
                 class="text-base"
-              >-{{format.formatName}}-
+              >{{format.formatName}}&emsp;
               </li>
             </ul>
           </div>
@@ -88,18 +94,6 @@
         (selectionChange)="handleItemSelected($event)"
       ></app-selector>
       </div>
-      <div class="flex flex-row gap-2">
-        <p class="hidden font-bold bg-gray-500 text-white p-2 w-24 sm:block">Idioma</p>
-        <ul *ngIf="languages.length != 0" class="flex flex-row items-center">
-          <li *ngFor="let language of languages" class="cursor-pointer px-4 py-2 rounded-sm select-none hover:bg-gray-300">{{language.languageName}}</li>
-        </ul>
-      </div>
-      <div class="flex flex-row gap-2">
-        <p class="hidden font-bold bg-gray-500 text-white p-2 w-24 sm:block">Formato</p>
-        <ul class="flex flex-row items-center">
-          <li *ngFor="let format of formats" class="cursor-pointer px-4 py-2 rounded-sm select-none hover:bg-gray-300">{{format.formatName}}</li>
-        </ul>
-      </div>
       <div>
         <ul class="flex flex-row flex-wrap gap-1 items-center justify-start">
           <li 
@@ -117,10 +111,10 @@
           class="text-red-600"
           *ngIf="filteredShows.length === 0"
         >No se encontraron funciones que cumplan con todos esos filtros</p>
-        <ul class="flex flex-row flex-wrap sm:flex-row">
+        <ul class="flex flex-row flex-wrap sm:flex-row justify-start items-center gap-1">
           <li 
             *ngFor="let show of filteredShows" 
-            class="flex flex-col border-2 rounded-md border-gray-500 px-4 py-2 w-40"
+            class="flex flex-col border-2 rounded-md border-gray-500 px-4 py-2 gap-2 w-1/3 min-w-40 cursor-pointer hover:bg-blue-100 hover:border-blue-600 transition-all"
           >
             <div class="flex flex-row gap-1">
               <div>
@@ -131,7 +125,7 @@
                 {{show.language.languageName}}
               </div>
             </div>         
-            <div class="bg-green-500 text-white px-2 py-1 w-min select-none hover:bg-green-700 transition-all cursor-pointer rounded-md">
+            <div class="bg-green-500 text-white px-2 py-1 w-min select-none transition-all rounded-md">
                {{getShowHourAndDay(show)}}
             </div>
           </li>
