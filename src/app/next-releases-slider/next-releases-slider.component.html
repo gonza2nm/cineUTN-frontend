@@ -1,8 +1,20 @@
 <div class="my-5">
+  <!--Titulo-->
   <h1 class="text-2xl font-bold text-center">Proximos Estrenos</h1>
-  <ul>
-    <li *ngFor="let nextRelease of nextReleases">
-      {{nextRelease.name}}
-    </li>
-  </ul>
+
+  <!--Slider con los proximos estrenos-->
+  <div *ngIf="currentRelease" class="flex justify-center">
+
+    <!--Imagen y titulo del proximo release-->
+    <div class="flex w-40 cursor-pointer flex-wrap my-5 mx-4" >
+      <img src="{{ currentRelease.imageLink }}" alt="{{currentRelease.name}}">
+      <p class="text-center text-white max-h-8 py-0.5 bg-blue-900 ">
+        {{currentRelease.name }}
+      </p>
+    </div>
+  </div>
+
+ <button (click)="nextMovie()">Pa delante</button>
+ <button (click)="prevMovie()">Pa tras</button>
+
 </div>

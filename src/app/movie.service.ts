@@ -14,7 +14,6 @@ export class MovieService {
   constructor(private http: HttpClient) { }
 
 
-  //cambiar este getMovies por la funcion de los proximos estrenos cuando este
   getNextReleases(): Observable<any> {
     return this.http.get<ResponseList<Movie> | ResponseWithError>(`${this.urlMovies}/next-releases`);
   }
