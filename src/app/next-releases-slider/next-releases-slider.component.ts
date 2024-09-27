@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieService } from '../movie.service';
 import { Movie } from '../interfaces/interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-next-releases-slider',
@@ -14,7 +15,8 @@ export class NextReleasesSliderComponent implements OnInit {
   currentReleaseIndex: number = 0;
 
   constructor(
-    private movieService: MovieService) { }
+    private movieService: MovieService,
+    private router: Router) { }
 
 
   ngOnInit(): void {
@@ -59,5 +61,7 @@ export class NextReleasesSliderComponent implements OnInit {
     this.currentRelease = this.nextReleases[this.currentReleaseIndex];
   }
 
-
+  navigateToMovie(movie: Movie): void {
+    this.router.navigate(['/movies', movie.id]);
+  }
 }
