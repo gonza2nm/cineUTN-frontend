@@ -1,17 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, retry } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ResponseOne, ResponseWithError, User } from '../interfaces/interfaces';
 
-interface User {
-  id: number,
-  dni: string,
-  name: string,
-  surname: string,
-  email: string,
-  password: string,
-  type: string,
-  cinema: string | null
-}
 
 @Injectable({
   providedIn: 'root',
@@ -29,13 +20,13 @@ export class LoginService {
 
   //Obtiene el usuario para el login
   getUser(userData: any): Observable<any> {
-    return this.http.post(`${this.url}/login`, userData);
+    return this.http.post<ResponseOne<User> | ResponseWithError>(`${this.url}/login`, userData);
   }
 
 
   //Registra el usuario
   addUser(userData: any): Observable<any> {
-    return this.http.post(`${this.url}/register`, userData)
+    return this.http.post<ResponseOne<User> | ResponseWithError>(`${this.url}/register`, userData)
   }
 
   //Actualiza los datos del usuario.

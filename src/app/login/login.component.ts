@@ -13,8 +13,9 @@ export class LoginComponent {
   constructor(private service: LoginService, private router: Router
   ) {}
 
-  band = true;
   messageError:string = '';
+  credentialsError:boolean = false;
+  othersError:boolean = false;
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
@@ -26,22 +27,21 @@ export class LoginComponent {
     this.service.getUser(this.loginForm.value).subscribe({
       next: (response) => {
         this.service.setUser(response.data); //Le pasa el valor al service y el service se lo pasa al my-account.
-        this.service.login();
+        this.service.login(); //Cambie el estado a logueado.
         this.router.navigate(['/my-account']);
         console.log(response);
       },
 
       error: (error) => {
-        this.band = false
-        this.messageError = 'Ocurrio un error, por favor intente mas tarde.';
-        console.error('Ocurrio un error.');
+        if (error.status === 404) {
+          this.credentialsError = true;
+          this.messageError = 'Email y/o contraseña incorrectos.';
+        } else {
+          this.othersError = true;
+          this.messageError = 'Ocurrio un error, por favor intente mas tarde.';     
+        }
+        console.log(error);
       }
     })
   }
-
-
-  //---------------------------------------------------------------
-
-
-
 }

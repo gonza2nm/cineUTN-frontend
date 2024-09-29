@@ -39,9 +39,8 @@ export class RegisterComponent {
         //this.registerForm.reset();
       }, 
       error: (error) => {
-        this.band = false
+        this.band = false;
         this.messageError = 'Ocurrio un error, por favor intente mas tarde.';
-        console.error('Ocurrio un error al hacer el registro del usuario.');
         console.log(error);
       }
     })

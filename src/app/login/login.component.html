@@ -20,9 +20,13 @@
       </Label>
 
       <Label class="flex flex-col w-full mb-5">
-        Password:
-        <input type="text" formControlName="password" class="border border-gray-600 bg-gray-50 rounded-md p-2 mt-1">
+        Contraseña:
+        <input type="password" formControlName="password" class="border border-gray-600 bg-gray-50 rounded-md p-2 mt-1">
       </Label>
+
+      <div *ngIf="credentialsError" class="border-2 border-red-400 w-full bg-red-200 p-2 rounded-md text-base mb-4">
+        {{messageError}}
+      </div>
 
       <button type="submit" [disabled]="!loginForm.valid"
         class="border-2 border-blue-500 bg-blue-500 text-white text-xl tracking-wide rounded-full px-7 py-1 my-6 mb-2 
@@ -41,11 +45,10 @@
       class="text-teal-800 underline hover:text-white">Registrate</a>
     </div>
 
-    <div *ngIf="messageError" class="m-5 text-2xl text-center" 
-    [ngClass]="{'text-green-600': band, 'text-red-800': !band}">
+    
+    <div *ngIf="othersError" class="m-5 text-2xl text-center text-red-600">
       <h2>{{messageError}}</h2>
     </div>
-
   </div>
 
   
