@@ -29,4 +29,8 @@ export class TheaterByCinemaService {
   addTheater(theater : Theater):Observable<any>{
     return this.http.post<ResponseOne<Theater> | ResponseWithError>(this.theaterUrl,theater);
   }
+
+  deleteTheater(id: number){
+    return this.http.delete<ResponseOne<Theater> | ResponseWithError>(`${this.theaterUrl}/${id}`);
+  }
 }

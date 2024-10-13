@@ -4,7 +4,7 @@
     </button>
   <h1 class=" text-2xl font-bold text-center mb-5">Seleccione su cine</h1>
   <ul>
-    <li *ngFor = "let cinema of cinemas" class= "border-2 border-black mx-3 mb-3">
+    <li *ngFor = "let cinema of cinemas" class= "rounded-md border-2 border-black mx-3 mb-3">
       <button [routerLink]='[cinema.id]'  class="w-full text-left hover:bg-gray-300 p-2"> 
         <div class="ml-1">
           {{cinema.name}}
