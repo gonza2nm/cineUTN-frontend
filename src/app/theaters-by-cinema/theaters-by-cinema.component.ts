@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Theater } from '../interfaces/interfaces.js';
 import { TheaterByCinemaService } from './theater-by-cinema.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-theaters-by-cinema',
@@ -18,12 +18,12 @@ export class TheatersByCinemaComponent implements OnInit {
   constructor(
     private service : TheaterByCinemaService,
     private route: ActivatedRoute,
+    private router : Router
   ){}
   
   ngOnInit(): void {
-    this.cinemaId = this.route.snapshot.params['cinemaid'];
+    this.cinemaId = this.route.snapshot.params['cid'];
     this.loadTheaters();
-
   }
 
   loadTheaters(){
@@ -38,8 +38,11 @@ export class TheatersByCinemaComponent implements OnInit {
           this.errorMessage = 'An error occurred while fetching cinemas.';
           console.error('Error getting cinemas:');
           this.loading = false;
+          this.router.navigate(["/manager-home/theaters"]);
         }
       });
+    }else{
+      this.router.navigate(["/manager-home/theaters"]);
     }
   }
 

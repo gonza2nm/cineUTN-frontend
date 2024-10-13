@@ -1,0 +1,15 @@
+<div class="max-w-4xl mx-auto">
+  <button type="button" [routerLink]="['/manager-home/theaters',cinemaId]" class="flex rounded-md border border-black mt-5 hover:bg-gray-300 ml-3 px-3 py-1">
+      &larr; Volver
+  </button>
+  <div class="flex justify-center text-xl">
+    <h2>{{editMode ? "Edite los datos de su sala" : "Ingrese la cantidad maxima de sillas de su nueva sala"}}</h2>
+  </div>
+  <form [formGroup]="theaterForm" (ngSubmit)="submit()" class="my-10">
+    <div class="flex flex-row justify-center gap-3">
+      <label for="max_seats"><img class="w-12" src="../../assets/seat.svg"/></label>
+      <input class="border-2 rounded-md px-2 py-1 border-red-400 outline-none" type="number" formControlName = "max_seats" id="max_seats">
+    </div>
+    <button [disabled]="!theaterForm.valid" type="submit">{{ editMode ? 'Guardar cambios' : 'Agregar sala' }}</button>
+  </form>
+</div>

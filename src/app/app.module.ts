@@ -18,6 +18,7 @@ import { RegisterComponent } from './register/register.component';
 import { MyAccountComponent } from './my-account/my-account.component';
 import { TheatersComponent } from './theaters/theaters.component';
 import { TheatersByCinemaComponent } from './theaters-by-cinema/theaters-by-cinema.component';
+import { TheaterEditComponent } from './theater-edit/theater-edit.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { TheatersByCinemaComponent } from './theaters-by-cinema/theaters-by-cine
     MyAccountComponent,
     TheatersComponent,
     TheatersByCinemaComponent,
+    TheaterEditComponent,
   ],
   imports: [
     BrowserModule,
