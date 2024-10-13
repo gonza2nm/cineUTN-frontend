@@ -38,8 +38,6 @@ export class TheaterEditComponent implements OnInit{
   ngOnInit() {
     this.cinema.id = this.route.snapshot.params["cid"];
     this.theaterId = this.route.snapshot.params["tid"];
-    console.log("cinema id : ",this.cinema.id)
-    console.log("theater id : ",this.theaterId)
     if (!this.theaterId){
       this.editMode = false
     }else{
@@ -54,8 +52,6 @@ export class TheaterEditComponent implements OnInit{
         next: (response) => {
           this.cinema = response.data;
           this.errorMessage = null;
-          console.log("cinema: ",this.cinema);
-
           if (this.editMode) {
             this.loadTheater();
           }
@@ -81,13 +77,9 @@ export class TheaterEditComponent implements OnInit{
           next: (response) => {
             this.theater = response.data;
             this.errorMessage = null;
-            console.log("theater: ",this.theater);
-  
             this.theaterForm.setValue({
               max_seats: this.theater.numChairs
             });
-  
-            
           },
           error: () => {
             this.errorMessage = 'An error occurred while fetching the theater.';
@@ -106,11 +98,11 @@ export class TheaterEditComponent implements OnInit{
     if(this.theaterId){
       this.service.deleteTheater(this.theaterId).subscribe({
         next: ()=>{
-          console.log("se elimino la sala exitosamente");
           this.errorMessage = null;
           this.router.navigate(["/manager-home/theaters/", this.cinema.id]);
         }, error: ()=> {
-          console.log("ocurrio un error mientras eliminabamos la sala")
+          this.errorMessage = 'An error occurred while deleting the theater.'
+          console.error('Error deleting theater:');
         }
       });
     }
@@ -139,12 +131,10 @@ export class TheaterEditComponent implements OnInit{
               this.router.navigate(['/manager-home/theaters/',this.cinema.id]);
           },
           error: () => {
-            this.errorMessage = 'An error occurred while updating the theater.'
-            console.error('Error updating theater:');
+            this.errorMessage = 'An error occurred while creating the theater.'
+            console.error('Error creating theater:');
           }
         });
       }
   }
 }
-
-//falta verificar que la sala exista en ese cine
