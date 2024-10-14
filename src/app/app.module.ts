@@ -19,6 +19,9 @@ import { MyAccountComponent } from './my-account/my-account.component';
 import { TheatersComponent } from './theaters/theaters.component';
 import { TheatersByCinemaComponent } from './theaters-by-cinema/theaters-by-cinema.component';
 import { TheaterEditComponent } from './theater-edit/theater-edit.component';
+import { ShowtimesComponent } from './showtimes/showtimes.component';
+import { ShowtimesByCinemaComponent } from './showtimes-by-cinema/showtimes-by-cinema.component';
+import { ShowtimesEditComponent } from './showtimes-edit/showtimes-edit.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,9 @@ import { TheaterEditComponent } from './theater-edit/theater-edit.component';
     TheatersComponent,
     TheatersByCinemaComponent,
     TheaterEditComponent,
+    ShowtimesComponent,
+    ShowtimesByCinemaComponent,
+    ShowtimesEditComponent,
   ],
   imports: [
     BrowserModule,

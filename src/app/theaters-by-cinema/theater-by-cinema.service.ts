@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Cinema, ResponseList, ResponseOne, ResponseWithError, Theater } from '../interfaces/interfaces.js';
+import { Cinema, ResponseList, ResponseOne, ResponseWithError, Theater } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
