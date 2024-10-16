@@ -24,7 +24,6 @@ export class ShowtimesByCinemaComponent implements OnInit {
   ngOnInit(): void {
     this.cinemaId = this.route.snapshot.params['cid'];
     this.findCinema();
-    
   }
 
   findCinema(){
