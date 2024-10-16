@@ -118,7 +118,6 @@ export class ShowtimesEditComponent implements OnInit {
             console.log(this.errorMessage);
             this.router.navigate(['/manager-home/showtimes']);
           }
-          console.log(this.showtime);
           this.formats = this.showtime.movie.formats;
           this.languages = this.showtime.movie.languages;
           this.showtimeForm.setValue({
@@ -164,10 +163,6 @@ export class ShowtimesEditComponent implements OnInit {
     this.showtime.language = this.showtimeForm.get('selectLanguageId')?.value;
     this.showtime.movie = this.showtimeForm.get('selectMovieId')?.value;
     this.showtime.theater = this.showtimeForm.get('selectTheaterId')?.value;
-    console.log(
-      'en el submit este es el showtime que se envia: ',
-      this.showtime
-    );
     if (this.editMode) {
       if (this.showtimeId != null) {
         this.service.updateShowtime(this.showtimeId, this.showtime).subscribe({
