@@ -22,6 +22,8 @@ import { TheaterEditComponent } from './theater-edit/theater-edit.component';
 import { ShowtimesComponent } from './showtimes/showtimes.component';
 import { ShowtimesByCinemaComponent } from './showtimes-by-cinema/showtimes-by-cinema.component';
 import { ShowtimesEditComponent } from './showtimes-edit/showtimes-edit.component';
+import { GenresComponent } from './genres/genres.component';
+import { GenresEditComponent } from './genres-edit/genres-edit.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { ShowtimesEditComponent } from './showtimes-edit/showtimes-edit.componen
     ShowtimesComponent,
     ShowtimesByCinemaComponent,
     ShowtimesEditComponent,
+    GenresComponent,
+    GenresEditComponent,
   ],
   imports: [
     BrowserModule,
