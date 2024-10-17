@@ -26,7 +26,7 @@ export class GenresEditComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
-    this.genreId = this.route.snapshot.params['gid'];
+    this.genreId = Number.parseInt(this.route.snapshot.params['gid']);
     this.genreForm = new FormGroup(
     {
       genre: new FormControl('', [Validators.required, Validators.minLength(3)])
