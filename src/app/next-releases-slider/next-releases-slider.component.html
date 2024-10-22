@@ -2,6 +2,8 @@
   <!--Titulo-->
   <h1 class="text-2xl font-bold text-center">Proximos Estrenos</h1>
 
+  <!--FALTA PONER NGIF POR SI NO HAY ESTRENOS-->
+
   <!--Slider con los proximos estrenos-->
   <div *ngIf="currentRelease" class="flex justify-center items-center">
 
@@ -15,9 +17,9 @@
     </button>
 
     <!--Imagen y titulo del proximo release-->
-    <div class="flex w-40 cursor-pointer flex-wrap my-5 mx-4" (click)="navigateToMovie(currentRelease)" >
+    <div class="flex w-40 cursor-pointer flex-wrap my-5 mx-4" (click)="navigateToMovie(currentRelease)" [title]="currentRelease.name" >
       <img src="{{ currentRelease.imageLink }}" alt="{{currentRelease.name}}">
-      <p class="text-left  text-white max-h-8 py-0.5 px-2 bg-blue-900 overflow-hidden text-ellipsis whitespace-nowrap ">
+      <p class="text-left  text-white max-h-8 py-0.5 px-2 bg-blue-900 overflow-hidden text-ellipsis whitespace-nowrap min-w-full ">
         {{currentRelease.name }}
       </p>
     </div>
