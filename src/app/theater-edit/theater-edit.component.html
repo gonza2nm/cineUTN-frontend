@@ -1,0 +1,26 @@
+<div class="max-w-4xl mx-auto p-4">
+  <button type="button" [routerLink]="['/manager-home/theaters',cinema.id]"
+    class="flex rounded-md border border-black mt-5 hover:bg-gray-300 ml-3 px-3 py-1">
+    &larr; Volver
+  </button>
+  <div class="flex justify-center text-xl text-center pt-4">
+    <h2>{{editMode ? "Edite los datos de su sala" : "Ingrese la cantidad maxima de sillas de su nueva sala"}}</h2>
+  </div>
+  <form class="my-10 flex flex-col justify-between gap-4 mx-3" [formGroup]="theaterForm" (ngSubmit)="submit()">
+    <div class="flex flex-row justify-center gap-3">
+      <label for="max_seats"><img class="w-12" src="../../assets/seat.svg" /></label>
+      <input placeholder="Cantidad de sillas"
+        class="w-36 border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500" type="number"
+        formControlName="max_seats" id="max_seats">
+    </div>
+    <div class="flex flex-col items-end sm:flex-row sm:items-center gap-4"
+      [ngClass]="!editMode ? 'sm:justify-end sm:items-end' : 'sm:justify-between' ">
+      <button *ngIf="editMode"
+        class="border-2 py-2 px-4 rounded-md border-black bg-red-600 hover:text-white hover:bg-red-800 hover:border-white"
+        type="button" (click)="deleteTheater()">Eliminar sala</button>
+      <button [ngClass]="!theaterForm.valid ? ' border-gray-400 text-gray-400' : 'hover:bg-gray-300'"
+        class="border-2 py-2 px-4 rounded-md  border-black" [disabled]="!theaterForm.valid" type="submit">{{ editMode ?
+        'Guardar cambios' : 'Agregar sala' }}</button>
+    </div>
+  </form>
+</div>

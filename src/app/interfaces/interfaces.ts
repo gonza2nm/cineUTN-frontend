@@ -30,7 +30,6 @@ export interface Movie {
   id: number;
   name: string;
   description: string;
-  format: string;
   imageLink: string;
   genres: Genre[];
   formats : Format[];

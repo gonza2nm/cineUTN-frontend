@@ -16,6 +16,14 @@ import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { CinemaEditComponent } from './cinema-edit/cinema-edit.component';
 import { RegisterComponent } from './register/register.component';
 import { MyAccountComponent } from './my-account/my-account.component';
+import { TheatersComponent } from './theaters/theaters.component';
+import { TheatersByCinemaComponent } from './theaters-by-cinema/theaters-by-cinema.component';
+import { TheaterEditComponent } from './theater-edit/theater-edit.component';
+import { ShowtimesComponent } from './showtimes/showtimes.component';
+import { ShowtimesByCinemaComponent } from './showtimes-by-cinema/showtimes-by-cinema.component';
+import { ShowtimesEditComponent } from './showtimes-edit/showtimes-edit.component';
+import { GenresComponent } from './genres/genres.component';
+import { GenresEditComponent } from './genres-edit/genres-edit.component';
 import { NextReleasesSliderComponent } from './next-releases-slider/next-releases-slider.component';
 
 @NgModule({
@@ -32,6 +40,14 @@ import { NextReleasesSliderComponent } from './next-releases-slider/next-release
     CinemaEditComponent,
     RegisterComponent,
     MyAccountComponent,
+    TheatersComponent,
+    TheatersByCinemaComponent,
+    TheaterEditComponent,
+    ShowtimesComponent,
+    ShowtimesByCinemaComponent,
+    ShowtimesEditComponent,
+    GenresComponent,
+    GenresEditComponent,
     NextReleasesSliderComponent,
   ],
   imports: [
@@ -44,4 +60,4 @@ import { NextReleasesSliderComponent } from './next-releases-slider/next-release
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

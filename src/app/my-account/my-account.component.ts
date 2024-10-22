@@ -1,17 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginComponent } from '../login/login.component';
 import { LoginService } from '../login/login.service';
+import { User } from '../interfaces/interfaces';
 
-interface User {
-  id: number,
-  dni: string,
-  name: string,
-  surname: string,
-  email: string,
-  password: string,
-  type: string,
-  cinema: string | null
-}
 
 @Component({
   selector: 'app-my-account',

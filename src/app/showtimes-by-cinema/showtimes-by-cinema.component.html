@@ -1,0 +1,33 @@
+<div class="max-w-4xl mx-auto "> 
+  <div class="flex justify-between gap-1">
+    <button type="button" routerLink="/manager-home/showtimes" class="flex rounded-md border border-black mt-5 hover:bg-gray-300 ml-3 px-3 py-1">
+      &larr; Volver
+    </button>
+    <button type="button" routerLink="new"
+      class="rounded-md border border-black mt-5 hover:bg-gray-300 mr-3 px-3 py-1">
+      Agregar una Funcion
+    </button>
+  </div>
+  <h1 class=" text-2xl font-bold text-center mb-5">Seleccione la Funcion que desea administrar</h1>
+  <ul>
+    <li *ngFor = "let showtime of showtimes" class= "border-2 border-black mx-3 mb-3 rounded-md">
+      <button [routerLink]='["edit", showtime.id]'  class="w-full text-left hover:bg-gray-300 p-2"> 
+        <div class="flex flex-col justify-between items-center ml-1 px-2 gap-4 sm:flex-row">
+          <div>
+            {{formatDate(showtime.dayAndTime,"DD/MM-HH:MM")}}
+            <p>&nbsp;a {{formatDate(showtime.finishTime,"HH:MM")}}</p>
+          </div>
+          <p>{{showtime.movie.name}}</p>
+          <p>{{showtime.language.languageName}}</p>
+          <p>{{showtime.format.formatName}}</p>
+        </div>
+      </button> 
+    </li>
+  </ul>
+  <p *ngIf="showtimes.length === 0 && !errorMessage && !loading" class="text-xl  text-red-600 text-center">
+    Este cine no tiene salas, por favor cree alguno.
+  </p>
+  <p *ngIf="errorMessage && !loading" class="text-xl  text-red-600 text-center">
+    {{ errorMessage }}
+  </p>
+</div>
