@@ -33,7 +33,7 @@
         Lo lamento, no se encontraron peliculas que cumplan esta condicion
       </p>
       <a
-        class="flex flex-nowrap flex-col rounded-sm w-40 h-60 border-black cursor-pointer"
+        class="flex w-40 cursor-pointer flex-wrap my-5 mx-4"
         *ngFor="let movie of filteredMovies"
         [title]="movie.name"
         (click)="navigateToMovie(movie)"
@@ -44,7 +44,7 @@
           alt="{{ movie.name }}"
         />
         <p
-          class="bg-blue-900 text-center text-white min-w-full max-h-8 text-base py-0.5"
+          class="bg-blue-900 text-center text-white max-h-8 py-0.5 px-2 min-w-full overflow-hidden text-ellipsis whitespace-nowrap"
         >
           {{ movie.name }}
         </p>
