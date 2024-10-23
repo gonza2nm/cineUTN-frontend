@@ -33,7 +33,7 @@
         Lo lamento, no se encontraron peliculas que cumplan esta condicion
       </p>
       <a
-        class="flex flex-nowrap flex-col rounded-sm w-40 h-60 border-black cursor-pointer"
+        class="flex w-40 cursor-pointer flex-wrap my-5 mx-4"
         *ngFor="let movie of filteredMovies"
         [title]="movie.name"
         (click)="navigateToMovie(movie)"
@@ -44,7 +44,7 @@
           alt="{{ movie.name }}"
         />
         <p
-          class="bg-blue-900 text-center text-white min-w-full max-h-8 text-base py-0.5"
+          class="bg-blue-900 text-center text-white max-h-8 py-0.5 px-2 min-w-full overflow-hidden text-ellipsis whitespace-nowrap"
         >
           {{ movie.name }}
         </p>
@@ -52,21 +52,7 @@
     </div>
   </div>
 </section>
+
 <section>
-  <div class="mt-4 py-2 px-4 bg-slate-500">
-    <h2 class="text-2xl font-bold">Proximos Estrenos</h2>
-    <ul class="flex gap-2 flex-col">
-      <li>
-        1. Santi, si podes aca hace la parte de todos los proximos estrenos sin importar el cine,
-        total despues en las siguientes paginas cuando ingresen a ver los detalles o a sacar entradas
-        yo voy a hacer que seleccionen un cine(mostrar solo en los cines que se encuentra esa pelicula 
-        o en el caso de los estrenos los cines donde se estrena esa pelicula con su respectivo dia)
-        sino seleccionaron un cine antes de ir a los detalles, y si lo seleccionaron no lo voy a pedir
-        ya va a estar marcado.
-      </li>
-      <li>2. Hacer NGFor con los proximos estrenos y luego darle estilo</li>
-      <li>3. Estaria bueno hacerlo como el slider de proximos estrenos de cinepolis, pero dejo a decision el estilo de los proximos estrenos</li>
-      <li>4. Sacar estilos de la "ul" ya que solo lo hice para que puedas verlo bien</li>
-    </ul>
-  </div>
+  <app-next-releases-slider></app-next-releases-slider>
 </section>

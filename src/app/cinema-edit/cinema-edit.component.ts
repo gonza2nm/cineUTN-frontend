@@ -65,6 +65,7 @@ export class CinemaEditComponent implements OnInit {
         error: () => {
           this.errorMessage = 'An error occurred while fetching the cinema.'
           console.error('Error getting cinema:');
+          this.router.navigate(['/manager-home/cinemas']);
         }
       });
     }
@@ -80,8 +81,8 @@ export class CinemaEditComponent implements OnInit {
         console.log(this.cinemaData)
         this.cinemaService.updateCinema(this.cinemaId, this.cinemaData).subscribe({
           next: () => {
-              this.errorMessage = null; //borra el mensaje de error por si viene alguno viejo arrastrado
-              this.router.navigate(['/manager-home/cinemas'])
+            this.errorMessage = null; //borra el mensaje de error por si viene alguno viejo arrastrado
+            this.router.navigate(['/manager-home/cinemas'])
           },
           error: () => {
             this.errorMessage = 'An error occurred while updating the cinema.'
@@ -92,8 +93,8 @@ export class CinemaEditComponent implements OnInit {
     } else { //o sea si no esta en editMode entra al add
       this.cinemaService.addCinema(this.cinemaData).subscribe({
         next: () => {
-            this.errorMessage = null;
-            this.router.navigate(['/manager-home/cinemas'])
+          this.errorMessage = null;
+          this.router.navigate(['/manager-home/cinemas'])
         },
         error: () => {
           this.errorMessage = 'An error occurred while saving the cinema.'
@@ -107,8 +108,8 @@ export class CinemaEditComponent implements OnInit {
     if (this.cinemaId) {
       this.cinemaService.deleteCinema(this.cinemaId).subscribe({
         next: () => {
-            this.errorMessage = null;
-            this.router.navigate(['/manager-home/cinemas'])
+          this.errorMessage = null;
+          this.router.navigate(['/manager-home/cinemas'])
         },
         error: () => {
           this.errorMessage = 'An error occurred while deleting the cinema.'

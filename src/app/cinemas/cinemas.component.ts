@@ -26,9 +26,9 @@ export class CinemasComponent implements OnInit {
     //Se llama al método getAllCinemas() del servicio CinemaService, que devuelve un Observable que se suscribe, puede devolver (response) o (error).
     this.cinemaService.getAllCinemas().subscribe({
       next: (response) => {
-          this.cinemas = response.data;
-          this.errorMessage = null; //borra el mensaje de error por si viene alguno viejo arrastrado
-          this.loading = false;
+        this.cinemas = response.data;
+        this.errorMessage = null; //borra el mensaje de error por si viene alguno viejo arrastrado
+        this.loading = false;
       },
       error: () => {  //el observable emitio un error 
         //Si ocurre un error durante la solicitud HTTP, se asigna un mensaje genérico a errorMessage, y el error se imprime en la consola
@@ -39,5 +39,3 @@ export class CinemasComponent implements OnInit {
     });
   }
 }
-
-//Me devuelve el cine completo con las peliculas y todo, pero yo en realidad quiero solo los datos del cine o si lo quiero....? porque al borrar un cine deberia borrar tambien las cosas relacionadas a el, ej: las salas. PERO, eso se haria en /manager/home/cinemas/"X" y no aca, conviene pedirlo solo con los datos iniciales al pedir que lo seleccione para administrar y luego buscar por ID el cine cuando seleccione cual quiere administrar o combiene directamente buscar todos y listo?

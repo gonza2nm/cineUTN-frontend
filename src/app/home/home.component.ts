@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
   loadCinemas(): void {
     this.service.getCinemas().subscribe({
       next: (response) => {
-          this.cinemas = response.data;
+        this.cinemas = response.data;
       }, error: () => {
         this.cinemas = [];
         console.error('Ocurrio un error al hacer la consulta de Cinemas');
@@ -59,10 +59,10 @@ export class HomeComponent implements OnInit {
   //solicita todas las peliculas y guarda en una variable para no volver a hacer la solicitud todo el tiempo
   loadMovies(): void {
     this.service.getMovies().subscribe({
-      next: (response) =>{
+      next: (response) => {
         this.movies = response.data;
         this.filteredMovies = response.data;
-      },error:() =>{
+      }, error: () => {
         this.filteredMovies = [];
         this.movies = [];
         console.error('Ocurrio un erro al hacer la consulta de Movies');
@@ -73,10 +73,10 @@ export class HomeComponent implements OnInit {
   loadCinema(id: number): Promise<void> {
     return new Promise((resolve, reject) => {
       this.service.getCinema(id, 'all').subscribe({
-        next: (response) =>{
+        next: (response) => {
           this.selectedCinema = response.data;
           resolve();
-        },error:() =>{
+        }, error: () => {
           console.log('Ocurrio un error al buscar el cine seleccionado');
           this.selectedCinema = null;
           this.filteredMovies = [];
@@ -85,7 +85,6 @@ export class HomeComponent implements OnInit {
       });
     });
   }
-
   /* filtra las peliculas y guarda las peliculas en una variable que luego se pasa a otro componente para mostrarlas*/
   async filterMovies() {
     if (!this.selectedCinema && !this.selectedGenre) {
