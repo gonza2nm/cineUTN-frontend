@@ -16,7 +16,7 @@
     <div class="flex flex-col items-end sm:flex-row sm:items-center gap-4"
       [ngClass]="!editMode ? 'sm:justify-end sm:items-end' : 'sm:justify-between' ">
       <button *ngIf="editMode"
-        class="border-2 py-2 px-4 rounded-md border-black bg-red-600 hover:text-white hover:bg-red-800 hover:border-white"
+        class="rounded-md border-2 border-black mt-5 bg-red-600 text-white hover:bg-red-800 py-2 px-4"
         type="button" (click)="deleteGenre()">Eliminar genero</button>
       <button [ngClass]="!genreForm.valid ? ' border-gray-400 text-gray-400' : 'hover:bg-gray-300'"
         class="border-2 py-2 px-4 rounded-md  border-black" [disabled]="!genreForm.valid" type="submit">{{ editMode ?
