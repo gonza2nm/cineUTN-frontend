@@ -33,6 +33,7 @@ export interface Movie {
   imageLink: string;
   genres: Genre[];
   shows: Show[];
+  cinemas: Cinema[];
   formats: Format[];
   languages: Language[];
 }
