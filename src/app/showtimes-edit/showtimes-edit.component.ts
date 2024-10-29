@@ -50,7 +50,6 @@ export class ShowtimesEditComponent implements OnInit {
       description: '',
       imageLink: '',
       genres: [],
-      shows: [],
       cinemas: [],
       formats: [],
       languages: []
