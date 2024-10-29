@@ -34,6 +34,8 @@
     <input type="text" formControlName="imageLink"
       class=" border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500">
 
+    <img [src]="imageLink" alt="Imagen de la película " class="flex self-center w-40 cursor-pointer flex-wrap my-5 mx-4">
+
     <button type="submit" [disabled]="!movieForm.valid"
       class="border-2 border-black mt-8 py-2 px-4 w-auto mx-auto rounded-md hover:bg-gray-300 fel disabled:border-gray-400 disabled:text-gray-400">
       {{ isEditMode ? 'Guardar Cambios' : 'Agregar Pelicula' }}
