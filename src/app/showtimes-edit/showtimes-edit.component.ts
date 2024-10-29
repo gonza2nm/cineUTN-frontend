@@ -46,12 +46,14 @@ export class ShowtimesEditComponent implements OnInit {
     },
     movie: {
       id: 0,
-      description: '',
       name: '',
-      formats: [],
-      languages: [],
-      genres: [],
+      description: '',
       imageLink: '',
+      genres: [],
+      shows: [],
+      cinemas: [],
+      formats: [],
+      languages: []
     },
     theater: { id: 0, cinema: 0, numChairs: 0 },
     tickets: [],
@@ -61,7 +63,7 @@ export class ShowtimesEditComponent implements OnInit {
     private service: ShowtimesByCinemaService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.cinemaId = this.route.snapshot.params['cid'];
