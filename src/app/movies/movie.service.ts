@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Movie, ResponseList, ResponseWithError } from './interfaces/interfaces';
+import { Movie, ResponseList, ResponseWithError } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
