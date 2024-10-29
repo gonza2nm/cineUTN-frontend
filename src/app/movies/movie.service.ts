@@ -19,4 +19,9 @@ export class MovieService {
   }
 
 
+  getAllMovies(): Observable<any> {
+    return this.http
+      .get<ResponseList<Movie> | ResponseWithError>(this.urlMovies)
+  }
+
 }
