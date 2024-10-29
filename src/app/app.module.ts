@@ -26,6 +26,7 @@ import { GenresComponent } from './genres/genres.component';
 import { GenresEditComponent } from './genres-edit/genres-edit.component';
 import { NextReleasesSliderComponent } from './next-releases-slider/next-releases-slider.component';
 import { MoviesComponent } from './movies/movies.component';
+import { MovieEditComponent } from './movie-edit/movie-edit.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { MoviesComponent } from './movies/movies.component';
     GenresEditComponent,
     NextReleasesSliderComponent,
     MoviesComponent,
+    MovieEditComponent,
   ],
   imports: [
     BrowserModule,

@@ -17,6 +17,7 @@ import { ShowtimesEditComponent } from './showtimes-edit/showtimes-edit.componen
 import { GenresComponent } from './genres/genres.component';
 import { GenresEditComponent } from './genres-edit/genres-edit.component';
 import { MoviesComponent } from './movies/movies.component';
+import { MovieEditComponent } from './movie-edit/movie-edit.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -46,6 +47,8 @@ const routes: Routes = [
   { path: 'manager-home/genres/new', component: GenresEditComponent },
 
   { path: 'manager-home/movies', component: MoviesComponent },
+  { path: 'manager-home/movies/new', component: MovieEditComponent },
+  { path: 'manager-home/movies/:id', component: MovieEditComponent },
 
   { path: 'register', component: RegisterComponent },
   { path: 'my-account', component: MyAccountComponent },
