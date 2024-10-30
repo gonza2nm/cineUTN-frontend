@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../login/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,7 +11,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 export class NavBarComponent implements OnInit {
 
-  constructor(private service: LoginService, private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private service: LoginService, 
+    private authService: AuthService,
+    private router: Router, 
+    private route: ActivatedRoute
+  ) {}
 
   isMenuOpen = false;
   isAuth = false;
@@ -26,13 +32,13 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit(): void {
     // Verifica el estado de autenticación
-    this.service.isAuthenticated$.subscribe(
+    this.authService.isAuthenticated$.subscribe(
       (authStatus) => {this.isAuth = authStatus}
     );
   }
 
   logout(){
-    this.service.logout();
+    this.authService.logout();
   }
 
 
