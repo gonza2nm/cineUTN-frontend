@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { MovieDetailsService } from './movie-details.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   Cinema,
   Format,
@@ -8,12 +8,19 @@ import {
   Movie,
   Show,
 } from '../interfaces/interfaces';
+import { AuthService } from '../auth.service';
+
+
 @Component({
   selector: 'app-movie-details',
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.css'],
 })
+
+
+
 export class MovieDetailsComponent implements OnInit {
+
   movieId: number = 0;
   cinemaId: number | null = null;
   movie: Movie | null = null;
@@ -28,10 +35,14 @@ export class MovieDetailsComponent implements OnInit {
   daySelected: string = 'Hoy';
   filteredShows: Show[] = [];
 
+
   constructor(
-    private service: MovieDetailsService,
-    private route: ActivatedRoute
+    private movieDetailsService: MovieDetailsService,
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    private router: Router
   ) {}
+
 
   ngOnInit() {
     this.movieId = Number(this.route.snapshot.paramMap.get('id'));
@@ -46,10 +57,15 @@ export class MovieDetailsComponent implements OnInit {
     this.days = this.getNextDays();
     this.loadLanguages();
     this.loadFormats();
+
+    // Verifica el estado de autenticación
+    this.authService.isAuthenticated$.subscribe(
+      (authStatus) => {this.isAuth = authStatus}
+    );
   }
 
   loadDataSelector() {
-    this.service.getAllCinemasByMovie(this.movieId).subscribe({
+    this.movieDetailsService.getAllCinemasByMovie(this.movieId).subscribe({
       next: (cinemas) => {
         this.cinemas = cinemas;
         if (this.cinemaId != null) {
@@ -95,7 +111,7 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   loadShows(movieId: number, cinemaId: number) {
-    this.service.getAllShowsByMovieAndCinema(movieId, cinemaId).subscribe({
+    this.movieDetailsService.getAllShowsByMovieAndCinema(movieId, cinemaId).subscribe({
       next: (shows) => {
         this.shows = shows;
         this.filterShows();
@@ -107,7 +123,7 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   loadMovieDetails(id: number) {
-    this.service.getMovieDetails(id).subscribe({
+    this.movieDetailsService.getMovieDetails(id).subscribe({
       next: (movie) => {
         this.movie = movie;
       },
@@ -119,7 +135,7 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   loadFormats() {
-    this.service.getAllFormats().subscribe({
+    this.movieDetailsService.getAllFormats().subscribe({
       next: (format) => {
         this.formats = format;
       },
@@ -129,8 +145,9 @@ export class MovieDetailsComponent implements OnInit {
       },
     });
   }
+
   loadLanguages() {
-    this.service.getAllLanguages().subscribe({
+    this.movieDetailsService.getAllLanguages().subscribe({
       next: (language) => {
         this.languages = language;
       },
@@ -177,5 +194,41 @@ export class MovieDetailsComponent implements OnInit {
   handleDaySelected(day: string) {
     this.daySelected = day;
     this.filterShows();
+  }
+
+  //----------------------------------------------------------------------------
+
+  messageWarning = '';
+  showSelected!: Show;
+  isAuth = false;
+
+  /* Pensar si se puede hacer una ventana modal.
+  warninModal(show: Show) {
+    let showDay = this.getShowHourAndDay(show)
+    let fecha = this.obtenerdia(show.dayAndTime)
+    this.messageWarning = `Usted ha elegido:\n ${show.movie.name} en formato ${show.format.formatName} \n ${fecha} - ${showDay} HS`
+  }
+  */
+
+  warningModal(show: Show) {
+    /*
+    this.showSelected = show;
+    this.movieDetailsService.setMovieData(this.showSelected)
+    this.router.navigate(['/buy'])
+    */
+    
+    if (this.isAuth) {
+      this.messageWarning = '';
+      this.showSelected = show;
+      this.movieDetailsService.setMovieData(this.showSelected)
+      this.router.navigate(['/buy'])
+    } else {
+      this.messageWarning = 'Atencion!!\nNecesita estar logueado para poder comprar le entradas.'
+    }
+    
+  }
+
+  loguearse() {
+    this.router.navigate(['/login']);
   }
 }
