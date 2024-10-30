@@ -25,16 +25,17 @@ export class BuyComponent {
   ) {}
 
   //Obtiente los datos de la peli y la función.
-  //show: Show = this.movieDatialsService.getMovieData();
-  //user: User = this.loginService.getOneUser();
+  show: Show = this.movieDatialsService.getMovieData();
+  user: User = this.loginService.getOneUser();
 
-  //showDay = this.movieDatialsService.getFormattedWeekday(this.show.dayAndTime);
-  //showHour = this.movieDatialsService.getShowHourAndDay(this.show);
+  showDay = this.movieDatialsService.getFormattedWeekday(this.show.dayAndTime);
+  showHour = this.movieDatialsService.getShowHourAndDay(this.show);
   //showThaterCantSillas = this.show.theater.numChairs;
   //showThaterCantSillas2 = this.show.theater.numChairs;
 
   //------------------------------------------------------------------------
 
+  /*
   showp = 
     {
       imageLink: 'https://a.ltrbxd.com/resized/film-poster/9/3/6/7/6/93676-guardians-of-the-galaxy-0-1000-0-1500-crop.jpg?v=3cc8cb967f',
@@ -44,6 +45,7 @@ export class BuyComponent {
       formato: 'IMAX',
       idioma: 'Español'
     }
+  */
   
 
 
@@ -114,7 +116,7 @@ export class BuyComponent {
 
     //this.user.id = 5
 
-    /*
+    
     this.buyService.addBuy("Compra de entradas", this.totalCompras, this.user.id).subscribe ({
       next: (response:any) => {
         
@@ -141,7 +143,7 @@ export class BuyComponent {
         console.log("No se pudo realizar la compra");
       }
     })
-    */
+    
   }
   
 
