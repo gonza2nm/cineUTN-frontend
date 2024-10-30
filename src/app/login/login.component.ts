@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LoginService } from './login.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,10 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  constructor(private service: LoginService, private router: Router
+  constructor(
+    private loginService: LoginService, 
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   messageError:string = '';
@@ -19,15 +23,15 @@ export class LoginComponent {
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
-    password: new FormControl(''),
+    password: new FormControl('', [Validators.required]),
   });
 
 
   getUser(): void {
-    this.service.getUser(this.loginForm.value).subscribe({
+    this.loginService.getUser(this.loginForm.value).subscribe({
       next: (response) => {
-        this.service.setUser(response.data); //Le pasa el valor al service y el service se lo pasa al my-account.
-        this.service.login(); //Cambie el estado a logueado.
+        this.loginService.setUser(response.data); //Le pasa el valor al service y el service se lo pasa al my-account.
+        this.authService.login(); //Cambia el estado a logueado.
         this.router.navigate(['/my-account']);
         console.log(response);
       },
