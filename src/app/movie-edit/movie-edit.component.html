@@ -38,6 +38,19 @@
 
     <img [src]="imageLink" alt="Imagen de la película " class="flex self-center w-40 flex-wrap my-5 mx-4">
 
+    <!--Generos-->
+    <label class="mt-4">Generos:</label>
+    <div class="flex flex-wrap gap-2 mt-2 ">
+      <span *ngFor="let genre of allGenres" (click)="toggleGenreSelection(genre.id)"
+        [class.active]="movieGenresIds.includes(genre.id)"
+        class=" px-2 text-lg rounded-full cursor-pointer border  border-gray-400 hover:bg-blue-100">
+        {{ genre.name }}
+      </span>
+    </div>
+      
+
+
+    <!--Boton-->
     <button type="submit" [disabled]="!movieForm.valid"
       class="border-2 border-black mt-8 py-2 px-4 w-auto mx-auto rounded-md hover:bg-gray-300 fel disabled:border-gray-400 disabled:text-gray-400">
       {{ isEditMode ? 'Guardar Cambios' : 'Agregar Pelicula' }}
