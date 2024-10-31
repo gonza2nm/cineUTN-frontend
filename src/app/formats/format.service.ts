@@ -13,13 +13,10 @@ export class FormatService {
   //HttpClient Se inyecta en el servicio a través del constructor para que pueda usarse dentro de los métodos del servicio
   constructor(private http: HttpClient) { }
 
-
   getFormats(): Observable<any> {
     return this.http
       .get<ResponseList<Format> | ResponseWithError>(this.urlFormats)
   }
-
-
 
 }
 
