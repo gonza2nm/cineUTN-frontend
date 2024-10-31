@@ -31,7 +31,7 @@ export interface Movie {
   name: string;
   description: string;
   imageLink: string;
-  genres: Genre[];
+  genres: Partial<Genre>[];
   cinemas: Cinema[];
   formats: Format[];
   languages: Language[];
