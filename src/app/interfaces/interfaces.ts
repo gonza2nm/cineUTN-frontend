@@ -31,9 +31,9 @@ export interface Movie {
   name: string;
   description: string;
   imageLink: string;
-  genres: Partial<Genre>[];
+  genres: Genre[];
   cinemas: Cinema[];
-  formats: Format[]; //recorda quitar el ? de formats abajo, con el ? funciona todo bien sin errores, pero gonza hizo esto sin partial y sin ?
+  formats: Format[];
   languages: Language[];
 }
 export interface Show {
@@ -48,7 +48,7 @@ export interface Show {
 }
 export interface Format {
   id: number;
-  formatName: string; //retirar ? acaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  formatName: string;
 }
 export interface Language {
   id: number;
