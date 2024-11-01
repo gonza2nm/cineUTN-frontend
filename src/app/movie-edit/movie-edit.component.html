@@ -43,12 +43,46 @@
     <div class="flex flex-wrap gap-2 mt-2 ">
       <span *ngFor="let genre of allGenres" (click)="toggleGenreSelection(genre.id)"
         [class.active]="movieGenresIds.includes(genre.id)"
-        class=" px-2 text-lg rounded-full cursor-pointer border  border-gray-400 hover:bg-blue-100">
+        class=" px-2 text-lg rounded-full cursor-pointer border  border-gray-400 hover:bg-gray-300">
         {{ genre.name }}
       </span>
     </div>
-      
+    
+    <!--Formatos-->
+    <!--LUEGO DARLE FORMATO COMO EL DOCUMENTO DE DISEÑOOOOOOOOOOO-->
+    <label class="mt-4">Formatos:</label>
+    <div class="flex flex-wrap gap-2 mt-2 ">
+      <span *ngFor="let format of allFormats" (click)="toggleFormatSelection(format.id)"
+        [class.active]="movieFormatsIds.includes(format.id)"
+        class=" px-2 text-lg rounded cursor-pointer border  border-gray-400 hover:bg-gray-300">
+        {{ format.formatName}}
+      </span>
+    </div>
 
+    <!--Idiomas-->
+    <!--LUEGO DARLE FORMATO COMO EL DOCUMENTO DE DISEÑOOOOOOOOOOO-->
+    <label class="mt-4">Idiomas:</label>
+    <div class="flex flex-wrap gap-2 mt-2 ">
+      <span *ngFor="let language of allLanguages" (click)="toggleLanguageSelection(language.id)"
+        [class.active]="movieLanguagesIds.includes(language.id)"
+        class=" px-2 text-lg rounded cursor-pointer border  border-gray-400 hover:bg-gray-300">
+        {{ language.languageName}}
+      </span>
+    </div>
+
+    <!--Cines-->
+    <label class="mt-4">Cines:</label>
+    <ul>
+      <li *ngFor="let cinema of allCinemas" (click)="toggleCinemaSelection(cinema.id)" [class.active]="movieCinemasIds.includes(cinema.id)" class="border border-gray-400 mx-3 mb-3 p-2 mt-2 hover:bg-gray-300">
+          <!--ese cinema.id es la variable que defini en el ngFor-->
+          <div class="ml-1">
+            {{cinema.name}}
+          </div>
+          <div class="ml-8">
+            {{cinema.address}}
+          </div>
+      </li>
+    </ul>
 
     <!--Boton-->
     <button type="submit" [disabled]="!movieForm.valid"

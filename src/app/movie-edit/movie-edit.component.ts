@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Genre, Movie } from '../interfaces/interfaces.js';
+import { Cinema, Format, Genre, Language, Movie } from '../interfaces/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../movies/movie.service';
 import { GenresService } from '../genres/genres.service';
+import { FormatService } from '../formats/format.service';
+import { LanguageService } from '../language/language.service';
+import { CinemaService } from '../cinemas/cinema.service';
 
 @Component({
   selector: 'app-movie-edit',
@@ -27,16 +30,24 @@ export class MovieEditComponent implements OnInit {
     formats: [],
     languages: []
   }
-  //esto es para obtener los genres, cinemas, etc actuales de la movie
+  //esto es para obtener los genres, cinemas, etc actuales de la movie (su id)
   movieGenresIds: number[] = []
-
+  movieFormatsIds: number[] = []
+  movieLanguagesIds: number[] = []
+  movieCinemasIds: number[] = []
   // esto para obetener todos los existentes
   allGenres: Genre[] = []
+  allFormats: Format[] = []
+  allLanguages: Language[] = []
+  allCinemas: Cinema[] = []
 
   constructor(
     private route: ActivatedRoute, // Se usa para acceder a informacion de la ruta activa , en este caso para acceder al parametro id
     private movieService: MovieService,
     private genresService: GenresService,
+    private formatService: FormatService,
+    private languageService: LanguageService,
+    private cinemaService: CinemaService,
     private router: Router //permite redirigir a una página diferente despues de que se haya completado alguna acción. (Ej: luego de crear la pelicula lo mando a la lista de peliculas)
   ) {
 
@@ -71,7 +82,7 @@ export class MovieEditComponent implements OnInit {
           this.movieData = respose.data
           this.errorMessage = null;
 
-          this.movieData.formats = [];
+          //ELIMINAR ESTOOOOOOOOOOOOOOOOOOOOOOOOO PARA QUE ANDE LANGUAGE Y CINEMA
           this.movieData.languages = [];
           this.movieData.cinemas = [];
 
@@ -84,6 +95,15 @@ export class MovieEditComponent implements OnInit {
           //map crea un nuevo array con todos los id de los genre de la pelicula
           this.movieGenresIds = this.movieData.genres.map(genre => genre.id).filter((id): id is number => id !== undefined);
           this.loadAllGenres();
+
+          this.movieFormatsIds = this.movieData.formats.map(format => format.id).filter((id): id is number => id !== undefined)
+          this.loadAllFormats();
+
+          this.movieLanguagesIds = this.movieData.languages.map(language => language.id).filter((id): id is number => id !== undefined)
+          this.loadAllLanguages();
+
+          this.movieCinemasIds = this.movieData.cinemas.map(cinema => cinema.id).filter((id): id is number => id !== undefined)
+          this.loadAllCinemas();
         },
         error: () => {
           this.errorMessage = 'An error occurred while fetching the movie.'
@@ -107,13 +127,48 @@ export class MovieEditComponent implements OnInit {
     })
   }
 
+  loadAllFormats() {
+    this.formatService.getFormats().subscribe({
+      next: (response) => {
+        this.allFormats = response.data;
+      },
+      error: () => {
+        console.error('Error getting all formats')
+      }
+    })
+  }
+
+  loadAllLanguages() {
+    this.languageService.getLanguages().subscribe({
+      next: (response) => {
+        this.allLanguages = response.data;
+      },
+      error: () => {
+        console.error('Error getting all languages')
+      }
+    })
+  }
+
+  loadAllCinemas() {
+    this.cinemaService.getAllCinemas().subscribe({
+      next: (response) => {
+        this.allCinemas = response.data;
+      },
+      error: () => {
+        console.error('Error getting all cinemas')
+      }
+    })
+  }
+
   saveMovie() {
     this.movieData.name = this.movieForm.get('name')?.value; //pongo los datos de del from en la movieData
     this.movieData.description = this.movieForm.get('description')?.value;
     this.movieData.imageLink = this.movieForm.get('imageLink')?.value;
 
-    // Guardamos los generos actuales en movieData antes de guardarlo
+    // Guardamos los id de los generos actuales en movieData antes de guardarlo
     this.movieData.genres = this.movieGenresIds.map(id => ({ id }));
+    this.movieData.formats = this.movieFormatsIds.map(id => ({ id })); //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA Funciona mal
+
 
 
 
@@ -146,5 +201,30 @@ export class MovieEditComponent implements OnInit {
     }
   }
 
+  toggleFormatSelection(formatId: number) {
+    const index = this.movieFormatsIds.indexOf(formatId);
+    if (index === -1) {
+      this.movieFormatsIds.push(formatId);
+    } else {
+      this.movieFormatsIds.splice(index, 1);
+    }
+  }
 
+  toggleLanguageSelection(languageId: number) {
+    const index = this.movieLanguagesIds.indexOf(languageId);
+    if (index === -1) {
+      this.movieLanguagesIds.push(languageId);
+    } else {
+      this.movieLanguagesIds.splice(index, 1);
+    }
+  }
+
+  toggleCinemaSelection(cinemaId: number) {
+    const index = this.movieCinemasIds.indexOf(cinemaId);
+    if (index === -1) {
+      this.movieCinemasIds.push(cinemaId);
+    } else {
+      this.movieCinemasIds.splice(index, 1);
+    }
+  }
 }
