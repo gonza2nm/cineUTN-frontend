@@ -81,11 +81,6 @@ export class MovieEditComponent implements OnInit {
         next: (respose) => {
           this.movieData = respose.data
           this.errorMessage = null;
-
-          //ELIMINAR ESTOOOOOOOOOOOOOOOOOOOOOOOOO PARA QUE ANDE LANGUAGE Y CINEMA
-          this.movieData.languages = [];
-          this.movieData.cinemas = [];
-
           this.movieForm.setValue({
             name: this.movieData.name,
             description: this.movieData.description,
@@ -161,14 +156,15 @@ export class MovieEditComponent implements OnInit {
   }
 
   saveMovie() {
-    this.movieData.name = this.movieForm.get('name')?.value; //pongo los datos de del from en la movieData
+    this.movieData.name = this.movieForm.get('name')?.value; //pongo los datos de del form en la movieData
     this.movieData.description = this.movieForm.get('description')?.value;
     this.movieData.imageLink = this.movieForm.get('imageLink')?.value;
 
-    // Guardamos los id de los generos actuales en movieData antes de guardarlo
-    this.movieData.genres = this.movieGenresIds.map(id => ({ id }));
-    this.movieData.formats = this.movieFormatsIds.map(id => ({ id })); //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA Funciona mal
-
+    // Guardamos los id de los generos actuales en movieData antes de guardarlo y le ponemos los datos que le faltan vacios para que no genere problemas de tipo.
+    this.movieData.genres = this.movieGenresIds.map(id => ({ id, name: '' }));
+    this.movieData.formats = this.movieFormatsIds.map(id => ({ id, formatName: '' }));
+    this.movieData.languages = this.movieLanguagesIds.map(id => ({ id, languageName: '' }));
+    this.movieData.cinemas = this.movieCinemasIds.map(id => ({ id, name: '', address: '', theaters: [], movies: [] }));
 
 
 
