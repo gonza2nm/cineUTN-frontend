@@ -72,6 +72,11 @@ export class MovieEditComponent implements OnInit {
     if (this.movieId) {
       this.isEditMode = true;
       this.loadOneMovie();
+    } else { // si no es edit mode igual tiene que cargar todas las relaciones para que el user pueda eleguir
+      this.loadAllGenres();
+      this.loadAllFormats();
+      this.loadAllLanguages();
+      this.loadAllCinemas();
     }
   }
 
@@ -181,10 +186,22 @@ export class MovieEditComponent implements OnInit {
           }
         })
       }
+    } else {
+      this.movieService.addMovie(this.movieData).subscribe({
+        next: () => {
+          this.errorMessage = null;
+          this.router.navigate(['/manager-home/movies'])
+        },
+        error: () => {
+          this.errorMessage = 'An error occurred while saving the movie.'
+          console.error('Error saving movie:');
+        }
+      })
     }
   }
 
   deleteMovie() {
+    //Ojito, que no deje borrar si existen funciones que usen la pelicula! (y eventos en A.D)
 
   }
 

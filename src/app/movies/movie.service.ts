@@ -34,4 +34,8 @@ export class MovieService {
       .put<ResponseOne<Movie> | ResponseWithError>(`${this.urlMovies}/${id}`, movie)
   }
 
+  addMovie(movie: Movie): Observable<any> {
+    return this.http
+      .post<ResponseOne<Movie> | ResponseWithError>(this.urlMovies, movie) //no hace falta el `${}` porque no se incluye ningun valor dinamico en al url
+  }
 }
