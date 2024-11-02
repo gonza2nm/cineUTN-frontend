@@ -200,10 +200,22 @@ export class MovieEditComponent implements OnInit {
     }
   }
 
+  //Ojito, que no deje borrar si existen funciones que usen la pelicula! (y eventos en A.D)
   deleteMovie() {
-    //Ojito, que no deje borrar si existen funciones que usen la pelicula! (y eventos en A.D)
-
+    if (this.movieId) {
+      this.movieService.deleteMovie(this.movieId).subscribe({
+        next: () => {
+          this.errorMessage = null;
+          this.router.navigate(['/manager-home/movies'])
+        },
+        error: (err) => {
+          this.errorMessage = 'An error occurred while deleting the movie.'
+          console.error('Error deleting movie:', err.error.message);
+        }
+      })
+    }
   }
+
 
   toggleGenreSelection(genreId: number) {
     const index = this.movieGenresIds.indexOf(genreId);

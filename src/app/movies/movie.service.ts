@@ -38,4 +38,9 @@ export class MovieService {
     return this.http
       .post<ResponseOne<Movie> | ResponseWithError>(this.urlMovies, movie) //no hace falta el `${}` porque no se incluye ningun valor dinamico en al url
   }
+
+  deleteMovie(id: number): Observable<any> {
+    return this.http
+      .delete<ResponseOne<Movie> | ResponseWithError>(`${this.urlMovies}/${id}`)
+  }
 }
