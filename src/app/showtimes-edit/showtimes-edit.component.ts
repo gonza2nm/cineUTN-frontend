@@ -184,9 +184,9 @@ export class ShowtimesEditComponent implements OnInit {
           this.errorMessage = null;
           this.router.navigate(['/manager-home/showtimes/', this.cinemaId]);
         },
-        error: () => {
+        error: (err) => {
           this.errorMessage = 'An error occurred while creating the showtime.';
-          console.error('Error creating showtime:');
+          console.error('Error creating showtime:', err.error.message);
         },
       });
     }
