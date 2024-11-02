@@ -84,6 +84,13 @@
       </li>
     </ul>
 
+    <!-- Muestra mensaje de error si hay algun error -->
+    <p *ngIf="errorMessage"
+      class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+      {{ errorMessage }}
+    </p>
+
+
     <!--Boton-->
     <button type="submit" [disabled]="!movieForm.valid"
       class="border-2 border-black mt-8 py-2 px-4 w-auto mx-auto rounded-md hover:bg-gray-300 fel disabled:border-gray-400 disabled:text-gray-400">

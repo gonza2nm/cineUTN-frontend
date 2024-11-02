@@ -30,10 +30,10 @@ export class CinemasComponent implements OnInit {
         this.errorMessage = null; //borra el mensaje de error por si viene alguno viejo arrastrado
         this.loading = false;
       },
-      error: () => {  //el observable emitio un error 
+      error: (err) => {  //el observable emitio un error 
         //Si ocurre un error durante la solicitud HTTP, se asigna un mensaje genérico a errorMessage, y el error se imprime en la consola
-        this.errorMessage = 'An error occurred while fetching cinemas.';
-        console.error('Error getting cinemas:');
+        this.errorMessage = 'Ocurrio un error buscando los cines, intente nuevamente.';
+        console.error('Error getting cinemas:', err.error.message);
         this.loading = false;
       }
     });

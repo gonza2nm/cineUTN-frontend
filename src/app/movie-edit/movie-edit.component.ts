@@ -200,7 +200,7 @@ export class MovieEditComponent implements OnInit {
     }
   }
 
-  //Ojito, que no deje borrar si existen funciones que usen la pelicula! (y eventos en A.D)
+  // (Ojito, que no deje borrar si existen eventos para A.D)
   deleteMovie() {
     if (this.movieId) {
       this.movieService.deleteMovie(this.movieId).subscribe({
@@ -209,14 +209,20 @@ export class MovieEditComponent implements OnInit {
           this.router.navigate(['/manager-home/movies'])
         },
         error: (err) => {
-          this.errorMessage = 'An error occurred while deleting the movie.'
-          console.error('Error deleting movie:', err.error.message);
+          if (err.error.message.includes('associated shows')) {
+            this.errorMessage = 'No puede borrarse esta pelicula porque todavia tiene funciones asociadas.'
+            this.scrollToBottomError();
+          } else {
+            this.errorMessage = 'An error occurred while deleting the movie.'
+            console.error('Error deleting movie:', err.error.message);
+            this.scrollToBottomError();
+          }
         }
       })
     }
   }
 
-
+  // Manejan la seleccion de generos, formatos, etc.
   toggleGenreSelection(genreId: number) {
     const index = this.movieGenresIds.indexOf(genreId);
     if (index === -1) { // Si no esta en el array, lo agregamos
@@ -252,4 +258,14 @@ export class MovieEditComponent implements OnInit {
       this.movieCinemasIds.splice(index, 1);
     }
   }
+
+  // Scrollea hacia abajo donde se muestran lo errores.
+  scrollToBottomError() {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: 'smooth'
+    });
+  }
+
+
 }

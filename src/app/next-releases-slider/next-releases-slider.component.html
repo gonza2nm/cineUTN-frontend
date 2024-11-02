@@ -34,7 +34,7 @@
   </div>
 
   <!--Si no hay proximos extrenos-->
-  <p *ngIf="!currentRelease" class="text-xl  text-red-600 text-center">
+  <p *ngIf="!currentRelease && !loading" class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
     No hay proximos extrenos.
   </p>
 

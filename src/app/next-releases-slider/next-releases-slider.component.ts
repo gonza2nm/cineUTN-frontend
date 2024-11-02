@@ -13,6 +13,8 @@ export class NextReleasesSliderComponent implements OnInit {
   nextReleases: Movie[] = [];
   currentRelease: Movie | null = null; //typescript obliga a que sea inicializado con un valor. Por eso le pongo el tipo nulo y lo pongo en nulo
   currentReleaseIndex: number = 0;
+  errorMessage: string | null = null;
+  loading: boolean = true //para no mostrar error antes de que carge la pagina
 
   constructor(
     private movieService: MovieService,
@@ -24,7 +26,6 @@ export class NextReleasesSliderComponent implements OnInit {
   }
 
   //BORAR TODOS LOS COMENTARIOS QUE NO USO, QUEDARON VIEJOS
-  //carga los proximos estrenos (no terminado hasta que meca me responda lo anterior, voy a darle estilo usando un getallmovies como para avanzar con algo)
   loadNextReleases() {
     this.movieService.getNextReleases().subscribe({
       next: (response) => {
@@ -32,13 +33,13 @@ export class NextReleasesSliderComponent implements OnInit {
         if (this.nextReleases.length > 0) {
           this.currentRelease = this.nextReleases[0];
         }
-        // this.errorMessage = null; no hay errorMessage aca pero podria ser una buena idea agregarlo
-        // this.loading = false; por si metemos errores que no aparesca antes de que cargue.
+        this.errorMessage = null;
+        this.loading = false;
       },
       error: (err) => {
-        //this.errorMessage = 'An error occurred while fetching next realeases.';
-        console.error('Error getting next realeases:', err.error);
-        //this.loading = false;
+        this.errorMessage = 'An error occurred while fetching next realeases.';
+        console.error('Error getting next realeases:', err.error.message);
+        this.loading = false;
       }
     });
   }
