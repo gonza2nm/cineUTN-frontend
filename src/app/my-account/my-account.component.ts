@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginComponent } from '../login/login.component';
 import { LoginService } from '../login/login.service';
-import { User } from '../interfaces/interfaces';
+import { User, Buy, Ticket } from '../interfaces/interfaces';
+import { MyAccountService } from './my-account.service';
+import { MovieDetailsService } from '../movie-details/movie-details.service';
 
 
 @Component({
@@ -9,26 +11,27 @@ import { User } from '../interfaces/interfaces';
   templateUrl: './my-account.component.html',
   styleUrls: ['./my-account.component.css']
 })
-export class MyAccountComponent  {
+export class MyAccountComponent {
 
-  constructor(private service: LoginService) {}
+  constructor(private loginService: LoginService, private mservice: MyAccountService) {}
 
-  user: User = this.service.getOneUser();
+  option = 'compras'
+  //detaildBuy = false;
 
-  nameUser = this.user.name;
 
-
-  // -------------------------------------------------
+  changeOption(opt: string) {
+    this.option = opt
+  }
 
   /*
-  ngOnInit(): void {
-    // Te suscribes al observable para recibir los datos del usuario.
-    this.service.currentUser.subscribe(user => {
-      this.user = user;
-      console.log('Usuario recibido:', this.user);
-      this.nameUser = this.user.name;
-    });
+  details(opt:boolean) {
+    this.detaildBuy = opt;
   }
-*/
+  */
+
+  
+  user: User = this.loginService.getOneUser();
+  buys: Buy[] = this.user.buys;
+  message = '';
 
 }
