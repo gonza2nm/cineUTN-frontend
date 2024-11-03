@@ -179,10 +179,9 @@ export class MovieEditComponent implements OnInit {
           next: () => {
             this.errorMessage = null; //borra el mensaje de error por si viene alguno viejo arrastrado
             this.router.navigate(['/manager-home/movies'])
-            console.log(this.movieData)
           },
           error: (err) => {
-            this.errorMessage = 'An error occurred while updating the movie.'
+            this.errorMessage = 'Ocurrio un error al actualizar la pelicula.'
             console.error('Error updating movie:', err.error.message);
           }
         })
@@ -219,7 +218,7 @@ export class MovieEditComponent implements OnInit {
             console.error('Error deleting movie:', err.error.message);
             this.scrollToBottomError();
           } else {
-            this.errorMessage = 'An error occurred while deleting the movie.'
+            this.errorMessage = 'Ocurrio un error al eliminar la pelicula.'
             console.error('Error deleting movie:', err.error.message);
             this.scrollToBottomError();
           }
