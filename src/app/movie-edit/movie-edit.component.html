@@ -90,9 +90,11 @@
       {{ errorMessage }}
     </p>
 
-
+    <p *ngIf="!movieForm.valid ||movieGenresIds.length === 0 || movieFormatsIds.length === 0 || movieLanguagesIds.length === 0 || movieLanguagesIds.length === 0 || movieCinemasIds.length === 0" class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+      La pelicula debe tener al menos un valor en cada campo.
+    </p>
     <!--Boton-->
-    <button type="submit" [disabled]="!movieForm.valid"
+    <button type="submit" [disabled]="!movieForm.valid ||movieGenresIds.length === 0 || movieFormatsIds.length === 0 || movieLanguagesIds.length === 0 || movieLanguagesIds.length === 0 || movieCinemasIds.length === 0 "
       class="border-2 border-black mt-8 py-2 px-4 w-auto mx-auto rounded-md hover:bg-gray-300 fel disabled:border-gray-400 disabled:text-gray-400">
       {{ isEditMode ? 'Guardar Cambios' : 'Agregar Pelicula' }}
     </button>

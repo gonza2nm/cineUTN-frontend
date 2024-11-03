@@ -105,9 +105,9 @@ export class MovieEditComponent implements OnInit {
           this.movieCinemasIds = this.movieData.cinemas.map(cinema => cinema.id).filter((id): id is number => id !== undefined)
           this.loadAllCinemas();
         },
-        error: () => {
+        error: (err) => {
           this.errorMessage = 'An error occurred while fetching the movie.'
-          console.error('Error getting movie:');
+          console.error('Error getting movie:', err.error.message);
           this.router.navigate(['/manager-home/movies']);
         }
       })
@@ -121,8 +121,8 @@ export class MovieEditComponent implements OnInit {
       next: (response) => {
         this.allGenres = response.data; //guardo en allGenres todos los generos globales.
       },
-      error: () => {
-        console.error('Error getting all the genres')
+      error: (err) => {
+        console.error('Error getting all the genres', err.error.message)
       }
     })
   }
@@ -132,8 +132,8 @@ export class MovieEditComponent implements OnInit {
       next: (response) => {
         this.allFormats = response.data;
       },
-      error: () => {
-        console.error('Error getting all formats')
+      error: (err) => {
+        console.error('Error getting all formats', err.error.message)
       }
     })
   }
@@ -143,8 +143,8 @@ export class MovieEditComponent implements OnInit {
       next: (response) => {
         this.allLanguages = response.data;
       },
-      error: () => {
-        console.error('Error getting all languages')
+      error: (err) => {
+        console.error('Error getting all languages', err.error.message)
       }
     })
   }
@@ -154,8 +154,8 @@ export class MovieEditComponent implements OnInit {
       next: (response) => {
         this.allCinemas = response.data;
       },
-      error: () => {
-        console.error('Error getting all cinemas')
+      error: (err) => {
+        console.error('Error getting all cinemas', err.error.message)
       }
     })
   }
@@ -179,10 +179,11 @@ export class MovieEditComponent implements OnInit {
           next: () => {
             this.errorMessage = null; //borra el mensaje de error por si viene alguno viejo arrastrado
             this.router.navigate(['/manager-home/movies'])
+            console.log(this.movieData)
           },
-          error: (error) => {
+          error: (err) => {
             this.errorMessage = 'An error occurred while updating the movie.'
-            console.error('Error updating movie:', error.error);
+            console.error('Error updating movie:', err.error.message);
           }
         })
       }
@@ -192,9 +193,13 @@ export class MovieEditComponent implements OnInit {
           this.errorMessage = null;
           this.router.navigate(['/manager-home/movies'])
         },
-        error: () => {
-          this.errorMessage = 'An error occurred while saving the movie.'
-          console.error('Error saving movie:');
+        error: (err) => {
+          if (err.error.message.includes('format or languages')) {
+            this.errorMessage = 'Ocurrio un error al guardar la pelicula: La pelicula debe tener por lo menos un formato y un idioma.'
+          } else {
+            this.errorMessage = 'Ocurrio un error al guardar la pelicula: La pelicula debe tener por lo menos un genero y un cine.'
+          }
+          console.error('Error saving movie:', err.error.message);
         }
       })
     }
@@ -211,6 +216,7 @@ export class MovieEditComponent implements OnInit {
         error: (err) => {
           if (err.error.message.includes('associated shows')) {
             this.errorMessage = 'No puede borrarse esta pelicula porque todavia tiene funciones asociadas.'
+            console.error('Error deleting movie:', err.error.message);
             this.scrollToBottomError();
           } else {
             this.errorMessage = 'An error occurred while deleting the movie.'
