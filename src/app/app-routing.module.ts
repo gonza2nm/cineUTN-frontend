@@ -53,10 +53,8 @@ const routes: Routes = [
 
   { path: 'register', component: RegisterComponent },
   { path: 'my-account', component: MyAccountComponent },
-
-  { path: 'register', component: RegisterComponent },
-  { path: 'my-account', component: MyAccountComponent },
   { path: 'buy', component: BuyComponent },
+
   { path: "**", component: HomeComponent }
 ];
 
