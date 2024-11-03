@@ -78,7 +78,6 @@ export class CinemaEditComponent implements OnInit {
 
     if (this.isEditMode) {
       if (this.cinemaId) { //sin este if no deja entrar al metodo porque dice que puede ser null
-        console.log(this.cinemaData)
         this.cinemaService.updateCinema(this.cinemaId, this.cinemaData).subscribe({
           next: () => {
             this.errorMessage = null; //borra el mensaje de error por si viene alguno viejo arrastrado

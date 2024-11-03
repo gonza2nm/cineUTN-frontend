@@ -1,0 +1,103 @@
+<!--Ancho maximo y centrado, para que se vea bien en diferentes pantallas-->
+<div class="max-w-4xl mx-auto ">
+  <div class="flex justify-between">
+
+    <!-- Boton para volver-->
+    <button type="button" routerLink="/manager-home/movies"
+      class="rounded-md border border-black mt-5  hover:bg-gray-300 ml-3 px-3 py-1">
+      &larr; Volver
+    </button>
+
+    <!-- Boton para eliminar-->
+    <button type="button" *ngIf="isEditMode" (click)="deleteMovie()"
+      class="rounded-md border border-black mt-5 bg-red-600 text-white hover:bg-red-800 mr-3 px-3 py-1">
+      Eliminar Pelicula
+    </button>
+  </div>
+
+  <!--Texto superior si es edit-->
+  <h1 *ngIf="isEditMode" class=" text-2xl font-bold text-center mb-5">Complete los campos que desea editar</h1>
+  <!--Texto superior si es new cinema-->
+  <h1 *ngIf="!isEditMode" class=" text-2xl font-bold text-center mb-5">Complete los campos para crear la nueva pelicula</h1>
+
+  <!--Formularios-->
+  <form [formGroup]="movieForm" (ngSubmit)="saveMovie()" class=" flex flex-col mx-3 mb-3">
+    <label>Nombre:</label>
+    <input type="text" formControlName='name'
+      class=" border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500">
+
+    <label class="mt-4">Descripción:</label>
+    <textarea rows="8" type="text" formControlName='description'
+      class=" border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500">
+    </textarea>
+
+    <label class="mt-4">Link imagen:</label>
+    <textarea type="text" formControlName="imageLink"
+      class=" border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500">
+    </textarea>
+
+    <img [src]="imageLink" alt="Imagen de la película " class="flex self-center w-40 flex-wrap my-5 mx-4">
+
+    <!--Generos-->
+    <label class="mt-4">Generos:</label>
+    <div class="flex flex-wrap gap-2 mt-2 ">
+      <span *ngFor="let genre of allGenres" (click)="toggleGenreSelection(genre.id)"
+        [class.active]="movieGenresIds.includes(genre.id)"
+        class=" px-2 text-lg rounded-full cursor-pointer border  border-gray-400 hover:bg-gray-300">
+        {{ genre.name }}
+      </span>
+    </div>
+    
+    <!--Formatos-->
+    <!--LUEGO DARLE FORMATO COMO EL DOCUMENTO DE DISEÑOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
+    <label class="mt-4">Formatos:</label>
+    <div class="flex flex-wrap gap-2 mt-2 ">
+      <span *ngFor="let format of allFormats" (click)="toggleFormatSelection(format.id)"
+        [class.active]="movieFormatsIds.includes(format.id)"
+        class=" px-2 text-lg rounded cursor-pointer border  border-gray-400 hover:bg-gray-300">
+        {{ format.formatName}}
+      </span>
+    </div>
+
+    <!--Idiomas-->
+    <!--LUEGO DARLE FORMATO COMO EL DOCUMENTO DE DISEÑOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
+    <label class="mt-4">Idiomas:</label>
+    <div class="flex flex-wrap gap-2 mt-2 ">
+      <span *ngFor="let language of allLanguages" (click)="toggleLanguageSelection(language.id)"
+        [class.active]="movieLanguagesIds.includes(language.id)"
+        class=" px-2 text-lg rounded cursor-pointer border  border-gray-400 hover:bg-gray-300">
+        {{ language.languageName}}
+      </span>
+    </div>
+
+    <!--Cines-->
+    <label class="mt-4">Cines:</label>
+    <ul>
+      <li *ngFor="let cinema of allCinemas" (click)="toggleCinemaSelection(cinema.id)" [class.active]="movieCinemasIds.includes(cinema.id)" class="border border-gray-400 mx-3 mb-3 p-2 mt-2 hover:bg-gray-300">
+          <!--ese cinema.id es la variable que defini en el ngFor-->
+          <div class="ml-1">
+            {{cinema.name}}
+          </div>
+          <div class="ml-8">
+            {{cinema.address}}
+          </div>
+      </li>
+    </ul>
+
+    <!-- Muestra mensaje de error si hay algun error -->
+    <p *ngIf="errorMessage"
+      class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+      {{ errorMessage }}
+    </p>
+
+    <p *ngIf="!movieForm.valid ||movieGenresIds.length === 0 || movieFormatsIds.length === 0 || movieLanguagesIds.length === 0 || movieLanguagesIds.length === 0 || movieCinemasIds.length === 0" class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+      La pelicula debe tener al menos un valor en cada campo.
+    </p>
+    <!--Boton-->
+    <button type="submit" [disabled]="!movieForm.valid ||movieGenresIds.length === 0 || movieFormatsIds.length === 0 || movieLanguagesIds.length === 0 || movieLanguagesIds.length === 0 || movieCinemasIds.length === 0 "
+      class="border-2 border-black mt-8 py-2 px-4 w-auto mx-auto rounded-md hover:bg-gray-300 fel disabled:border-gray-400 disabled:text-gray-400">
+      {{ isEditMode ? 'Guardar Cambios' : 'Agregar Pelicula' }}
+    </button>
+  </form>
+
+</div>
