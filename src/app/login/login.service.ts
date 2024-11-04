@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ResponseOne, ResponseWithError, User } from '../interfaces/interfaces';
+import { ResponseList, ResponseOne, ResponseWithError, User } from '../interfaces/interfaces';
 
 
 @Injectable({
@@ -11,11 +11,11 @@ export class LoginService {
 
   readonly url = 'http://localhost:3000/api/users';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
 
   user!: User;
-  
+
 
 
   getUser(userData: any): Observable<any> {
@@ -34,11 +34,16 @@ export class LoginService {
 
   }
 
+  getAllManagers(): Observable<any> {
+    return this.http.get<ResponseList<User> | ResponseWithError>(this.url)
+
+  }
+
   //-----------------------------------------------------------------------------
 
 
   // Método para actualizar el valor del usuario y pasarle a my-account
-  setUser(user: User):void {
+  setUser(user: User): void {
     this.user = user;
   }
 

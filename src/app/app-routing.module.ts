@@ -19,6 +19,7 @@ import { GenresEditComponent } from './genres-edit/genres-edit.component';
 import { MoviesComponent } from './movies/movies.component';
 import { MovieEditComponent } from './movie-edit/movie-edit.component';
 import { BuyComponent } from './buy/buy.component';
+import { ManagersComponent } from './managers/managers.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -50,6 +51,10 @@ const routes: Routes = [
   { path: 'manager-home/movies', component: MoviesComponent },
   { path: 'manager-home/movies/new', component: MovieEditComponent },
   { path: 'manager-home/movies/:id', component: MovieEditComponent },
+
+  { path: 'manager-home/managers', component: ManagersComponent },
+  { path: 'manager-home/managers/new', component: RegisterComponent },
+  { path: 'manager-home/managers/:id', component: RegisterComponent },
 
   { path: 'register', component: RegisterComponent },
   { path: 'my-account', component: MyAccountComponent },
