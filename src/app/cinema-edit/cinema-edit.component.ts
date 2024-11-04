@@ -65,7 +65,7 @@ export class CinemaEditComponent implements OnInit {
         error: (err) => {
           this.errorMessage = 'An error occurred while fetching the cinema.'
           console.error('Error getting cinema:', err.error.message);
-          this.router.navigate(['/manager-home/cinemas']);
+          this.router.navigate(['/manager-home/cinemas']); //por si se quiere meter a un id que no existe.
         }
       });
     }

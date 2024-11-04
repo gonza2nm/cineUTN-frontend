@@ -108,7 +108,7 @@ export class MovieEditComponent implements OnInit {
         error: (err) => {
           this.errorMessage = 'An error occurred while fetching the movie.'
           console.error('Error getting movie:', err.error.message);
-          this.router.navigate(['/manager-home/movies']);
+          this.router.navigate(['/manager-home/movies']); //por si se quiere meter a un id que no existe.
         }
       })
     }
