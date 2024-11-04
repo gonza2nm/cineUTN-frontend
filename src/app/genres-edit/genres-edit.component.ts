@@ -7,30 +7,32 @@ import { GenresService } from '../genres/genres.service';
 @Component({
   selector: 'app-genres-edit',
   templateUrl: './genres-edit.component.html',
-  styleUrls: ['./genres-edit.component.css']
+  styleUrls: ['./genres-edit.component.css'],
 })
-export class GenresEditComponent implements OnInit{
-  editMode: boolean = false
+export class GenresEditComponent implements OnInit {
+  editMode: boolean = false;
   errorMessage: string | null = null;
   genreForm!: FormGroup;
-  genreId : number | null = null;
-  genre : Genre = {
+  genreId: number | null = null;
+  genre: Genre = {
     id: 0,
-    name: ""
-  }
+    name: '',
+  };
 
   constructor(
-    private service : GenresService,
+    private service: GenresService,
     private route: ActivatedRoute,
     private router: Router
-  ){}
+  ) {}
 
   ngOnInit(): void {
     this.genreId = Number.parseInt(this.route.snapshot.params['gid']);
-    this.genreForm = new FormGroup(
-    {
-      genre: new FormControl('', [Validators.required, Validators.minLength(3)])
-    })
+    this.genreForm = new FormGroup({
+      genre: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+    });
     if (!this.genreId) {
       this.editMode = false;
     } else {
@@ -39,14 +41,14 @@ export class GenresEditComponent implements OnInit{
     }
   }
 
-  loadGenre(){
-    if(this.genreId){
+  loadGenre() {
+    if (this.genreId) {
       this.service.getOneGenre(this.genreId).subscribe({
         next: (response) => {
           this.genre = response.data;
           this.genreForm.setValue({
-            genre : this.genre.name
-          })
+            genre: this.genre.name,
+          });
           this.errorMessage = null;
         },
         error: () => {
@@ -58,7 +60,7 @@ export class GenresEditComponent implements OnInit{
     }
   }
 
-  submit(){
+  submit() {
     this.genre.name = this.genreForm.get('genre')?.value;
     if (this.editMode) {
       if (this.genreId != null) {
@@ -68,8 +70,7 @@ export class GenresEditComponent implements OnInit{
             this.router.navigate(['/manager-home/genres']);
           },
           error: () => {
-            this.errorMessage =
-              'An error occurred while updating the genre.';
+            this.errorMessage = 'An error occurred while updating the genre.';
             console.error('Error updating genre:');
           },
         });
@@ -81,14 +82,15 @@ export class GenresEditComponent implements OnInit{
           this.router.navigate(['/manager-home/genres']);
         },
         error: () => {
-          this.errorMessage = 'An error occurred while creating the genre.';
+          this.errorMessage =
+            'Ocurrio un error al agregar el genero,por favor revise si ese genero ya esta creado';
           console.error('Error creating genre:');
         },
       });
     }
   }
 
-  deleteGenre(){
+  deleteGenre() {
     if (this.genreId) {
       this.service.deleteGenre(this.genreId).subscribe({
         next: () => {
@@ -102,5 +104,4 @@ export class GenresEditComponent implements OnInit{
       });
     }
   }
-
 }

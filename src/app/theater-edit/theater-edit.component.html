@@ -12,12 +12,13 @@
       <input placeholder="Cantidad de sillas"
         class="w-36 border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500" type="number"
         formControlName="max_seats" id="max_seats">
+      <span *ngIf="errorMessage" class="text-red-500">{{errorMessage}}</span>
     </div>
     <div class="flex flex-col items-end sm:flex-row sm:items-center gap-4"
       [ngClass]="!editMode ? 'sm:justify-end sm:items-end' : 'sm:justify-between' ">
       <button *ngIf="editMode"
-        class="rounded-md border-2 border-black mt-5 bg-red-600 text-white hover:bg-red-800 py-2 px-4"
-        type="button" (click)="deleteTheater()">Eliminar sala</button>
+        class="rounded-md border-2 border-black mt-5 bg-red-600 text-white hover:bg-red-800 py-2 px-4" type="button"
+        (click)="deleteTheater()">Eliminar sala</button>
       <button [ngClass]="!theaterForm.valid ? ' border-gray-400 text-gray-400' : 'hover:bg-gray-300'"
         class="border-2 py-2 px-4 rounded-md  border-black" [disabled]="!theaterForm.valid" type="submit">{{ editMode ?
         'Guardar cambios' : 'Agregar sala' }}</button>
