@@ -117,4 +117,4 @@ export class CinemaEditComponent implements OnInit {
       })
     }
   }
-}
+} //comentario para poder volver al formato antiguo.
