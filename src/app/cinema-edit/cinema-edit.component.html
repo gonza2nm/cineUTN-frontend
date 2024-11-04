@@ -21,16 +21,20 @@
   <h1 *ngIf="!isEditMode" class=" text-2xl font-bold text-center mb-5">Complete los campos para crear el nuevo cine</h1>
 
   <!--Formularios-->
-  <form [formGroup]="cinemaForm" (ngSubmit)="saveCinema()" class=" flex flex-col mx-3 mb-3" >
+  <form [formGroup]="cinemaForm" (ngSubmit)="saveCinema()" class=" flex flex-col mx-3 mb-3">
     <label>Nombre:</label>
-    <input type="text" formControlName = 'name' class=" border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500">
+    <input type="text" formControlName='name'
+      class=" border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500">
 
     <label class="mt-4">Dirección:</label>
-    <input type="text" formControlName = 'address' class=" border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500">
-
-    <button type="submit" [disabled]="!cinemaForm.valid" class="border-2 border-black mt-8 py-2 px-4 w-auto mx-auto rounded-md hover:bg-gray-300 fel disabled:border-gray-400 disabled:text-gray-400" >
+    <input type="text" formControlName='address'
+      class=" border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500">
+    <span *ngIf="errorMessage" class="text-red-500">{{errorMessage}}</span>
+    <button type="submit" [disabled]="!cinemaForm.valid"
+      class="border-2 border-black mt-8 py-2 px-4 w-auto mx-auto rounded-md hover:bg-gray-300 fel disabled:border-gray-400 disabled:text-gray-400">
       {{ isEditMode ? 'Guardar Cambios' : 'Agregar Cine' }}
     </button>
   </form>
 
-</div>
+</div><!--Comentario para volver formato anterior,-->
+<!--otro mas-->
