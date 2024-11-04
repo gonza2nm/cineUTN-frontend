@@ -195,9 +195,10 @@ export class MovieEditComponent implements OnInit {
         error: (err) => {
           if (err.error.message.includes('format or languages')) {
             this.errorMessage = 'Ocurrio un error al guardar la pelicula: La pelicula debe tener por lo menos un formato y un idioma.'
-          } else {
+          } else if (err.error.message.includes('format or languages')) {
             this.errorMessage = 'Ocurrio un error al guardar la pelicula: La pelicula debe tener por lo menos un genero y un cine.'
           }
+          this.errorMessage = 'Ocurrio un error al guardar la pelicula.'
           console.error('Error saving movie:', err.error.message);
         }
       })

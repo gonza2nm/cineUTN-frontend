@@ -62,9 +62,9 @@ export class CinemaEditComponent implements OnInit {
             address: this.cinemaData.address
           });
         },
-        error: () => {
+        error: (err) => {
           this.errorMessage = 'An error occurred while fetching the cinema.'
-          console.error('Error getting cinema:');
+          console.error('Error getting cinema:', err.error.message);
           this.router.navigate(['/manager-home/cinemas']);
         }
       });
