@@ -10,6 +10,7 @@ import { ResponseList, ResponseOne, ResponseWithError, User } from '../interface
 export class LoginService {
 
   readonly url = 'http://localhost:3000/api/users';
+  readonly urlManager = 'http://localhost:4200/manager-home/managers';
 
   constructor(private http: HttpClient) { }
 
@@ -36,7 +37,10 @@ export class LoginService {
 
   getAllManagers(): Observable<any> {
     return this.http.get<ResponseList<User> | ResponseWithError>(this.url)
+  }
 
+  getOneManager(id: number): Observable<any> {
+    return this.http.get<ResponseOne<User> | ResponseWithError>(`${this.url}/managers/${id}`)
   }
 
   //-----------------------------------------------------------------------------

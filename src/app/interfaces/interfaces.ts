@@ -75,7 +75,7 @@ export interface User {
   email: string;
   password: string;
   type: "user" | "manager";
-  cinema: Cinema;
-  buys: Buy[];
+  cinema?: Cinema; //Opcionales por si es user
+  buys: Buy[]; //Opcionales por si es manager
 }
 
