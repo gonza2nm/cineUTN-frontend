@@ -7,9 +7,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 @Component({
   selector: 'app-cinema-edit',
   templateUrl: './cinema-edit.component.html',
-  styleUrls: ['./cinema-edit.component.css'],
+  styleUrls: ['./cinema-edit.component.css']
 })
 export class CinemaEditComponent implements OnInit {
+
   cinemaId: number | null = null;
   isEditMode: boolean = false;
   errorMessage: string | null = null;
@@ -20,7 +21,7 @@ export class CinemaEditComponent implements OnInit {
     address: '',
     theaters: [],
     movies: [],
-  };
+  }
 
   constructor(
     private route: ActivatedRoute, // Se usa para acceder a informacion de la ruta activa , en este caso para acceder al parametro id
@@ -36,7 +37,7 @@ export class CinemaEditComponent implements OnInit {
 
   ngOnInit(): void {
     //recupero el id de la ruta actual
-    this.cinemaId = this.route.snapshot.params['id'];
+    this.cinemaId = this.route.snapshot.params['id']
 
     if (this.cinemaId) {
       this.isEditMode = true;
@@ -45,11 +46,10 @@ export class CinemaEditComponent implements OnInit {
   }
 
   loadOneCinema() {
-    if (this.cinemaId) {
-      //sin este if no deja entrar al metodo porque dice que puede ser null
+    if (this.cinemaId) { //sin este if no deja entrar al metodo porque dice que puede ser null
       this.cinemaService.getOneCinema(this.cinemaId).subscribe({
         next: (response) => {
-          this.cinemaData = response.data;
+          this.cinemaData = response.data
           this.cinemaData.movies = [];
           this.cinemaData.theaters = [];
           /*    COMENTARIO DE GONZA
@@ -59,51 +59,47 @@ export class CinemaEditComponent implements OnInit {
           //Pongo los datos del cinema en el form
           this.cinemaForm.setValue({
             name: this.cinemaData.name,
-            address: this.cinemaData.address,
+            address: this.cinemaData.address
           });
         },
-        error: () => {
-          this.errorMessage = 'An error occurred while fetching the cinema.';
-          console.error('Error getting cinema:');
+        error: (err) => {
+          this.errorMessage = 'An error occurred while fetching the cinema.'
+          console.error('Error getting cinema:', err.error.message);
           this.router.navigate(['/manager-home/cinemas']);
-        },
+        }
       });
     }
   }
 
   saveCinema() {
-    this.cinemaData.name = this.cinemaForm.get('name')?.value;
+    //Guardo los datos ingresados del form en el cinemaData
+    this.cinemaData.name = this.cinemaForm.get('name')?.value; //busca en el formGroup el formControl que se llame 'name' y con .value le agarra el valor.
     this.cinemaData.address = this.cinemaForm.get('address')?.value;
 
     if (this.isEditMode) {
-      if (this.cinemaId) {
-        this.cinemaService
-          .updateCinema(this.cinemaId, this.cinemaData)
-          .subscribe({
-            next: () => {
-              this.errorMessage = null;
-              this.router.navigate(['/manager-home/cinemas']);
-            },
-            error: () => {
-              this.errorMessage =
-                'Ocurrio un erro al actualizar el cine, posiblemente se deba a que ya existe un cine en esa direccion';
-              console.error('Error updating cinema:');
-            },
-          });
+      if (this.cinemaId) { //sin este if no deja entrar al metodo porque dice que puede ser null
+        this.cinemaService.updateCinema(this.cinemaId, this.cinemaData).subscribe({
+          next: () => {
+            this.errorMessage = null; //borra el mensaje de error por si viene alguno viejo arrastrado
+            this.router.navigate(['/manager-home/cinemas'])
+          },
+          error: () => {
+            this.errorMessage = 'An error occurred while updating the cinema.'
+            console.error('Error updating cinema:');
+          }
+        });
       }
-    } else {
-      //o sea si no esta en editMode entra al add
+    } else { //o sea si no esta en editMode entra al add
       this.cinemaService.addCinema(this.cinemaData).subscribe({
         next: () => {
           this.errorMessage = null;
-          this.router.navigate(['/manager-home/cinemas']);
+          this.router.navigate(['/manager-home/cinemas'])
         },
         error: () => {
-          this.errorMessage =
-            'Ocurrio un erro al agregar el cine, posiblemente se deba a que ya existe un cine en esa direccion';
+          this.errorMessage = 'An error occurred while saving the cinema.'
           console.error('Error saving cinema:');
-        },
-      });
+        }
+      })
     }
   }
 
@@ -112,14 +108,13 @@ export class CinemaEditComponent implements OnInit {
       this.cinemaService.deleteCinema(this.cinemaId).subscribe({
         next: () => {
           this.errorMessage = null;
-          this.router.navigate(['/manager-home/cinemas']);
+          this.router.navigate(['/manager-home/cinemas'])
         },
         error: () => {
-          this.errorMessage = 'An error occurred while deleting the cinema.';
+          this.errorMessage = 'An error occurred while deleting the cinema.'
           console.error('Error deleting cinema:');
-        },
-      });
+        }
+      })
     }
   }
-} //comentario para volver formato anterior, 
-//Otro mas
+} //Ultimo intento reformateo.
