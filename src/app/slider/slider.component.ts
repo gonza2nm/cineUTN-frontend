@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Movie } from '../interfaces/interfaces.js';
 
 @Component({
@@ -6,11 +6,18 @@ import { Movie } from '../interfaces/interfaces.js';
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.css'],
 })
-export class SliderComponent {
+export class SliderComponent implements OnChanges {
   @Input({ required: true }) movies: Movie[] = [];
   limitedMovies: Movie[] = [];
   currentIndex = 0;
-  maxMovies = 4;
+  maxMovies = 0;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['movies']) {
+      this.maxMovies = this.movies.length;
+      this.currentIndex = 0; // Reinicia el índice para evitar desbordamiento
+    }
+  }
 
   get transform(): string {
     return `translateX(-${this.currentIndex * 100}%)`;
