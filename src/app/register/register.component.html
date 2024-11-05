@@ -25,7 +25,7 @@
 
 <div class="flex justify-center items-center min-h-screen w-full">
 
-  <div *ngIf="!messageError" class="bg-blue-100 rounded-lg flex-grow min-w-[320px] max-w-[650px] m-5">
+  <div *ngIf="!messageError" [ngClass]="{'bg-blue-100': !isManagerMode, 'bg-orange-100': isManagerMode, 'rounded-lg flex-grow min-w-[320px] max-w-[650px] m-5': true}">
 
     <div class="flex justify-center px-3 pt-4 pb-3 mt-4">
       <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" [ngClass]="{'fill-blue-500': !isManagerMode, 'fill-orange-500': isManagerMode }" viewBox="0 0 16 16">
@@ -35,7 +35,9 @@
       </svg>
     </div>
 
-    <h4 class="text-center text-xl font-medium text-blue-700 pb-2">{{isManagerMode ? 'Encargado' : 'Crea tu cuenta'}}</h4>
+    <h4 [ngClass]="{'text-blue-700': !isManagerMode , 'text-orange-700': isManagerMode, 'text-center text-xl font-medium pb-2': true}">
+      {{isManagerMode ? 'Encargado' : 'Crea tu cuenta'}}
+    </h4>
 
     <form [formGroup]="registerForm"
       class=" flex flex-col items-center justify-center px-5 py-5 md:px-7">
@@ -73,7 +75,7 @@
       </div>
 
       <!--Cines-->
-      <label *ngIf="isManagerMode" class="mt-4 text-lg font-medium text-blue-700">Seleccione el cine del Encargado:</label>
+      <label *ngIf="isManagerMode" class="mt-4 text-lg font-medium text-orange-700">Seleccione el cine del Encargado:</label>
       <ul>
         <li *ngFor="let cinema of allCinemas" (click)="selectCinema(cinema.id)"
           [class.active]="managerCinemaId === cinema.id"
