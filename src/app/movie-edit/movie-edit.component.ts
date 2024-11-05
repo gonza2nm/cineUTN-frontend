@@ -171,8 +171,6 @@ export class MovieEditComponent implements OnInit {
     this.movieData.languages = this.movieLanguagesIds.map(id => ({ id, languageName: '' }));
     this.movieData.cinemas = this.movieCinemasIds.map(id => ({ id, name: '', address: '', theaters: [], movies: [] }));
 
-
-
     if (this.isEditMode) {
       if (this.movieId) {
         this.movieService.updateMovie(this.movieId, this.movieData).subscribe({
