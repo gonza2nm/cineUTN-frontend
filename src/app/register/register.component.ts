@@ -176,10 +176,19 @@ export class RegisterComponent {
   }
 
   deleteManager() {
-
+    if (this.userId) {
+      this.loginService.deleteUser(this.userId).subscribe({
+        next: () => {
+          this.messageError = null;
+          this.router.navigate(['/manager-home/managers'])
+        },
+        error: () => {
+          this.messageError = 'An error occurred while deleting the manager.'
+          console.error('Error deleting manager:');
+        }
+      })
+    }
   }
-
-
 
   selectCinema(cinemaId: number) {
     this.managerCinemaId = cinemaId;

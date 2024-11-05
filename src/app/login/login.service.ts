@@ -31,8 +31,8 @@ export class LoginService {
     return this.http.put<ResponseOne<User> | ResponseWithError>(`${this.url}/${id}`, user)
   }
 
-  deleteUser() {
-
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete<ResponseOne<User> | ResponseWithError>(`${this.url}/${id}`)
   }
 
   getAllManagers(): Observable<any> {
