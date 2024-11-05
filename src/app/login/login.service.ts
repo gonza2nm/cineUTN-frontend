@@ -27,8 +27,8 @@ export class LoginService {
     return this.http.post<ResponseOne<User> | ResponseWithError>(`${this.url}/register`, userData)
   }
 
-  updateUser() {
-
+  updateUser(id: number, user: User): Observable<any> {
+    return this.http.put<ResponseOne<User> | ResponseWithError>(`${this.url}/${id}`, user)
   }
 
   deleteUser() {
@@ -36,11 +36,15 @@ export class LoginService {
   }
 
   getAllManagers(): Observable<any> {
-    return this.http.get<ResponseList<User> | ResponseWithError>(this.url)
+    return this.http.get<ResponseList<User> | ResponseWithError>(`${this.url}/managers`)
   }
 
   getOneManager(id: number): Observable<any> {
     return this.http.get<ResponseOne<User> | ResponseWithError>(`${this.url}/managers/${id}`)
+  }
+
+  addManager(userData: any): Observable<any> {
+    return this.http.post<ResponseOne<User> | ResponseWithError>(`this.url`, userData)
   }
 
   //-----------------------------------------------------------------------------
