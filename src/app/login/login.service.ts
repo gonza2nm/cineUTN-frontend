@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ResponseOne, ResponseWithError, User } from '../interfaces/interfaces';
+import { ResponseList, ResponseOne, ResponseWithError, User } from '../interfaces/interfaces';
 
 
 @Injectable({
@@ -10,12 +10,13 @@ import { ResponseOne, ResponseWithError, User } from '../interfaces/interfaces';
 export class LoginService {
 
   readonly url = 'http://localhost:3000/api/users';
+  readonly urlManager = 'http://localhost:4200/manager-home/managers';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
 
   user!: User;
-  
+
 
 
   getUser(userData: any): Observable<any> {
@@ -26,19 +27,31 @@ export class LoginService {
     return this.http.post<ResponseOne<User> | ResponseWithError>(`${this.url}/register`, userData)
   }
 
-  updateUser() {
-
+  updateUser(id: number, user: User): Observable<any> {
+    return this.http.put<ResponseOne<User> | ResponseWithError>(`${this.url}/${id}`, user)
   }
 
-  deleteUser() {
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete<ResponseOne<User> | ResponseWithError>(`${this.url}/${id}`)
+  }
 
+  getAllManagers(): Observable<any> {
+    return this.http.get<ResponseList<User> | ResponseWithError>(`${this.url}/managers`)
+  }
+
+  getOneManager(id: number): Observable<any> {
+    return this.http.get<ResponseOne<User> | ResponseWithError>(`${this.url}/managers/${id}`)
+  }
+
+  addManager(userData: any): Observable<any> {
+    return this.http.post<ResponseOne<User> | ResponseWithError>(`this.url`, userData)
   }
 
   //-----------------------------------------------------------------------------
 
 
   // Método para actualizar el valor del usuario y pasarle a my-account
-  setUser(user: User):void {
+  setUser(user: User): void {
     this.user = user;
   }
 

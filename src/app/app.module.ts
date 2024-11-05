@@ -28,6 +28,7 @@ import { NextReleasesSliderComponent } from './next-releases-slider/next-release
 import { MoviesComponent } from './movies/movies.component';
 import { MovieEditComponent } from './movie-edit/movie-edit.component';
 import { BuyComponent } from './buy/buy.component';
+import { ManagersComponent } from './managers/managers.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { BuyComponent } from './buy/buy.component';
     MoviesComponent,
     MovieEditComponent,
     BuyComponent,
+    ManagersComponent,
   ],
   imports: [
     BrowserModule,

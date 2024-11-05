@@ -108,7 +108,7 @@ export class MovieEditComponent implements OnInit {
         error: (err) => {
           this.errorMessage = 'An error occurred while fetching the movie.'
           console.error('Error getting movie:', err.error.message);
-          this.router.navigate(['/manager-home/movies']);
+          this.router.navigate(['/manager-home/movies']); //por si se quiere meter a un id que no existe.
         }
       })
     }
@@ -171,8 +171,6 @@ export class MovieEditComponent implements OnInit {
     this.movieData.languages = this.movieLanguagesIds.map(id => ({ id, languageName: '' }));
     this.movieData.cinemas = this.movieCinemasIds.map(id => ({ id, name: '', address: '', theaters: [], movies: [] }));
 
-
-
     if (this.isEditMode) {
       if (this.movieId) {
         this.movieService.updateMovie(this.movieId, this.movieData).subscribe({
@@ -195,9 +193,10 @@ export class MovieEditComponent implements OnInit {
         error: (err) => {
           if (err.error.message.includes('format or languages')) {
             this.errorMessage = 'Ocurrio un error al guardar la pelicula: La pelicula debe tener por lo menos un formato y un idioma.'
-          } else {
+          } else if (err.error.message.includes('format or languages')) {
             this.errorMessage = 'Ocurrio un error al guardar la pelicula: La pelicula debe tener por lo menos un genero y un cine.'
           }
+          this.errorMessage = 'Ocurrio un error al guardar la pelicula.'
           console.error('Error saving movie:', err.error.message);
         }
       })
