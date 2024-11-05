@@ -55,7 +55,7 @@ export interface Language {
 }
 export interface Ticket {
   id: number;
-  show: Show[];
+  show: Show;
   buy: Buy;
 }
 export interface Buy{
@@ -64,6 +64,7 @@ export interface Buy{
   total: number;
   fechaHora : Date;
   user: User;
+  status: string;
   tickets : Ticket[];
 }
 export interface User {

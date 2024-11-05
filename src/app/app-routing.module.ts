@@ -17,6 +17,7 @@ import { ShowtimesEditComponent } from './showtimes-edit/showtimes-edit.componen
 import { GenresComponent } from './genres/genres.component';
 import { GenresEditComponent } from './genres-edit/genres-edit.component';
 import { BuyComponent } from './buy/buy.component';
+import { BuyDetailsComponent } from './buy-details/buy-details.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -49,6 +50,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'my-account', component: MyAccountComponent},
   { path: 'buy', component: BuyComponent},
+  { path: 'buy-details', component: BuyDetailsComponent},
   { path: "**", component: HomeComponent }
 
 ];

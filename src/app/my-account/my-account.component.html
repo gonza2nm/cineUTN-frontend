@@ -39,20 +39,29 @@
       </div>
 
       <!-- Mostrar un mensaje si no hay compras -->
+      
       <div *ngIf="buys.length === 0" class="text-gray-600 text-center md:text-xl">No tienes compras hechas.</div>
 
       <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         <li *ngFor="let buy of buys">
           <div class="shadow-md border-t-2 border-gray-100 rounded-lg p-6 mb-4 text-left bg-white hover:shadow-xl ">
             <h3 class="text-xl font-semibold mb-2">{{buy.description}}</h3>
-            <p class="text-gray-600 mb-5">Fecha de la compra: {{buy.fechaHora | date:'medium'}}</p>
-            <button class="bg-blue-500 text-white font-semibold px-6 py-1.5 rounded-lg hover:bg-blue-700">
+            <p class="text-gray-600 mb-2">Fecha de la compra: {{buy.fechaHora | date:'medium'}}</p>
+            <!-- Esto es de prueba -->
+            <p class="px-5 py-1 text-xs font-bold rounded-full w-1/3"
+              [ngClass]="{'bg-green-100 text-green-800': buy.status === 'valido', 
+              'bg-red-100 text-red-800': buy.status !== 'valido'}">
+              {{buy.status}}
+            </p>
+            <!-- ------------------ -->
+            <button (click)="showDetails(buy)" class="bg-blue-500 text-white font-semibold mt-5 px-6 py-1.5 rounded-lg hover:bg-blue-700">
               Detalles
             </button>
           </div>
         </li>
       </ul>
     </div>
+    
 
     <!-- Mis datos -->
     <div *ngIf="option === 'datos'">
@@ -68,4 +77,10 @@
   </div>
 
 </div>
+
+
+
+
+
+
 

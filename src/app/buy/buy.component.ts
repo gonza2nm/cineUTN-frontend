@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Show, User } from '../interfaces/interfaces.js';
+import { Show, Ticket, User } from '../interfaces/interfaces.js';
 import { MovieDetailsService } from '../movie-details/movie-details.service';
 import { LoginService } from '../login/login.service';
 import { BuyService } from './buy.service';
+import { TicketService } from '../ticket.service';
 
 interface Item {
   descripcion: string;
@@ -21,37 +22,38 @@ export class BuyComponent {
   constructor(
     private movieDatialsService: MovieDetailsService,
     private loginService: LoginService,
-    private buyService: BuyService
+    private buyService: BuyService,
+    private ticketService: TicketService
   ) {}
 
   //Obtiente los datos de la peli y la función.
   show: Show = this.movieDatialsService.getMovieData();
+  //Obtiene los datos del usuario
   user: User = this.loginService.getOneUser();
+
 
   showDay = this.movieDatialsService.getFormattedWeekday(this.show.dayAndTime);
   showHour = this.movieDatialsService.getShowHourAndDay(this.show);
+
+  //Para mostrar el total de las compras
+  totalPurchases = 0;
+  totalTickets = 0;
+  
   //showThaterCantSillas = this.show.theater.numChairs;
   //showThaterCantSillas2 = this.show.theater.numChairs;
 
-  //------------------------------------------------------------------------
 
-  /*
-  showp = 
-    {
-      imageLink: 'https://a.ltrbxd.com/resized/film-poster/9/3/6/7/6/93676-guardians-of-the-galaxy-0-1000-0-1500-crop.jpg?v=3cc8cb967f',
-      name: 'Guardianes de la galaxia',
-      diaFuncion: '2024-11-05',
-      horario: '20:00',
-      formato: 'IMAX',
-      idioma: 'Español'
-    }
-  */
-  
+  items: Item[] = [
+    { descripcion: 'Entrada general', costo: 4500, subtotal: 0, counter: 0 },
+    { descripcion: 'Para niños', costo: 3000, subtotal: 0, counter: 0 },
+    { descripcion: 'Para adultos', costo: 3500, subtotal: 0, counter: 0 }
+  ];
 
 
-  //------------------------------------------------------------------------
 
+  //Para cambiar los numeros del input
   increment(item: Item) {
+    if (item.counter < 6)
     item.counter++;
     this.updateSubtotal(item)
   }
@@ -63,16 +65,6 @@ export class BuyComponent {
     }
   }
 
-  items: Item[] = [
-    { descripcion: 'Entrada general', costo: 4500, subtotal: 0, counter: 0 },
-    { descripcion: 'Para niños', costo: 3000, subtotal: 0, counter: 0 },
-    { descripcion: 'Para adultos', costo: 3500, subtotal: 0, counter: 0 }
-  ];
-
-  //Para mostrar el total de las compras
-  totalCompras = 0;
-  totalEntradas = 0;
-
   updateSubtotal(item: any) {
     item.subtotal = item.costo * item.counter;
     this.calculateTotal();
@@ -80,11 +72,11 @@ export class BuyComponent {
   }
 
   calculateTotal() {
-    this.totalCompras = this.items.reduce((sum, item) => sum + item.subtotal, 0);
+    this.totalPurchases = this.items.reduce((sum, item) => sum + item.subtotal, 0);
   }
   
   calculateTotalTickets() {
-    this.totalEntradas = this.items.reduce((sum, item) => sum + item.counter, 0);
+    this.totalTickets = this.items.reduce((sum, item) => sum + item.counter, 0);
     //this.showThaterCantSillas2 = this.showThaterCantSillas;
     //this.showThaterCantSillas2 = this.showThaterCantSillas2 - this.totalEntradas;
   }
@@ -111,16 +103,14 @@ export class BuyComponent {
   buyAcepted = false;
 
   confirmPurchase() {
-    // Lógica para confirmar la compra
+
     this.buyAcepted = true;
 
-    //this.user.id = 5
-
     
-    this.buyService.addBuy("Compra de entradas", this.totalCompras, this.user.id).subscribe ({
-      next: (response:any) => {
+    this.buyService.addBuy("Compra de entradas", this.totalPurchases, this.user.id).subscribe ({
+      next: (response) => {
         
-        this.buyService.addtickets(this.show.id, response.data.id, this.totalEntradas).subscribe({
+        this.ticketService.addtickets(this.show.id, response.data.id, this.totalTickets).subscribe({
           next: () => {
             console.log('Todas las entradas completadas:')
           },

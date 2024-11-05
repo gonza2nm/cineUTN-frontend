@@ -1,6 +1,6 @@
 <div *ngIf="!buyAcepted" class="py-3 w-full">
 
-  <!-- Seccion -->
+  <!-- Secciones para elegir -->
   <div class="flex flex-row justify-evenly text-lg py-2 mb-9">
     <h3 [ngClass]="{'text-blue-600 text-lg': step === 1, 'text-black text-base': step !== 1}">
       1. Selecciona tu Ticket
@@ -14,10 +14,10 @@
   </div>
 
 
+  <!-- Contenido de las secciones -->
   <div class="flex justify-center items-center w-2/3 m-auto">
 
     <!-- Paso 1: Seleccionar Ticket -->
-
     <div class="w-full" [ngClass]="{'block': step === 1, 'hidden': step !== 1}">
 
       <!-- Datos de la peli -->
@@ -32,7 +32,7 @@
         </div>
       </div>
 
-      <!-- Para la entrada -->
+      <!-- Para elegir las entradas la entrada -->
       <div class="border-2 border-gray-600 w-2/3 mt-10">
         <div class="grid grid-cols-4 font-bold w-full mb-2">
           <h4 class="bg-blue-200 py-1 text-center w-full">Ticket</h4>
@@ -43,8 +43,8 @@
 
         <ul *ngFor="let item of items">
           <li class="grid grid-cols-4 justify-items-center w-full">
-            <div>{{ item.descripcion }}</div>
-            <div>${{ item.costo.toFixed(2) }}</div>
+            <p>{{ item.descripcion }}</p>
+            <p>${{ item.costo.toFixed(2) }}</p>
             <div class="flex items-center space-x-1 mb-1">
               <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 py-0 px-2 rounded-lg text-2xl"
                 (click)="decrement(item)">
@@ -56,7 +56,7 @@
                 +
               </button>
             </div>
-            <div>${{ item.subtotal.toFixed(2) }}</div>
+            <p>${{ item.subtotal.toFixed(2) }}</p>
           </li>
         </ul>
 
@@ -65,12 +65,12 @@
           <p class="font-semibold">Total</p>
           <div></div>
           <div></div>
-          <p>${{totalCompras.toFixed(2)}}</p>
-
+          <p>${{totalPurchases.toFixed(2)}}</p>
         </div>
       </div>
 
-      <div *ngIf="totalEntradas !==0 " class="w-full flex">
+      <!-- El botos de coninuar - solo se muestra si hay entradas selecionadas -->
+      <div *ngIf="totalTickets !==0 " class="w-full flex">
         <button (click)="nextStep()"
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-auto mt-5">
           Siguiente
@@ -81,7 +81,6 @@
 
 
     <!-- Paso 2: Seleccionar Ubicación -->
-
     <div [ngClass]="{'block': step === 2, 'hidden': step !== 2}">
       <h3 class="text-2xl mb-10">Elegir asiento</h3>
       <p class="text-xl mb-10 text-blue-600">Acá estaría, si lo podemos hacer, la parte de los asientos :p.</p>
@@ -92,6 +91,7 @@
       <p>Estas pelicula se proyecta en la sala: {{show.theater.id}} que tiene {{showThaterCantSillas}}</p>
       <p>Con las entradas que se comprar quedan: {{showThaterCantSillas2}} entradas disponibles</p>
       -->
+
       <div class="flex justify-between mt-20">
         <button (click)="previousStep()"
           class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Anterior</button>
@@ -115,18 +115,9 @@
       <p class="text-lg">Fecha: {{showDay}}</p>
       <p class="text-lg">Hora: {{showHour}}</p>
       <p class="text-lg">Sala: {{show.theater.id}}</p>
-      <p class="text-lg">Cantidad entradas: {{totalEntradas}}</p>
+      <p class="text-lg">Cantidad entradas: {{totalTickets}}</p>
       
-      <!--
-      <h3 class="text-xl font-semibold mb-3">Datos de la compra</h3>
-      <p class="text-lg">Pelicula: {{showp.name}}</p>
-      <p class="text-lg">Formato: {{showp.formato}}</p>
-      <p class="text-lg">Idioma: {{showp.idioma}}</p>
-      <p class="text-lg">Fecha: {{showp.diaFuncion}}</p>
-      <p class="text-lg">Hora: {{showp.horario}}</p>
-      <p class="text-lg">Sala: {{2}}</p>
-      <p class="text-lg">Cantidad entradas: {{totalEntradas}}</p>
-      -->
+      
       <div class="flex justify-between mt-8">
         <button (click)="previousStep()"
           class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Anterior</button>
@@ -134,13 +125,11 @@
           class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirmar Compra</button>
       </div>
     </div>
-
-
-
   </div>
-
-
 </div>
+
+
+
 
 <div *ngIf="buyAcepted" class="h-[50vh] flex gap-2 justify-center items-center">
   
@@ -150,7 +139,7 @@
           d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
       </svg>
     </div>
-    <p class="text-xl">Gracias por tu compra, {{user.name}}</p>
+    <p class="text-xl">Gracias por tu compra, sabrina</p>
 
     <!--
     <div>

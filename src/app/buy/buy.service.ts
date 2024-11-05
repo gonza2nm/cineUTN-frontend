@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../interfaces/interfaces';
-import { forkJoin } from 'rxjs';
+import { Buy, ResponseList, ResponseOne, ResponseWithError, User } from '../interfaces/interfaces';
+import { forkJoin, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,26 +10,29 @@ export class BuyService {
 
   constructor(private http: HttpClient) { }
 
-  readonly urlBuy = 'http://localhost:3000/api/buys'
-  readonly urlTicket = 'http://localhost:3000/api/tickets'
+
+  readonly urlBuy = 'http://localhost:3000/api/buys';
   
-  addBuy(description: string, total:number, user:number):any {
-    return this.http.post(`${this.urlBuy}`, {description, total, user} )
+
+  getBuys():Observable<any>{
+    return this.http.get<ResponseList<Buy> | ResponseWithError>(this.urlBuy);
   }
 
-  deleteBuy(id: number) {
-    return this.http.delete(`${this.urlBuy}/${id}`)
+  getOneBuy(id: number): Observable<any> {
+    return this.http.get<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}/${id}`)
+  }
+  
+  addBuy(description: string, total:number, user:number):Observable<any> {
+    return this.http.post<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}`, {description, total, user, status: 'valido'} )
   }
 
-  addtickets(show: number, buy: number, cantidad: number) {
-    const requests = [];
-    // Repetir la llamada según la cantidad especificada
-    for (let i = 0; i < cantidad; i++) {
-      const request = this.http.post(`${this.urlTicket}`, { show, buy });
-      requests.push(request); // Guardar cada solicitud en el array
-    }
-
-    // Ejecutar todas las solicitudes simultáneamente
-    return forkJoin(requests);
+  
+  updatebuy(id: number, status:string):Observable<any>{
+    return this.http.put<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}/${id}`, {status});
   }
+
+  deleteBuy(id: number): Observable<any> {
+    return this.http.delete<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}/${id}`)
+  }
+
 }
