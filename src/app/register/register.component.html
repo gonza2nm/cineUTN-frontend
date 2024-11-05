@@ -37,7 +37,7 @@
 
     <h4 class="text-center text-xl font-medium text-blue-700 pb-2">Crea tu cuenta</h4>
 
-    <form [formGroup]="registerForm" (ngSubmit)="addUser()"
+    <form [formGroup]="registerForm"
       class=" flex flex-col items-center justify-center px-5 py-5 md:px-7">
 
       <div class="flex flex-col w-full my-3">
@@ -72,10 +72,19 @@
           class="border border-gray-600 bg-gray-50 rounded-full p-2 mt-1 placeholder-gray-500 text-center">
       </div>
 
-      <button type="submit" [disabled]="!registerForm.valid"
-      class="border-2 border-blue-500 bg-blue-500 text-white text-xl tracking-wide rounded-full px-10 py-1 my-6 cursor-pointer hover:bg-blue-700">
-        Registrar
+      <!--Cines-->
+      <div *ngFor="let cinema of allCinemas">
+        <input type="radio" name="cinema" [value]="cinema.id" [checked]="managerCinemaId === cinema.id"
+          (change)="selectCinema(cinema.id)" />
+        {{ cinema.name }}
+      </div>
+
+      <!--Boton que funciona para todos los casos, si es managerMode hace saveManager() si no hace addUser()-->
+      <button type="submit" [disabled]="!registerForm.valid" (click)="isManagerMode ? saveManager() : addUser()"
+        class="border-2 border-blue-500 bg-blue-500 text-white text-xl tracking-wide rounded-full px-10 py-1 my-6 cursor-pointer hover:bg-blue-700  disabled:border-gray-500 disabled:text-gray-600 disabled:bg-gray-300">
+        {{ isManagerMode ? 'Registrar Encargado' : 'Registrar Usuario' }}
       </button>
+
 
       <!--
       <div *ngIf= "isSubmmited && !registerForm.valid">
