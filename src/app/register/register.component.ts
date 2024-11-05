@@ -85,9 +85,11 @@ export class RegisterComponent {
     //this.isSubmmited = true;
     this.loginService.addUser(this.registerForm.value).subscribe({
       next: (response) => {
-        this.messageError = '¡Se ha registrado exitosamente!';
-        console.log(response);
+        //this.messageError = '¡Se ha registrado exitosamente!';
+        //console.log(response);
         //this.registerForm.reset();
+        this.messageError = null;
+        this.router.navigate(['/login']) // SABRINA: vos decidi, podria llevarte a iniciar seccion como hace aca, podria llevarte a my account y ya quedar iniciado, o podria llevarte al menu de cartelera
       },
       error: (error) => {
         this.band = false;

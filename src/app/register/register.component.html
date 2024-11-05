@@ -23,9 +23,10 @@
 
 </div>
 
+<!--Parte compartida:-->
 <div class="flex justify-center items-center min-h-screen w-full">
 
-  <div *ngIf="!messageError" [ngClass]="{'bg-blue-100': !isManagerMode, 'bg-orange-100': isManagerMode, 'rounded-lg flex-grow min-w-[320px] max-w-[650px] m-5': true}">
+  <div [ngClass]="{'bg-blue-100': !isManagerMode, 'bg-orange-100': isManagerMode, 'rounded-lg flex-grow min-w-[320px] max-w-[650px] m-5': true}">
 
     <div class="flex justify-center px-3 pt-4 pb-3 mt-4">
       <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" [ngClass]="{'fill-blue-500': !isManagerMode, 'fill-orange-500': isManagerMode }" viewBox="0 0 16 16">
@@ -74,7 +75,7 @@
           class="border border-gray-600 bg-gray-50 rounded-full p-2 mt-1 placeholder-gray-500 text-center">
       </div>
 
-      <!--Cines-->
+      <!--Cines (solo si es manager)-->
       <label *ngIf="isManagerMode" class="mt-4 text-lg font-medium text-orange-700">Seleccione el cine del Encargado:</label>
       <ul>
         <li *ngFor="let cinema of allCinemas" (click)="selectCinema(cinema.id)"
@@ -90,7 +91,11 @@
         </li>
       </ul>
       
-     
+    <!-- Muestra mensaje de error si hay algun error -->
+    <p *ngIf="messageError"
+      class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+      {{ messageError}}
+    </p>
 
       <!--Boton que funciona para cuando no es managerMode-->
       <button *ngIf="!isManagerMode" type="submit" [disabled]="!registerForm.valid" (click)="addUser()"
@@ -99,7 +104,7 @@
       </button>
 
       <!--Boton que funciona para manager mode en edit y new-->
-      <button *ngIf="isManagerMode" type="submit" [disabled]="!registerForm.valid" (click)="saveManager()"
+      <button *ngIf="isManagerMode" type="submit" [disabled]="!registerForm.valid || managerCinemaId === null " (click)="saveManager()"
         class="border-2 border-orange-500 bg-orange-500 text-white text-xl tracking-wide rounded-full px-10 py-1 my-6 cursor-pointer hover:bg-orange-700  disabled:border-gray-500 disabled:text-gray-600 disabled:bg-gray-300">
         {{ isManagerModeEdit ? 'Actualizar Encargado' : 'Registrar Encargado' }}
       </button>
@@ -110,16 +115,14 @@
         <p>El formulario no está completo</p>
       </div>
       -->
-
     </form>
 
   </div>
 
+<!--
   <div *ngIf="messageError" class="m-5 text-2xl text-center"
     [ngClass]="{'text-green-600': band, 'text-red-800': !band}">
     <h2>{{messageError}}</h2>
   </div>
-
+-->
 </div>
-
-<!-- Por decidir: Poner al boton desactivado de otro color o poner burbujas en cada campo incompleto -->
