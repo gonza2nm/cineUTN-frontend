@@ -92,7 +92,7 @@ export class RegisterComponent {
       error: (error) => {
         this.band = false;
         this.messageError = 'Ocurrio un error, por favor intente mas tarde.';
-        console.log(error);
+        console.error(error);
       }
     })
   }
@@ -145,7 +145,6 @@ export class RegisterComponent {
     this.userData.type = this.registerForm.get('type')?.value;
 
     this.userData.cinema = { id: this.managerCinemaId || 0, name: '', address: '', theaters: [], movies: [] }
-    console.log('aca', this.userData)
 
     if (this.isManagerModeEdit) {
       if (this.userId) { //sin este if no deja entrar al metodo porque dice que puede ser null
@@ -167,7 +166,6 @@ export class RegisterComponent {
           this.router.navigate(['/manager-home/managers'])
         },
         error: (err) => {
-          console.log(this.userData)
           this.messageError = 'An error occurred while saving the manager.'
           console.error('Error saving manager:', err.error.error);
         }
