@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoginService } from '../login/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../interfaces/interfaces.js';
+import { Cinema, User } from '../interfaces/interfaces';
+import { CinemaService } from '../cinemas/cinema.service';
 
 @Component({
   selector: 'app-register',
@@ -35,11 +36,17 @@ export class RegisterComponent {
   band = true;
   messageError: string | null = null;
   //isSubmmited:boolean = false;
+
+  //para encontrar el id de cine actual y para mostrar todos los que se pueden selecionar
+  managerCinemaId: number | null = null;
+  allCinemas: Cinema[] = []
+
   registerForm: FormGroup;
   constructor(
-    private service: LoginService,
+    private loginService: LoginService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private cinemaService: CinemaService
   ) {
 
     //se inicializa dentro del constructor, para que este configurado y disponible para usarse
@@ -66,6 +73,8 @@ export class RegisterComponent {
         if (this.userId) { //si estamos en manager-home y en modo edicion
           this.isManagerModeEdit = true;
           this.loadOneManager();
+        } else { //si no es edit mode
+          this.loadAllCinemas();
         }
       }
     });
@@ -74,7 +83,7 @@ export class RegisterComponent {
   //Registra un usuario en la base de datos
   addUser() {
     //this.isSubmmited = true;
-    this.service.addUser(this.registerForm.value).subscribe({
+    this.loginService.addUser(this.registerForm.value).subscribe({
       next: (response) => {
         this.messageError = '¡Se ha registrado exitosamente!';
         console.log(response);
@@ -90,7 +99,7 @@ export class RegisterComponent {
 
   loadOneManager() {
     if (this.userId) { //sin este if no deja entrar al metodo porque dice que puede ser null
-      this.service.getOneManager(this.userId).subscribe({
+      this.loginService.getOneManager(this.userId).subscribe({
         next: (response) => {
           this.userData = response.data
           this.messageError = null;
@@ -103,6 +112,8 @@ export class RegisterComponent {
             dni: this.userData.dni,
             type: this.userData.type,
           });
+          this.managerCinemaId = this.userData.cinema?.id || null;
+          this.loadAllCinemas();
         },
         error: (err) => {
           this.messageError = 'An error occurred while fetching the cinema.'
@@ -113,11 +124,64 @@ export class RegisterComponent {
     }
   }
 
+  loadAllCinemas() {
+    this.cinemaService.getAllCinemas().subscribe({
+      next: (response) => {
+        this.allCinemas = response.data;
+      },
+      error: (err) => {
+        console.error('Error getting all cinemas', err.error.message)
+      }
+    })
+  }
+
+  saveManager() {
+    //Guardo los datos ingresados del form en el userData
+    this.userData.name = this.registerForm.get('name')?.value; //busca en el formGroup el formControl que se llame 'name' y con .value le agarra el valor.
+    this.userData.surname = this.registerForm.get('surname')?.value;
+    this.userData.email = this.registerForm.get('email')?.value;
+    this.userData.password = this.registerForm.get('password')?.value;
+    this.userData.dni = this.registerForm.get('dni')?.value;
+    this.userData.type = this.registerForm.get('type')?.value;
+
+    this.userData.cinema = { id: this.managerCinemaId || 0, name: '', address: '', theaters: [], movies: [] }
+    console.log('aca', this.userData)
+
+    if (this.isManagerModeEdit) {
+      if (this.userId) { //sin este if no deja entrar al metodo porque dice que puede ser null
+        this.loginService.updateUser(this.userId, this.userData).subscribe({
+          next: () => {
+            this.messageError = null; //borra el mensaje de error por si viene alguno viejo arrastrado
+            this.router.navigate(['/manager-home/managers'])
+          },
+          error: (err) => {
+            this.messageError = 'An error occurred while updating the manager.'
+            console.error('Error updating manager:', err.error.error);
+          }
+        });
+      }
+    } else { //o sea si no esta en editMode entra al add
+      this.loginService.addUser(this.userData).subscribe({
+        next: () => {
+          this.messageError = null;
+          this.router.navigate(['/manager-home/managers'])
+        },
+        error: (err) => {
+          console.log(this.userData)
+          this.messageError = 'An error occurred while saving the manager.'
+          console.error('Error saving manager:', err.error.error);
+        }
+      })
+    }
+  }
+
   deleteManager() {
 
   }
 
 
 
-
+  selectCinema(cinemaId: number) {
+    this.managerCinemaId = cinemaId;
+  }
 }
