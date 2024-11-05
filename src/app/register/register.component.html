@@ -3,7 +3,7 @@
 
   <div class="flex justify-between">
     <!-- Boton para volver-->
-    <button type="button" routerLink="/manager-home"
+    <button type="button" routerLink="/manager-home/managers"
       class="rounded-md border border-black mt-5 hover:bg-gray-300 ml-3 px-3 py-1">
       &larr; Volver
     </button>
@@ -23,19 +23,19 @@
 
 </div>
 
-<div class="flex justify-center items-center h-[calc(100vh-70px)] w-full">
+<div class="flex justify-center items-center min-h-screen w-full">
 
   <div *ngIf="!messageError" class="bg-blue-100 rounded-lg flex-grow min-w-[320px] max-w-[650px] m-5">
 
     <div class="flex justify-center px-3 pt-4 pb-3 mt-4">
-      <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" class="fill-blue-500" viewBox="0 0 16 16">
+      <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" [ngClass]="{'fill-blue-500': !isManagerMode, 'fill-orange-500': isManagerMode }" viewBox="0 0 16 16">
         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
         <path fill-rule="evenodd"
           d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
       </svg>
     </div>
 
-    <h4 class="text-center text-xl font-medium text-blue-700 pb-2">Crea tu cuenta</h4>
+    <h4 class="text-center text-xl font-medium text-blue-700 pb-2">{{isManagerMode ? 'Encargado' : 'Crea tu cuenta'}}</h4>
 
     <form [formGroup]="registerForm"
       class=" flex flex-col items-center justify-center px-5 py-5 md:px-7">
@@ -73,11 +73,22 @@
       </div>
 
       <!--Cines-->
-      <div *ngFor="let cinema of allCinemas">
-        <input type="radio" name="cinema" [value]="cinema.id" [checked]="managerCinemaId === cinema.id"
-          (change)="selectCinema(cinema.id)" />
-        {{ cinema.name }}
-      </div>
+      <label *ngIf="isManagerMode" class="mt-4 text-lg font-medium text-blue-700">Seleccione el cine del Encargado:</label>
+      <ul>
+        <li *ngFor="let cinema of allCinemas" (click)="selectCinema(cinema.id)"
+          [class.active]="managerCinemaId === cinema.id"
+          class="border border-gray-400 mx-3 mb-3 p-2 mt-2 hover:bg-gray-300 cursor-pointer">
+      
+          <div class="ml-1">
+            {{ cinema.name }}
+          </div>
+          <div class="ml-8">
+            {{ cinema.address }}
+          </div>
+        </li>
+      </ul>
+      
+     
 
       <!--Boton que funciona para cuando no es managerMode-->
       <button *ngIf="!isManagerMode" type="submit" [disabled]="!registerForm.valid" (click)="addUser()"
@@ -87,7 +98,7 @@
 
       <!--Boton que funciona para manager mode en edit y new-->
       <button *ngIf="isManagerMode" type="submit" [disabled]="!registerForm.valid" (click)="saveManager()"
-        class="border-2 border-blue-500 bg-blue-500 text-white text-xl tracking-wide rounded-full px-10 py-1 my-6 cursor-pointer hover:bg-blue-700  disabled:border-gray-500 disabled:text-gray-600 disabled:bg-gray-300">
+        class="border-2 border-orange-500 bg-orange-500 text-white text-xl tracking-wide rounded-full px-10 py-1 my-6 cursor-pointer hover:bg-orange-700  disabled:border-gray-500 disabled:text-gray-600 disabled:bg-gray-300">
         {{ isManagerModeEdit ? 'Actualizar Encargado' : 'Registrar Encargado' }}
       </button>
 
