@@ -79,10 +79,16 @@
         {{ cinema.name }}
       </div>
 
-      <!--Boton que funciona para todos los casos, si es managerMode hace saveManager() si no hace addUser()-->
-      <button type="submit" [disabled]="!registerForm.valid" (click)="isManagerMode ? saveManager() : addUser()"
+      <!--Boton que funciona para cuando no es managerMode-->
+      <button *ngIf="!isManagerMode" type="submit" [disabled]="!registerForm.valid" (click)="addUser()"
         class="border-2 border-blue-500 bg-blue-500 text-white text-xl tracking-wide rounded-full px-10 py-1 my-6 cursor-pointer hover:bg-blue-700  disabled:border-gray-500 disabled:text-gray-600 disabled:bg-gray-300">
-        {{ isManagerMode ? 'Registrar Encargado' : 'Registrar Usuario' }}
+        Registrar Usuario
+      </button>
+
+      <!--Boton que funciona para manager mode en edit y new-->
+      <button *ngIf="isManagerMode" type="submit" [disabled]="!registerForm.valid" (click)="saveManager()"
+        class="border-2 border-blue-500 bg-blue-500 text-white text-xl tracking-wide rounded-full px-10 py-1 my-6 cursor-pointer hover:bg-blue-700  disabled:border-gray-500 disabled:text-gray-600 disabled:bg-gray-300">
+        {{ isManagerModeEdit ? 'Actualizar Encargado' : 'Registrar Encargado' }}
       </button>
 
 
