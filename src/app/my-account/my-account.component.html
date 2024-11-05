@@ -73,7 +73,63 @@
         <h2 class="text-xl font-semibold md:text-2xl">Mis datos</h2>
       </div>
       <p class="text-center text-xl">En breve continuaremos con esta sección. :p</p>
+
+      <form [formGroup]="userEditForm" (ngSubmit)="updateUser()"
+        class=" flex flex-col items-center justify-center px-5 py-5 md:px-7 border-2 border-gray-600">
+      
+        <div class="flex flex-col w-full my-3">
+          <input type="text" formControlName="name" placeholder="Nombre"
+            class="border border-gray-600 bg-gray-50 rounded-full p-2 mt-1 placeholder-gray-500 text-center">
+        </div>
+      
+        <div class="flex flex-col w-full my-3">
+          <input type="text" formControlName="surname" placeholder="Apellido"
+            class="border border-gray-600 bg-gray-50 rounded-full p-2 mt-1 placeholder-gray-500 text-center">
+        </div>
+      
+        <div class="flex flex-col w-full my-3">
+          <input type="text" formControlName="dni" placeholder="Dni"
+            class="border border-gray-600 bg-gray-50 rounded-full p-2 mt-1 placeholder-gray-500 text-center">
+        </div>
+      
+        <!--
+            <div class="flex flex-col w-full my-3">
+              <input type="text" formControlName="phoneNumber" placeholder="Telefono"
+                class="border border-gray-600 bg-gray-50 rounded-full p-2 mt-1 placeholder-gray-500 text-center">
+            </div>
+            -->
+      
+        <div class="flex flex-col w-full my-3">
+          <input type="email" formControlName="email" placeholder="Email"
+            class="border border-gray-600 bg-gray-50 rounded-full p-2 mt-1 placeholder-gray-500 text-center">
+        </div>
+      
+        <div class="flex flex-col w-full my-3">
+          <input type="password" formControlName="password" placeholder="Contraseña"
+            class="border border-gray-600 bg-gray-50 rounded-full p-2 mt-1 placeholder-gray-500 text-center">
+        </div>
+      
+        <button type="submit" [disabled]="!userEditForm.valid"
+          class="border-2 border-blue-500 bg-blue-500 text-white text-xl tracking-wide rounded-full px-10 py-1 my-6 cursor-pointer hover:bg-blue-700">
+          Registrar
+        </button>
+      
+        <!--
+            <div *ngIf= "isSubmmited && !registerForm.valid">
+              <p>El formulario no está completo</p>
+            </div>
+            -->
+      
+      </form>
+
+      <p>{{messageError}}</p>
+
+
+
     </div>
+
+
+
   </div>
 
 </div>

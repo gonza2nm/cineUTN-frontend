@@ -26,8 +26,8 @@ export class LoginService {
     return this.http.post<ResponseOne<User> | ResponseWithError>(`${this.url}/register`, userData)
   }
 
-  updateUser() {
-
+  updateUser(id:number, userEditData:any): Observable<any> {
+    return this.http.put<ResponseOne<User> | ResponseWithError>(`${this.url}/${id}`, userEditData)
   }
 
   deleteUser() {
