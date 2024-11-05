@@ -85,14 +85,16 @@ export class RegisterComponent {
     //this.isSubmmited = true;
     this.loginService.addUser(this.registerForm.value).subscribe({
       next: (response) => {
-        this.messageError = '¡Se ha registrado exitosamente!';
-        console.log(response);
+        //this.messageError = '¡Se ha registrado exitosamente!';
+        //console.log(response);
         //this.registerForm.reset();
+        this.messageError = null;
+        this.router.navigate(['/login']) // SABRINA: vos decidi, podria llevarte a iniciar seccion como hace aca, podria llevarte a my account y ya quedar iniciado, o podria llevarte al menu de cartelera
       },
       error: (error) => {
         this.band = false;
         this.messageError = 'Ocurrio un error, por favor intente mas tarde.';
-        console.log(error);
+        console.error(error);
       }
     })
   }
@@ -145,7 +147,6 @@ export class RegisterComponent {
     this.userData.type = this.registerForm.get('type')?.value;
 
     this.userData.cinema = { id: this.managerCinemaId || 0, name: '', address: '', theaters: [], movies: [] }
-    console.log('aca', this.userData)
 
     if (this.isManagerModeEdit) {
       if (this.userId) { //sin este if no deja entrar al metodo porque dice que puede ser null
@@ -167,7 +168,6 @@ export class RegisterComponent {
           this.router.navigate(['/manager-home/managers'])
         },
         error: (err) => {
-          console.log(this.userData)
           this.messageError = 'An error occurred while saving the manager.'
           console.error('Error saving manager:', err.error.error);
         }
