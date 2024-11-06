@@ -34,7 +34,8 @@ export class MovieDetailsComponent implements OnInit {
   isDetailsOpen: boolean = false;
   daySelected: string = 'Hoy';
   filteredShows: Show[] = [];
-
+  messageWarning = '';
+  isLoggedIn = false;
 
   constructor(
     private movieDetailsService: MovieDetailsService,
@@ -59,9 +60,10 @@ export class MovieDetailsComponent implements OnInit {
     this.loadFormats();
 
     // Verifica el estado de autenticación
-    this.authService.isAuthenticated$.subscribe(
-      (authStatus) => {this.isAuth = authStatus}
-    );
+    this.authService.isLoggedIn.subscribe((status: boolean) => {
+      this.isLoggedIn = status; 
+    });
+    this.authService.checkLoginStatus();
   }
 
   loadDataSelector() {
@@ -83,15 +85,7 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   getNextDays(): { name: string; date: Date }[] {
-    const daysOfWeek = [
-      'Domingo',
-      'Lunes',
-      'Martes',
-      'Miércoles',
-      'Jueves',
-      'Viernes',
-      'Sábado',
-    ];
+    const daysOfWeek = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado',];
     const daysArray: { name: string; date: Date }[] = [];
     const today = new Date();
     const todayIndex = today.getDay();
@@ -196,11 +190,7 @@ export class MovieDetailsComponent implements OnInit {
     this.filterShows();
   }
 
-  //----------------------------------------------------------------------------
 
-  messageWarning = '';
-  showSelected!: Show;
-  isAuth = false;
 
   /* Pensar si se puede hacer una ventana modal.
   warninModal(show: Show) {
@@ -211,21 +201,11 @@ export class MovieDetailsComponent implements OnInit {
   */
 
   warningModal(show: Show) {
-    /*
-    this.showSelected = show;
-    this.movieDetailsService.setMovieData(this.showSelected)
-    this.router.navigate(['/buy'])
-    */
-    
-    if (this.isAuth) {
-      this.messageWarning = '';
-      this.showSelected = show;
-      this.movieDetailsService.setMovieData(this.showSelected)
-      this.router.navigate(['/buy'])
+    if (this.isLoggedIn) {
+      this.router.navigate([`/buy/${show.id}`]);
     } else {
       this.messageWarning = 'Atencion!!\nNecesita estar logueado para poder comprar le entradas.'
     }
-    
   }
 
   loguearse() {

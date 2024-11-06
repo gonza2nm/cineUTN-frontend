@@ -1,4 +1,4 @@
-<div class="max-w-7xl m-auto p-6">
+<div *ngIf="user != null" class="max-w-7xl m-auto p-6">
 
   <!-- Bienvenida -->
   <div>
@@ -41,8 +41,8 @@
       </p>
 
       <!-- Mostrar un mensaje si no hay compras -->
-      
-      <div *ngIf="buys.length === 0" class="text-gray-600 text-center md:text-xl">No tienes compras hechas.</div>
+      <div *ngIf="buys && buys.length === 0" class="text-gray-600 text-center md:text-xl">No tienes compras hechas.
+      </div>
 
       <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         <li *ngFor="let buy of buys">
@@ -143,12 +143,5 @@
     </div>
 
   </div>
-
 </div>
-
-
-
-
-
-
-
+<div *ngIf="!user">Usted no esta logeado</div>

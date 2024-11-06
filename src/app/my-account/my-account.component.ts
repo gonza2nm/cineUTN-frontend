@@ -1,18 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../login/login.service';
-import { User, Buy } from '../interfaces/interfaces';
+import { User, Buy, Ticket } from '../interfaces/interfaces';
 import { MyAccountService } from './my-account.service';
-import { Router } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { tick } from '@angular/core/testing/index.js';
-
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-my-account',
   templateUrl: './my-account.component.html',
   styleUrls: ['./my-account.component.css']
 })
+export class MyAccountComponent implements OnInit {
 
+  constructor(private authService: AuthService, private mservice: MyAccountService) {}
+  user: User | null = null;
+  buys: Buy[] | undefined;
+  message = '';
+
+  ngOnInit(): void {
+    this.user = this.authService.getUser();
+    this.buys = this.user?.buys;
+    //deberiamos hacer una peticion cada vez que se inicia para conseguir las nuevas compras
+  }
 
 export class MyAccountComponent implements OnInit {
 
@@ -54,51 +61,10 @@ export class MyAccountComponent implements OnInit {
     
   }
 
-
   changeOption(opt: string) {
     this.option = opt;
     this.messageError = "";
   }
-
-
-  showDetails(buy: Buy) {
-    this.myAccountservice.setPurchase(buy);
-    this.router.navigate(['buy-details']);
-  }
-
-
-  //--------------------------------------------------------------------
-
-
-  updateUser() {
-    this.loginService.updateUser(this.user.id, this.userEditForm.value).subscribe({
-      next: (response) => {
-        this.band = true;
-        this.messageError = '¡Los cambios se guardaron correctamente!';
-        console.log(response);
-      }, 
-      error: (error) => {
-        this.messageError = 'Ocurrio un error, por favor intente mas tarde.';
-        console.log(error);
-      }
-    })
-    
-  }
-
-  deleteUser() {
-    this.loginService.deleteUser(this.user.id).subscribe({
-      next: (response) => {
-        console.log(response);
-        this.router.navigate(['/login']);
-      },
-
-      error: (err) => {
-        console.log(err)
-      }
-    })
-  }
-
-
 
 
 }

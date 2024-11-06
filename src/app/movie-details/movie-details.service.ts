@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { map } from 'rxjs';
 import { Cinema, Format, Language, Movie, ResponseList, ResponseOne, ResponseWithError, Show} from '../interfaces/interfaces';
 
 @Injectable({
@@ -39,11 +39,9 @@ export class MovieDetailsService {
       cinemaId: cinemaID
     }).pipe(map(response=> response.data));
   }
-
-  //-----------------------------------------------------------------------
-
-  //Comunicacion con buy.component.ts -----------------------------------
-
+  getOneShow(showId: number){
+    return this.http.get<ResponseOne<Show>>(`${this.urlShows}/${showId}`).pipe(map(response=> response.data));
+  }
 
   getShowHourAndDay(show: Show){
     let date = new Date(show.dayAndTime)
@@ -56,7 +54,6 @@ export class MovieDetailsService {
   getFormattedWeekday(show: Date) {
     const fecha = new Date(show);
     const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-    // Obtener los valores de día de la semana, día del mes y mes
     const diaSemana = diasSemana[fecha.getDay()];
     const diaMes = fecha.getDate(); 
     const mes = fecha.getUTCMonth() + 1;
@@ -64,11 +61,4 @@ export class MovieDetailsService {
     return fechaFormateada
   }
 
-  setMovieData(show: Show) {
-    this.movieData = show;
-  }
-  
-  getMovieData(): Show {
-    return this.movieData;
-  }
 }
