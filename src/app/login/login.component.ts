@@ -30,10 +30,12 @@ export class LoginComponent {
   getUser(): void {
     this.loginService.getUser(this.loginForm.value).subscribe({
       next: (response) => {
-        this.loginService.setUser(response.data); //Le pasa el valor al service y el service se lo pasa al my-account.
+        sessionStorage.setItem('user', JSON.stringify(response.data));
+        //this.loginService.setUser(response.data); //Le pasa el valor al service y el service se lo pasa al my-account.
         this.authService.login(); //Cambia el estado a logueado.
         this.router.navigate(['/my-account']);
         console.log(response);
+  
       },
 
       error: (error) => {

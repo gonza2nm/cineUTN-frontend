@@ -12,7 +12,6 @@ import { CinemaService } from '../cinemas/cinema.service';
 })
 export class RegisterComponent {
 
-  @Input() user!: User;
   isUserModeEdit: boolean = false;
   isManagerMode: boolean = false;
   isManagerModeEdit: boolean = false;
@@ -38,7 +37,6 @@ export class RegisterComponent {
 
   band = true;
   messageError: string | null = null;
-  //isSubmmited:boolean = false;
 
   //para encontrar el id de cine actual y para mostrar todos los que se pueden selecionar
   managerCinemaId: number | null = null;
@@ -80,30 +78,14 @@ export class RegisterComponent {
         }
       }
     });
-
-    if(this.user) {
-      this.isUserModeEdit =  true;
-      this.registerForm.setValue({
-      name: this.user.name,
-      surname: this.user.surname,
-      email: this.user.email,
-      password: this.user.password,
-      dni: this.user.dni,
-      type: new FormControl('user')
-    });
-    }
   }
 
   //Registra un usuario en la base de datos
   addUser() {
-    //this.isSubmmited = true;
     this.loginService.addUser(this.registerForm.value).subscribe({
       next: (response) => {
-        //this.messageError = '¡Se ha registrado exitosamente!';
-        //console.log(response);
-        //this.registerForm.reset();
         this.messageError = null;
-        this.router.navigate(['/login']) // SABRINA: vos decidi, podria llevarte a iniciar seccion como hace aca, podria llevarte a my account y ya quedar iniciado, o podria llevarte al menu de cartelera
+        this.router.navigate(['/login'])
       },
       error: (error) => {
         this.band = false;

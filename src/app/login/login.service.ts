@@ -23,15 +23,12 @@ export class LoginService {
     return this.http.post<ResponseOne<User> | ResponseWithError>(`${this.url}/login`, userData);
   }
 
-  addUser(userData: any): Observable<any> {
+  addUser(userData: User): Observable<any> {
     return this.http.post<ResponseOne<User> | ResponseWithError>(`${this.url}/register`, userData)
   }
 
-  updateUser(id:number, userEditData:any): Observable<any> {
-    return this.http.put<ResponseOne<User> | ResponseWithError>(`${this.url}/${id}`, userEditData)
-  }
-  updateUser2(id: number, user: User): Observable<any> {
-    return this.http.put<ResponseOne<User> | ResponseWithError>(`${this.url}/${id}`, user)
+  updateUser(id: number, userData: User): Observable<any> {
+    return this.http.put<ResponseOne<User> | ResponseWithError>(`${this.url}/${id}`, userData)
   }
 
   deleteUser(id: number): Observable<any> {

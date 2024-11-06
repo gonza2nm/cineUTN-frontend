@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { BuyService } from '../buy/buy.service';
 import { Buy, Movie, Show, Ticket } from '../interfaces/interfaces';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { TicketService } from '../ticket.service';
 })
 export class BuyDetailsComponent implements OnInit {
 
-  buy!: Buy;
+  @Input() buy!: Buy;
   tickets: Ticket[] = [];
   show!: Show;
   movie!: Movie;
@@ -96,7 +96,7 @@ export class BuyDetailsComponent implements OnInit {
           this.buyService.updatebuy(id, status).subscribe({
             next: () => {
               console.log(response.data);
-              this.messageCanceled = "La compra fue cancelada con exito";
+              this.messageCanceled = "La compra fue cancelada.";
             },
 
             error: (err) => {
@@ -112,20 +112,7 @@ export class BuyDetailsComponent implements OnInit {
           console.log(err.error);
         }
       })
-        
-      //this.myAcountService.setStatus('cancelado');
-      /*
-      this.buyService.deleteBuy(id).subscribe({
-        next: (response) => {
-          console.log(response.data);
-          this.messageCanceled = "La compra fue cancelada con exito."
-        },
-        error: (error) => {
-          console.log(error);
-          this.messageCanceled = "La compra no se puede cancelar"
-        }
-      })
-      */
+
     } else {
       this.messageCanceled = "La compra solo se puede cancelar hasta 12hs antes de la función."
     }

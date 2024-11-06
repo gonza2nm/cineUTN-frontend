@@ -19,6 +19,8 @@ interface Item {
 })
 export class BuyComponent {
 
+  user!: User;
+
   constructor(
     private movieDatialsService: MovieDetailsService,
     private loginService: LoginService,
@@ -26,10 +28,19 @@ export class BuyComponent {
     private ticketService: TicketService
   ) {}
 
+  ngOnInit() {
+    const storedUser = sessionStorage.getItem('user');
+    if (storedUser) {
+      this.user = JSON.parse(storedUser);
+    }
+    }
+
+  
+
   //Obtiente los datos de la peli y la función.
   show: Show = this.movieDatialsService.getMovieData();
   //Obtiene los datos del usuario
-  user: User = this.loginService.getOneUser();
+  //user: User = this.loginService.getOneUser();
 
 
   showDay = this.movieDatialsService.getFormattedWeekday(this.show.dayAndTime);
