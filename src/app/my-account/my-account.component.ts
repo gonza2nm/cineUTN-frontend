@@ -38,7 +38,6 @@ export class MyAccountComponent implements OnInit {
       name: new FormControl(this.user.name, [Validators.required]),
       surname: new FormControl(this.user.surname, [Validators.required]),
       email: new FormControl(this.user.email, [Validators.required]),
-      //phoneNumber: new FormControl('', [Validators.required]),
       password: new FormControl(this.user.password, [Validators.required]),
       dni: new FormControl(this.user.dni, [Validators.required]),
       type: new FormControl('user')

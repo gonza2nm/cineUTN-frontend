@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoginService } from '../login/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,6 +12,8 @@ import { CinemaService } from '../cinemas/cinema.service';
 })
 export class RegisterComponent {
 
+  @Input() user!: User;
+  isUserModeEdit: boolean = false;
   isManagerMode: boolean = false;
   isManagerModeEdit: boolean = false;
   userId: number | null = null;
@@ -32,6 +34,7 @@ export class RegisterComponent {
     },
     buys: []
   }
+
 
   band = true;
   messageError: string | null = null;
@@ -77,6 +80,18 @@ export class RegisterComponent {
         }
       }
     });
+
+    if(this.user) {
+      this.isUserModeEdit =  true;
+      this.registerForm.setValue({
+      name: this.user.name,
+      surname: this.user.surname,
+      email: this.user.email,
+      password: this.user.password,
+      dni: this.user.dni,
+      type: new FormControl('user')
+    });
+    }
   }
 
   //Registra un usuario en la base de datos

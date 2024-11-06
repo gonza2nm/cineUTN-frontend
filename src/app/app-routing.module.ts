@@ -59,16 +59,15 @@ const routes: Routes = [
 
   { path: 'register', component: RegisterComponent },
   { path: 'my-account', component: MyAccountComponent },
+  { path: 'my-account/editUser', component: RegisterComponent },
+  
   { path: 'buy', component: BuyComponent },
+  { path: 'buy-details', component: BuyDetailsComponent},
 
   {path: 'manager-home/genres', component: GenresComponent},
   {path: 'manager-home/genres/:gid', component: GenresEditComponent},
   {path: 'manager-home/genres/new', component: GenresEditComponent},
   
-  { path: 'register', component: RegisterComponent},
-  { path: 'my-account', component: MyAccountComponent},
-  { path: 'buy', component: BuyComponent},
-  { path: 'buy-details', component: BuyDetailsComponent},
   { path: "**", component: HomeComponent }
 ];
 

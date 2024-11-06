@@ -24,11 +24,12 @@
 </div>
 
 <!--Parte compartida:-->
-<div class="flex justify-center items-center min-h-screen w-full">
+<div class="flex justify-center items-center min-h-[90vh] w-full"
+[ngClass]="{'min-h-[60vh]': isUserModeEdit}">
 
-  <div [ngClass]="{'bg-blue-100': !isManagerMode, 'bg-orange-100': isManagerMode, 'rounded-lg flex-grow min-w-[320px] max-w-[650px] m-5': true}">
+  <div [ngClass]="{'bg-blue-100': !isManagerMode, 'bg-orange-100': isManagerMode, 'rounded-lg flex-grow min-w-80 max-w-2xl m-5': true}">
 
-    <div class="flex justify-center px-3 pt-4 pb-3 mt-4">
+    <div *ngIf="!user" class="flex justify-center px-3 pt-4 pb-3 mt-4">
       <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" [ngClass]="{'fill-blue-500': !isManagerMode, 'fill-orange-500': isManagerMode }" viewBox="0 0 16 16">
         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
         <path fill-rule="evenodd"
@@ -36,12 +37,12 @@
       </svg>
     </div>
 
-    <h4 [ngClass]="{'text-blue-700': !isManagerMode , 'text-orange-700': isManagerMode, 'text-center text-xl font-medium pb-2': true}">
+    <h4 *ngIf="!user" [ngClass]="{'text-blue-700': !isManagerMode , 'text-orange-700': isManagerMode, 'text-center text-xl font-medium pb-2': true}">
       {{isManagerMode ? 'Encargado' : 'Crea tu cuenta'}}
     </h4>
 
     <form [formGroup]="registerForm"
-      class=" flex flex-col items-center justify-center px-5 py-5 md:px-7">
+      class=" flex flex-col items-center justify-center px-5 py-5 md:px-7" [ngClass]="{'rounded-lg py-9': isUserModeEdit}">
 
       <div class="flex flex-col w-full my-3">
         <input type="text" formControlName="name" placeholder="Nombre"
@@ -93,7 +94,7 @@
       <!--Boton que funciona para cuando no es managerMode-->
       <button *ngIf="!isManagerMode" type="submit" [disabled]="!registerForm.valid" (click)="addUser()"
         class="border-2 border-blue-500 bg-blue-500 text-white text-xl tracking-wide rounded-full px-10 py-1 my-6 cursor-pointer hover:bg-blue-700  disabled:border-gray-500 disabled:text-gray-600 disabled:bg-gray-300">
-        Registrar Usuario
+        {{ isUserModeEdit ? 'Actualizar datos' : 'Registrar Usuario'}}
       </button>
 
       <!--Boton que funciona para manager mode en edit y new-->
