@@ -2,12 +2,12 @@ export interface ResponseWithError {
   message: string;
   error: string;
 }
-export interface ResponseList<T>{
-  message : string;
+export interface ResponseList<T> {
+  message: string;
   data: T[];
 }
-export interface ResponseOne<T>{
-  message : string;
+export interface ResponseOne<T> {
+  message: string;
   data: T;
 }
 export interface Cinema {
@@ -32,8 +32,9 @@ export interface Movie {
   description: string;
   imageLink: string;
   genres: Genre[];
-  formats : Format[];
-  languages : Language[];
+  cinemas: Cinema[];
+  formats: Format[];
+  languages: Language[];
 }
 export interface Show {
   id: number;
@@ -41,8 +42,8 @@ export interface Show {
   finishTime: Date;
   theater: Theater;
   movie: Movie;
-  tickets : Ticket[];
-  format : Format;
+  tickets: Ticket[];
+  format: Format;
   language: Language;
 }
 export interface Format {
@@ -51,21 +52,21 @@ export interface Format {
 }
 export interface Language {
   id: number;
-  languageName: string;  
+  languageName: string;
 }
 export interface Ticket {
   id: number;
   show: Show;
   buy: Buy;
 }
-export interface Buy{
+export interface Buy {
   id: number;
   description: string;
   total: number;
-  fechaHora : Date;
+  fechaHora: Date;
   user: User;
   status: string;
-  tickets : Ticket[];
+  tickets: Ticket[];
 }
 export interface User {
   id: number;
@@ -74,8 +75,8 @@ export interface User {
   surname: string;
   email: string;
   password: string;
-  type: "user" | "manager";  
-  cinema: Cinema;
-  buys : Buy[];
+  type: "user" | "manager";
+  cinema?: Cinema; //Opcionales por si es user
+  buys: Buy[]; //Opcionales por si es manager
 }
 

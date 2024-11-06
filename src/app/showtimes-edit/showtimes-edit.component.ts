@@ -46,12 +46,13 @@ export class ShowtimesEditComponent implements OnInit {
     },
     movie: {
       id: 0,
-      description: '',
       name: '',
-      formats: [],
-      languages: [],
-      genres: [],
+      description: '',
       imageLink: '',
+      genres: [],
+      cinemas: [],
+      formats: [],
+      languages: []
     },
     theater: { id: 0, cinema: 0, numChairs: 0 },
     tickets: [],
@@ -61,7 +62,7 @@ export class ShowtimesEditComponent implements OnInit {
     private service: ShowtimesByCinemaService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.cinemaId = this.route.snapshot.params['cid'];
@@ -183,9 +184,9 @@ export class ShowtimesEditComponent implements OnInit {
           this.errorMessage = null;
           this.router.navigate(['/manager-home/showtimes/', this.cinemaId]);
         },
-        error: () => {
+        error: (err) => {
           this.errorMessage = 'An error occurred while creating the showtime.';
-          console.error('Error creating showtime:');
+          console.error('Error creating showtime:', err.error.message);
         },
       });
     }

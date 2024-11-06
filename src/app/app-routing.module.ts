@@ -16,32 +16,50 @@ import { ShowtimesByCinemaComponent } from './showtimes-by-cinema/showtimes-by-c
 import { ShowtimesEditComponent } from './showtimes-edit/showtimes-edit.component';
 import { GenresComponent } from './genres/genres.component';
 import { GenresEditComponent } from './genres-edit/genres-edit.component';
+import { MoviesComponent } from './movies/movies.component';
+import { MovieEditComponent } from './movie-edit/movie-edit.component';
 import { BuyComponent } from './buy/buy.component';
 import { BuyDetailsComponent } from './buy-details/buy-details.component';
+import { ManagersComponent } from './managers/managers.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+
   { path: 'login', component: LoginComponent },
+
   { path: 'movies/:id', component: MovieDetailsComponent },
+
   { path: 'manager-home', component: ManagerHomeComponent },
+
   { path: 'manager-home/cinemas', component: CinemasComponent },
   { path: 'manager-home/cinemas/new', component: CinemaEditComponent },//uso mismo componente para editar y crear
   { path: 'manager-home/cinemas/:id', component: CinemaEditComponent }, //cuidado! si la ruta del new queda abajo de la del id entonces toma a "new" como ID y no funciona.
-  
-  {path: 'manager-home/theaters', component: TheatersComponent},
-  {path: 'manager-home/theaters/:cid', component: TheatersByCinemaComponent},
-  {path: 'manager-home/theaters/:cid/new', component: TheaterEditComponent},
-  {path: 'manager-home/theaters/:cid/edit/:tid', component: TheaterEditComponent},
 
-  {path: 'manager-home/showtimes', component: ShowtimesComponent},
-  {path: 'manager-home/showtimes/:cid', component: ShowtimesByCinemaComponent},
-  {path: 'manager-home/showtimes/:cid/new', component: ShowtimesEditComponent},
-  {path: 'manager-home/showtimes/:cid/edit/:sid', component: ShowtimesEditComponent},
+  { path: 'manager-home/theaters', component: TheatersComponent },
+  { path: 'manager-home/theaters/:cid', component: TheatersByCinemaComponent },
+  { path: 'manager-home/theaters/:cid/new', component: TheaterEditComponent },
+  { path: 'manager-home/theaters/:cid/edit/:tid', component: TheaterEditComponent },
 
-  {path: 'manager-home/showtimes', component: ShowtimesComponent},
-  {path: 'manager-home/showtimes/:cid', component: ShowtimesByCinemaComponent},
-  {path: 'manager-home/showtimes/:cid/new', component: ShowtimesEditComponent},
-  {path: 'manager-home/showtimes/:cid/edit/:sid', component: ShowtimesEditComponent},
+  { path: 'manager-home/showtimes', component: ShowtimesComponent },
+  { path: 'manager-home/showtimes/:cid', component: ShowtimesByCinemaComponent },
+  { path: 'manager-home/showtimes/:cid/new', component: ShowtimesEditComponent },
+  { path: 'manager-home/showtimes/:cid/edit/:sid', component: ShowtimesEditComponent },
+
+  { path: 'manager-home/genres', component: GenresComponent },
+  { path: 'manager-home/genres/:gid', component: GenresEditComponent },
+  { path: 'manager-home/genres/new', component: GenresEditComponent },
+
+  { path: 'manager-home/movies', component: MoviesComponent },
+  { path: 'manager-home/movies/new', component: MovieEditComponent },
+  { path: 'manager-home/movies/:id', component: MovieEditComponent },
+
+  { path: 'manager-home/managers', component: ManagersComponent },
+  { path: 'manager-home/managers/new', component: RegisterComponent },
+  { path: 'manager-home/managers/:id', component: RegisterComponent },
+
+  { path: 'register', component: RegisterComponent },
+  { path: 'my-account', component: MyAccountComponent },
+  { path: 'buy', component: BuyComponent },
 
   {path: 'manager-home/genres', component: GenresComponent},
   {path: 'manager-home/genres/:gid', component: GenresEditComponent},
@@ -52,7 +70,6 @@ const routes: Routes = [
   { path: 'buy', component: BuyComponent},
   { path: 'buy-details', component: BuyDetailsComponent},
   { path: "**", component: HomeComponent }
-
 ];
 
 @NgModule({

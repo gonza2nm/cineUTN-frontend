@@ -62,10 +62,10 @@ export class CinemaEditComponent implements OnInit {
             address: this.cinemaData.address
           });
         },
-        error: () => {
+        error: (err) => {
           this.errorMessage = 'An error occurred while fetching the cinema.'
-          console.error('Error getting cinema:');
-          this.router.navigate(['/manager-home/cinemas']);
+          console.error('Error getting cinema:', err.error.message);
+          this.router.navigate(['/manager-home/cinemas']); //por si se quiere meter a un id que no existe.
         }
       });
     }
@@ -78,7 +78,6 @@ export class CinemaEditComponent implements OnInit {
 
     if (this.isEditMode) {
       if (this.cinemaId) { //sin este if no deja entrar al metodo porque dice que puede ser null
-        console.log(this.cinemaData)
         this.cinemaService.updateCinema(this.cinemaId, this.cinemaData).subscribe({
           next: () => {
             this.errorMessage = null; //borra el mensaje de error por si viene alguno viejo arrastrado
@@ -111,11 +110,11 @@ export class CinemaEditComponent implements OnInit {
           this.errorMessage = null;
           this.router.navigate(['/manager-home/cinemas'])
         },
-        error: () => {
+        error: (err) => {
           this.errorMessage = 'An error occurred while deleting the cinema.'
-          console.error('Error deleting cinema:');
+          console.error('Error deleting cinema:', err.error.error);
         }
       })
     }
   }
-}
+} //Ultimo intento reformateo.

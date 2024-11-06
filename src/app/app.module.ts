@@ -25,8 +25,11 @@ import { ShowtimesEditComponent } from './showtimes-edit/showtimes-edit.componen
 import { GenresComponent } from './genres/genres.component';
 import { GenresEditComponent } from './genres-edit/genres-edit.component';
 import { NextReleasesSliderComponent } from './next-releases-slider/next-releases-slider.component';
+import { MoviesComponent } from './movies/movies.component';
+import { MovieEditComponent } from './movie-edit/movie-edit.component';
 import { BuyComponent } from './buy/buy.component';
 import { BuyDetailsComponent } from './buy-details/buy-details.component';
+import { ManagersComponent } from './managers/managers.component';
 
 @NgModule({
   declarations: [
@@ -51,8 +54,11 @@ import { BuyDetailsComponent } from './buy-details/buy-details.component';
     GenresComponent,
     GenresEditComponent,
     NextReleasesSliderComponent,
+    MoviesComponent,
+    MovieEditComponent,
     BuyComponent,
     BuyDetailsComponent,
+    ManagersComponent,
   ],
   imports: [
     BrowserModule,

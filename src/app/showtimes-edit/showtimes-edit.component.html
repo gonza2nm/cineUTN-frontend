@@ -27,6 +27,7 @@
           <option [ngValue]="null" class="text-gray-900">Seleccione la sala</option>
           <option *ngFor="let theater of theaters" [ngValue]="theater.id">Sala {{theater.id}}</option>
         </select>
+        <span *ngIf="theaters.length == 0" class="text-red-500">Este cine no tiene salas, por favor cree una sala</span>
       </div>
       <div class="flex flex-col gap-1">
         <label for="movie">Pelicula</label>
@@ -35,6 +36,8 @@
           <option [ngValue]="null" class="text-gray-900">Seleccione una pelicula</option>
           <option *ngFor="let movie of movies" [ngValue]="movie.id">{{movie.name}}</option>
         </select>
+        <span *ngIf="movies.length == 0" class="text-red-500">Este cine no tiene peliculas asociadas, por favor asocie
+          alguna pelicula al cine</span>
       </div>
       <div class="flex flex-col gap-1">
         <label for="format">Formato</label>
@@ -57,8 +60,8 @@
     <div class="flex flex-col items-end sm:flex-row sm:items-center gap-4"
       [ngClass]="!editMode ? 'sm:justify-end sm:items-end' : 'sm:justify-between' ">
       <button *ngIf="editMode"
-        class="rounded-md border-2 border-black mt-5 bg-red-600 text-white hover:bg-red-800 py-2 px-4"
-        type="button" (click)="deleteShowtime()">Eliminar Funcion</button>
+        class="rounded-md border-2 border-black mt-5 bg-red-600 text-white hover:bg-red-800 py-2 px-4" type="button"
+        (click)="deleteShowtime()">Eliminar Funcion</button>
       <button [ngClass]="!showtimeForm.valid ? ' border-gray-400 text-gray-400' : 'hover:bg-gray-300'"
         class="border-2 py-2 px-4 rounded-md  border-black" [disabled]="!showtimeForm.valid" type="submit">{{ editMode ?
         'Guardar cambios' : 'Agregar Funcion' }}</button>
