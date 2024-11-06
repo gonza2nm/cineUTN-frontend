@@ -54,7 +54,6 @@ export class RegisterComponent {
       name: new FormControl('', [Validators.required]),
       surname: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      //phoneNumber: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
       dni: new FormControl('', [Validators.required]),
       type: new FormControl('user')
