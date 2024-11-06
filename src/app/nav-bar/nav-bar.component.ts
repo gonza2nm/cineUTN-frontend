@@ -12,15 +12,13 @@ import { AuthService } from '../auth.service';
 export class NavBarComponent implements OnInit {
 
   constructor(
-    private service: LoginService, 
     private authService: AuthService,
     private router: Router, 
     private route: ActivatedRoute
   ) {}
 
   isMenuOpen = false;
-  isAuth = false;
-
+  isLoggedIn: boolean = false;
 
   closeMenu() {
     this.isMenuOpen = false;
@@ -29,18 +27,14 @@ export class NavBarComponent implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-
   ngOnInit(): void {
-    // Verifica el estado de autenticación
-    this.authService.isAuthenticated$.subscribe(
-      (authStatus) => {this.isAuth = authStatus}
-    );
+    this.authService.isLoggedIn.subscribe((status: boolean) => {
+      this.isLoggedIn = status; 
+    });
+    this.authService.checkLoginStatus();
   }
 
   logout(){
     this.authService.logout();
   }
-
-
-
 }

@@ -35,7 +35,7 @@ export class MovieDetailsComponent implements OnInit {
   daySelected: string = 'Hoy';
   filteredShows: Show[] = [];
   messageWarning = '';
-  isAuth = false;
+  isLoggedIn = false;
 
   constructor(
     private movieDetailsService: MovieDetailsService,
@@ -60,9 +60,10 @@ export class MovieDetailsComponent implements OnInit {
     this.loadFormats();
 
     // Verifica el estado de autenticación
-    this.authService.isAuthenticated$.subscribe(
-      (authStatus) => {this.isAuth = authStatus}
-    );
+    this.authService.isLoggedIn.subscribe((status: boolean) => {
+      this.isLoggedIn = status; 
+    });
+    this.authService.checkLoginStatus();
   }
 
   loadDataSelector() {
@@ -200,7 +201,7 @@ export class MovieDetailsComponent implements OnInit {
   */
 
   warningModal(show: Show) {
-    if (this.isAuth) {
+    if (this.isLoggedIn) {
       this.router.navigate([`/buy/${show.id}`]);
     } else {
       this.messageWarning = 'Atencion!!\nNecesita estar logueado para poder comprar le entradas.'

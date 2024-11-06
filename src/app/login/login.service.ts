@@ -13,14 +13,11 @@ export class LoginService {
 
   constructor(private http: HttpClient) {}
 
-
   user!: User;
   
-
-
-  getUser(userData: any): Observable<any> {
+  /*getUser(userData: any): Observable<any> {
     return this.http.post<ResponseOne<User> | ResponseWithError>(`${this.url}/login`, userData);
-  }
+  }*/
 
   addUser(userData: any): Observable<any> {
     return this.http.post<ResponseOne<User> | ResponseWithError>(`${this.url}/register`, userData)
@@ -33,19 +30,5 @@ export class LoginService {
   deleteUser() {
 
   }
-
-  //-----------------------------------------------------------------------------
-
-
-  // Método para actualizar el valor del usuario y pasarle a my-account
-  setUser(user: User):void {
-    this.user = user;
-  }
-
-  getOneUser(): User {
-    return this.user;
-  }
-
-
 
 }

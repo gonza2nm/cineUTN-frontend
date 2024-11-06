@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Show, User } from '../interfaces/interfaces.js';
 import { MovieDetailsService } from '../movie-details/movie-details.service';
-import { LoginService } from '../login/login.service';
 import { BuyService } from './buy.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 interface Item {
   descripcion: string;
@@ -45,7 +45,7 @@ export class BuyComponent implements OnInit {
   ];
   total = 0;
   totalEntradas = 0;
-  user: User = this.loginService.getOneUser();
+  user: User | null = this.authService.getUser();
   numbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   showDay = this.movieDatialsService.getFormattedWeekday(this.show.dayAndTime);
   showHour = this.movieDatialsService.getShowHourAndDay(this.show);
@@ -54,7 +54,7 @@ export class BuyComponent implements OnInit {
 
   constructor(
     private movieDatialsService: MovieDetailsService,
-    private loginService: LoginService,
+    private authService: AuthService,
     private buyService: BuyService,
     private route: ActivatedRoute,
     private router: Router
@@ -113,38 +113,40 @@ export class BuyComponent implements OnInit {
     console.log("total de tickets: ",this.totalEntradas)
     this.calculateTotal();
     console.log("total: ",this.total)
-    this.buyService
-      .addBuy('Compra de entradas', this.total, this.user.id)
-      .subscribe({
-        next: (response: any) => {
-          this.buyService
-            .addtickets(this.show.id, response.data.id, this.totalEntradas)
-            .subscribe({
-              next: () => {
-                console.log('Todas las entradas completadas:');
-              },
-              error: () => {
-                console.log('No se pudo realizar la compra de la entrada');
-                // Si ocurre un error al crear las entradas, elimina la compra.
-                this.buyService.deleteBuy(response.data.id).subscribe({
-                  next: () => {
-                    console.log(
-                      'Compra revertida debido al fallo en la creación de entradas'
-                    );
-                  },
-                  error: () => {
-                    console.log('No se pudo revertir la compra');
-                  },
-                });
-              },
-            });
-        },
-
-        error: () => {
-          console.log('No se pudo realizar la compra');
-        },
-      });
+    if(this.user){
+      this.buyService
+        .addBuy('Compra de entradas', this.total, this.user.id)
+        .subscribe({
+          next: (response: any) => {
+            this.buyService
+              .addtickets(this.show.id, response.data.id, this.totalEntradas)
+              .subscribe({
+                next: () => {
+                  console.log('Todas las entradas completadas:');
+                },
+                error: () => {
+                  console.log('No se pudo realizar la compra de la entrada');
+                  // Si ocurre un error al crear las entradas, elimina la compra.
+                  this.buyService.deleteBuy(response.data.id).subscribe({
+                    next: () => {
+                      console.log(
+                        'Compra revertida debido al fallo en la creación de entradas'
+                      );
+                    },
+                    error: () => {
+                      console.log('No se pudo revertir la compra');
+                    },
+                  });
+                },
+              });
+          },
+          error: () => {
+            console.log('No se pudo realizar la compra');
+          },
+        });
+    }
   }
+
   updateQuantity(ticket: Item, change: number) {
     ticket.counter = Math.max(0, ticket.counter + change);
     this.totalEntradas = this.items.reduce(

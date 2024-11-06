@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
+import { AuthService } from './auth.service.js';
 
-import { AuthService } from './auth.service';
 
-describe('AuthService', () => {
+describe('AuthServiceTsService', () => {
   let service: AuthService;
 
   beforeEach(() => {
