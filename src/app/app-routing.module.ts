@@ -53,7 +53,7 @@ const routes: Routes = [
 
   { path: 'register', component: RegisterComponent },
   { path: 'my-account', component: MyAccountComponent },
-  { path: 'buy', component: BuyComponent },
+  { path: 'buy/:id', component: BuyComponent },
 
   { path: "**", component: HomeComponent }
 ];
