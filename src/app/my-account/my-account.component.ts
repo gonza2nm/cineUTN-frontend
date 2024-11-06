@@ -1,23 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginComponent } from '../login/login.component';
-import { LoginService } from '../login/login.service';
 import { User, Buy, Ticket } from '../interfaces/interfaces';
 import { MyAccountService } from './my-account.service';
-import { MovieDetailsService } from '../movie-details/movie-details.service';
-
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-my-account',
   templateUrl: './my-account.component.html',
   styleUrls: ['./my-account.component.css']
 })
-export class MyAccountComponent {
+export class MyAccountComponent implements OnInit {
 
-  constructor(private loginService: LoginService, private mservice: MyAccountService) {}
+  constructor(private authService: AuthService, private mservice: MyAccountService) {}
+  user: User | null = null;
+  buys: Buy[] | undefined;
+  message = '';
+
+  ngOnInit(): void {
+    this.user = this.authService.getUser();
+    this.buys = this.user?.buys;
+    //deberiamos hacer una peticion cada vez que se inicia para conseguir las nuevas compras
+  }
 
   option = 'compras'
   //detaildBuy = false;
-
 
   changeOption(opt: string) {
     this.option = opt
@@ -28,10 +33,5 @@ export class MyAccountComponent {
     this.detaildBuy = opt;
   }
   */
-
-  
-  user: User = this.loginService.getOneUser();
-  buys: Buy[] = this.user.buys;
-  message = '';
 
 }

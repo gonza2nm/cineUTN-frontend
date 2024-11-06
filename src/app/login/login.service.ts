@@ -47,18 +47,4 @@ export class LoginService {
     return this.http.post<ResponseOne<User> | ResponseWithError>(`this.url`, userData)
   }
 
-  //-----------------------------------------------------------------------------
-
-
-  // Método para actualizar el valor del usuario y pasarle a my-account
-  setUser(user: User): void {
-    this.user = user;
-  }
-
-  getOneUser(): User {
-    return this.user;
-  }
-
-
-
 }
