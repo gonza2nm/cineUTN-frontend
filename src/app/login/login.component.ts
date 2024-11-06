@@ -1,21 +1,31 @@
-import { Component } from '@angular/core';
-import { LoginService } from './login.service';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
+
+  isLoggedIn: boolean = false;
 
   constructor(
-    private loginService: LoginService, 
     private authService: AuthService,
     private router: Router
   ) {}
+  ngOnInit(): void {
+    this.authService.isLoggedIn.subscribe((status: boolean) => {
+      this.isLoggedIn = status; 
+    });
+    this.authService.checkLoginStatus();
+    if(this.isLoggedIn){
+      this.router.navigate(["/"])
+    }
+  }
 
   messageError:string = '';
   credentialsError:boolean = false;
@@ -28,23 +38,21 @@ export class LoginComponent {
 
 
   getUser(): void {
-    this.loginService.getUser(this.loginForm.value).subscribe({
-      next: (response) => {
-        this.loginService.setUser(response.data); //Le pasa el valor al service y el service se lo pasa al my-account.
-        this.authService.login(); //Cambia el estado a logueado.
-        this.router.navigate(['/my-account']);
-        console.log(response);
-      },
-
-      error: (error) => {
-        if (error.status === 404) {
+    if (this.loginForm.invalid) {
+      return;
+    }
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (success) => {
+        if (success) {
+          this.router.navigate(['/my-account']);
+        }else{
           this.credentialsError = true;
-          this.messageError = 'Email y/o contraseña incorrectos.';
-        } else {
-          this.othersError = true;
-          this.messageError = 'Ocurrio un error, por favor intente mas tarde.';     
+          this.messageError = 'Email y/o contraseña incorrectos.'; 
         }
-        console.log(error);
+      },
+      error: () => {
+          this.othersError = true;
+          this.messageError = 'Error al realizar el login. Intenta de nuevo.';  
       }
     })
   }
