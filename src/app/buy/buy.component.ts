@@ -4,6 +4,7 @@ import { MovieDetailsService } from '../movie-details/movie-details.service';
 import { BuyService } from './buy.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { TicketService } from '../ticket.service';
 
 interface Item {
   descripcion: string;
@@ -51,13 +52,13 @@ export class BuyComponent implements OnInit {
   showHour = this.movieDatialsService.getShowHourAndDay(this.show);
   step: number = 1;
   buyAcepted = false;
-
-  //user!: User;
+  
 
   constructor(
     private movieDatialsService: MovieDetailsService,
     private authService: AuthService,
     private buyService: BuyService,
+    private ticketService: TicketService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -120,8 +121,8 @@ export class BuyComponent implements OnInit {
         .addBuy('Compra de entradas', this.total, this.user.id)
         .subscribe({
           next: (response: any) => {
-            this.buyService
-              .addtickets(this.show.id, response.data.id, this.totalEntradas)
+            this.ticketService.
+              addtickets(this.show.id, response.data.id, this.totalEntradas)
               .subscribe({
                 next: () => {
                   console.log('Todas las entradas completadas:');
@@ -166,17 +167,4 @@ export class BuyComponent implements OnInit {
 
   //showThaterCantSillas = this.show.theater.numChairs;
   //showThaterCantSillas2 = this.show.theater.numChairs;
-
-
-  /*
-  showp = 
-    {
-      imageLink: 'https://a.ltrbxd.com/resized/film-poster/9/3/6/7/6/93676-guardians-of-the-galaxy-0-1000-0-1500-crop.jpg?v=3cc8cb967f',
-      name: 'Guardianes de la galaxia',
-      diaFuncion: '2024-11-05',
-      horario: '20:00',
-      formato: 'IMAX',
-      idioma: 'Español'
-    }
-  */
 }

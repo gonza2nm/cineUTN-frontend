@@ -9,35 +9,19 @@ import { Buy, ResponseList, ResponseOne, ResponseWithError, Show, Ticket } from 
 export class TicketService {
 
   constructor(private http: HttpClient) { }
-
-
   
   readonly urlTicket = "http://localhost:3000/api/tickets"
   readonly ticketsUrlByBuy = "http://localhost:3000/api/tickets/byBuy"
   readonly ticketsUrlDelted = "http://localhost:3000/api/tickets/remove2"
 
 
-  getTickets(id: number):Observable<any>{
+  getTicketsByBuy(id: number):Observable<any>{
     return this.http.post<ResponseList<Ticket> | ResponseWithError>(`${this.ticketsUrlByBuy}`, {buy: id});
   }
 
-  addTicket(show: number, buy: number,) {
-    this.http.post(`${this.urlTicket}`, { show, buy });
+  updatebuy(id: number, ticketData:any):Observable<any>{
+    return this.http.put<ResponseOne<Buy> | ResponseWithError>(`${this.urlTicket}/${id}`, {ticketData});
   }
-
-  //No terminado
-  updatebuy(id: number, algo:string):Observable<any>{
-    return this.http.put<ResponseOne<Buy> | ResponseWithError>(`${this.urlTicket}/${id}`, {algo});
-  }
-
-  deleteBuy(id: number): Observable<any> {
-    return this.http.delete<ResponseOne<Buy> | ResponseWithError>(`${this.urlTicket}/${id}`)
-  }
-
-
-  //---------------------------------------------------------------------------------
-
-
 
   addtickets(show: number, buy: number, cantidad: number) {
     const requests = [];
@@ -54,7 +38,6 @@ export class TicketService {
   //--------------------------------------------------------------------------------
 
   deleteTickets(buy: number): Observable<any> {
-
     return this.http.post<ResponseOne<Buy> | ResponseWithError>(`${this.ticketsUrlDelted}`, {buy})
   }
 

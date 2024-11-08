@@ -51,6 +51,7 @@ export class MovieDetailsService {
     return dateString
   }
 
+
   getFormattedWeekday(show: Date) {
     const fecha = new Date(show);
     const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];

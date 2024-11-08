@@ -165,11 +165,9 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   getShowHourAndDay(show: Show) {
-    let date = new Date(show.dayAndTime);
-    let hour = date.getUTCHours().toString().padStart(2, '0');
-    let minutes = date.getUTCMinutes().toString().padStart(2, '0');
-    const dateString = `${hour}:${minutes}`;
-    return dateString;
+    let showHour;
+    showHour = this.movieDetailsService.getShowHourAndDay(show);
+    return showHour
   }
 
   handleItemSelected(item: Cinema | { clear: string }): void {

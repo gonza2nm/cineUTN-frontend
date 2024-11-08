@@ -17,6 +17,9 @@ export class LoginComponent implements OnInit{
     private authService: AuthService,
     private router: Router
   ) {}
+
+
+
   ngOnInit(): void {
     this.authService.isLoggedIn.subscribe((status: boolean) => {
       this.isLoggedIn = status; 
@@ -31,6 +34,7 @@ export class LoginComponent implements OnInit{
   credentialsError:boolean = false;
   othersError:boolean = false;
 
+  
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),

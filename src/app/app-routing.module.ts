@@ -21,6 +21,7 @@ import { MovieEditComponent } from './movie-edit/movie-edit.component';
 import { BuyComponent } from './buy/buy.component';
 import { AuthGuard } from './auth.guard';
 import { ManagersComponent } from './managers/managers.component';
+import { BuyDetailsComponent } from './buy-details/buy-details.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -31,6 +32,7 @@ const routes: Routes = [
   
   { path: 'movies/:id', component: MovieDetailsComponent },
   { path: 'buy/:id', component: BuyComponent },
+  { path: 'buy-details/:id', component: BuyDetailsComponent},
   
   { path: 'manager-home', component: ManagerHomeComponent,canActivate: [AuthGuard],}, 
   { path: 'manager-home/cinemas', component: CinemasComponent,canActivate: [AuthGuard], },

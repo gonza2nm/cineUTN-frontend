@@ -7,9 +7,11 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService {
+  
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
 
   isLoggedIn: Observable<boolean> = this.isLoggedInSubject.asObservable();
+
   readonly url = 'http://localhost:3000/api/users';
 
   constructor(private http: HttpClient) { }

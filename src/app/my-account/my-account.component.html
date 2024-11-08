@@ -56,7 +56,7 @@
               {{buy.status}}
             </p>
             <!-- ------------------ -->
-            <button (click)="showDetails(buy)" class="bg-blue-500 text-white font-semibold mt-5 px-6 py-1.5 rounded-lg hover:bg-blue-700">
+            <button *ngIf="buy.status !== 'cancelado'" (click)="showDetails(buy)" class="bg-blue-500 text-white font-semibold mt-5 px-6 py-1.5 rounded-lg hover:bg-blue-700">
               Detalles
             </button>
           </div>

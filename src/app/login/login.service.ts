@@ -27,11 +27,11 @@ export class LoginService {
     return this.http.post<ResponseOne<User> | ResponseWithError>(`${this.url}/register`, userData)
   }
 
-  updateUser(id: number, userData: User): Observable<any> {
+  updateUser(id: number | undefined, userData: User): Observable<any> {
     return this.http.put<ResponseOne<User> | ResponseWithError>(`${this.url}/${id}`, userData)
   }
 
-  deleteUser(id: number): Observable<any> {
+  deleteUser(id: number | undefined): Observable<any> {
     return this.http.delete<ResponseOne<User> | ResponseWithError>(`${this.url}/${id}`)
   }
 
