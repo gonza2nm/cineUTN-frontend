@@ -86,6 +86,11 @@ export class BuyComponent implements OnInit {
   formatHour(show: Show){
     return this.movieDatialsService.getShowHourAndDay(show);
   }
+
+  formatDay(show: Show){
+    return this.movieDatialsService.getFormattedWeekday(show.dayAndTime);
+  }
+
   nextStep() {
     if (this.step < 3) {
       this.step++;

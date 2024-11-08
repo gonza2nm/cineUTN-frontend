@@ -27,7 +27,7 @@
             <img class="w-32 h-44" src="{{show.movie.imageLink}}" alt="{{show.movie.imageLink}}">
             <div>
               <h3 class="text-2xl mb-1.5">{{show.movie.name}}</h3>
-              <p class="text-xl">{{showDay}} a las {{formatHour(show)}}</p>
+              <p class="text-xl">{{formatDay(show)}} a las {{formatHour(show)}}</p>
               <p>{{show.format.formatName}} - {{show.language.languageName}}</p>
             </div>
           </div>
@@ -147,7 +147,7 @@
         <p class="text-lg">Pelicula: {{show.movie.name}}</p>
         <p class="text-lg">Formato: {{show.format.formatName}}</p>
         <p class="text-lg">Idioma: {{show.language.languageName}}</p>
-        <p class="text-lg">Fecha: {{showDay}}</p>
+        <p class="text-lg">Fecha: {{formatDay(show)}}</p>
         <p class="text-lg">Hora: {{formatHour(show)}}</p>
         <p class="text-lg">Sala: {{show.theater.id}}</p>
         <p class="text-lg">Cantidad entradas: {{totalEntradas}}</p>
