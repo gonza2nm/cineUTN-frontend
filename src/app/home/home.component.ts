@@ -15,12 +15,14 @@ export class HomeComponent implements OnInit {
   selectedGenre: Genre | null = null;
   selectedCinema: Cinema | null = null;
   filteredMovies: Movie[] = [];
+  loading = true;
   constructor(private service: HomeService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadCinemas();
     this.loadMovies();
     this.loadGenres();
+    this.loading = false;
   }
 
   navigateToMovie(movie: Movie): void {

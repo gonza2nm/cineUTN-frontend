@@ -48,7 +48,11 @@ export class LoginComponent implements OnInit{
     this.authService.login(this.loginForm.value).subscribe({
       next: (success) => {
         if (success) {
-          this.router.navigate(['/my-account']);
+          if(this.authService.getUser()?.type == "manager"){
+            this.router.navigate(["/manager-home"]);
+          }else{
+            this.router.navigate(['/my-account']);
+          }
         }else{
           this.credentialsError = true;
           this.messageError = 'Email y/o contraseña incorrectos.'; 

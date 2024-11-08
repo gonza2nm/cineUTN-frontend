@@ -27,7 +27,7 @@
             <img class="w-32 h-44" src="{{show.movie.imageLink}}" alt="{{show.movie.imageLink}}">
             <div>
               <h3 class="text-2xl mb-1.5">{{show.movie.name}}</h3>
-              <p class="text-xl">{{showDay}} a las {{showHour}}</p>
+              <p class="text-xl">{{showDay}} a las {{formatHour(show)}}</p>
               <p>{{show.format.formatName}} - {{show.language.languageName}}</p>
             </div>
           </div>
@@ -120,8 +120,11 @@
       <!-- Paso 2: Seleccionar Ubicación -->
       <div [ngClass]="{'block': step === 2, 'hidden': step !== 2}">
         <h3 class="text-2xl mb-10">Elegir asiento</h3>
+        <!--
         <p class="text-xl mb-10 text-blue-600">Acá estaría, si lo podemos hacer, la parte de los asientos :p.</p>
         <p class="text-xl">Estas pelicula se proyecta en la sala: {{2}} que tiene {{32}}</p>
+      -->
+        <p class="text-xl mb-10 text-blue-600">Proximamente agregaremos esta seccion.</p>
         <!--
       <p>Total de entradas: {{totalEntradas}}</p>
       <p>Estas pelicula se proyecta en la sala: {{show.theater.id}} que tiene {{showThaterCantSillas}}</p>
@@ -145,7 +148,7 @@
         <p class="text-lg">Formato: {{show.format.formatName}}</p>
         <p class="text-lg">Idioma: {{show.language.languageName}}</p>
         <p class="text-lg">Fecha: {{showDay}}</p>
-        <p class="text-lg">Hora: {{showHour}}</p>
+        <p class="text-lg">Hora: {{formatHour(show)}}</p>
         <p class="text-lg">Sala: {{show.theater.id}}</p>
         <p class="text-lg">Cantidad entradas: {{totalEntradas}}</p>
 

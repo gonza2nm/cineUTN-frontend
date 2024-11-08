@@ -21,7 +21,7 @@
       block: isMenuOpen,
       hidden: !isMenuOpen
     }" class="mt-1.5 w-full text-white lg:flex lg:items-center lg:w-auto hidden lg:pr-4">
-    <a class="text-white px-3 gap-3 py-2 lg:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit lg:hover:text-slate-900 lg:hover: duration-300 lg:pl-0 lg:ml-4"
+    <a class="text-white px-3 gap-3 py-2 lg:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit lg:hover:text-slate-900 lg:hover: duration-300 lg:pl-0 lg:ml-2"
       [routerLink]="isLoggedIn ? ['/my-account'] : ['/login']" (click)="closeMenu()">
       <div class="w-8 h-8 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle"
@@ -36,7 +36,7 @@
     <!-- 
     <a
       *ngIf="isLoggedIn === true"
-      class="text-white px-3 gap-3 py-2 lg:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit lg:hover:text-slate-900 lg:hover: duration-300 lg:pl-0 lg:ml-4"
+      class="text-white px-3 gap-3 py-2 lg:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit lg:hover:text-slate-900 lg:hover: duration-300 lg:pl-0 lg:ml-2"
       [routerLink]="['/my-account']"
       (click)="closeMenu()"
     >
@@ -59,7 +59,12 @@
       Mi cuenta
     </a>
     -->
-    <a class="text-white px-3 gap-3 py-2 lg:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit lg:hover:text-slate-900 lg:hover: duration-300 lg:pl-0 lg:ml-4"
+    <a *ngIf="isManager"
+      class="text-white px-3 gap-3 py-2 lg:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit lg:hover:text-slate-900 lg:hover: duration-300 lg:pl-0 lg:ml-2"
+      [routerLink]="['/manager-home']" (click)="closeMenu()">
+      Panel Enc.
+    </a>
+    <a class="text-white px-3 gap-3 py-2 lg:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit lg:hover:text-slate-900 lg:hover: duration-300 lg:pl-0 lg:ml-2"
       [routerLink]="['/']" (click)="closeMenu()">
       <div class="w-8 h-8 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-film"
@@ -70,7 +75,7 @@
       </div>
       Cartelera
     </a>
-    <a class="text-white px-3 gap-3 py-2 lg:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit lg:hover:text-slate-900 lg:hover: duration-300 lg:pl-0 lg:ml-4"
+    <a class="text-white px-3 gap-3 py-2 lg:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit lg:hover:text-slate-900 lg:hover: duration-300 lg:pl-0 lg:ml-2"
       (click)="closeMenu()">
       <div class="w-8 h-8 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" class="ionicon" viewBox="0 0 512 512">
@@ -90,7 +95,7 @@
       </div>
       Comidas y Bebidas
     </a>
-    <a class="text-white px-3 gap-3 py-2 lg:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit lg:hover:text-slate-900 lg:hover: duration-300 lg:pl-0 lg:ml-4"
+    <a class="text-white px-3 gap-3 py-2 lg:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit lg:hover:text-slate-900 lg:hover: duration-300 lg:pl-0 lg:ml-2"
       (click)="closeMenu()">
       <div class="w-8 h-8 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-tags"
@@ -105,7 +110,7 @@
     </a>
 
     <a *ngIf="isLoggedIn"
-      class="text-white px-3 gap-3 py-2 lg:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit lg:hover:text-slate-900 lg:hover: duration-300 lg:pl-0 lg:ml-4"
+      class="text-white px-3 gap-3 py-2 lg:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 lg:hover:bg-inherit lg:hover:text-slate-900 lg:hover: duration-300 lg:pl-0 lg:ml-2"
       [routerLink]="['/login']" (click)="logout()" (click)="closeMenu()">
 
       Cerrar sesión

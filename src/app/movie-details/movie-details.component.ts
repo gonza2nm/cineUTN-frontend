@@ -173,6 +173,8 @@ export class MovieDetailsComponent implements OnInit {
   handleItemSelected(item: Cinema | { clear: string }): void {
     if ('clear' in item) {
       this.cinema = null;
+      this.shows = []
+      this.filteredShows = [];
     } else {
       this.cinema = item;
       this.loadShows(this.movieId, this.cinema.id);

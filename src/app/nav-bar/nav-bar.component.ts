@@ -17,6 +17,7 @@ export class NavBarComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
+  isManager = this.authService.getUser()?.type == "manager" ? true : false;
   isMenuOpen = false;
   isLoggedIn: boolean = false;
 
