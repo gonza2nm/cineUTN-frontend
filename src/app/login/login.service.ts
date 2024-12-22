@@ -20,7 +20,7 @@ export class LoginService {
 
 
   getUser(userData: any): Observable<any> {
-    return this.http.post<ResponseOne<User> | ResponseWithError>(`${this.url}/login`, userData);
+    return this.http.post<ResponseOne<User> | ResponseWithError>(`${this.url}/login`, userData, {withCredentials: true});
   }
 
   addUser(userData: User): Observable<any> {
