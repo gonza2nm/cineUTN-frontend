@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ResponseOne,Cinema, ResponseList, ResponseWithError} from "../interfaces/interfaces";
+import { ResponseOne, Cinema, ResponseList, ResponseWithError } from "../interfaces/interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class CinemaService {
 
   updateCinema(id: number, cinema: Cinema): Observable<any> {
     return this.http
-      .put<ResponseOne<Cinema> | ResponseWithError>(`${this.apiUrl}/${id}`, cinema)
+      .put<ResponseOne<Cinema> | ResponseWithError>(`${this.apiUrl}/${id}`, cinema, { withCredentials: true })
   }
 
   addCinema(cinema: Cinema): Observable<any> {
