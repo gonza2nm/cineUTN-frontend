@@ -17,7 +17,7 @@ export class ShowtimesByCinemaService {
   readonly showtimeUrl = 'http://localhost:3000/api/shows';
   readonly movieUrl = 'http://localhost:3000/api/movies';
   readonly cinemaUrl = 'http://localhost:3000/api/cinemas';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getCinema(id: number): Observable<any> {
     return this.http.get<ResponseOne<Cinema> | ResponseWithError>(
@@ -51,20 +51,20 @@ export class ShowtimesByCinemaService {
   addShowtime(show: Show): Observable<any> {
     return this.http.post<ResponseOne<Show> | ResponseWithError>(
       this.showtimeUrl,
-      show
+      show, { withCredentials: true }
     );
   }
 
   updateShowtime(id: number, show: Show): Observable<any> {
     return this.http.put<ResponseOne<Show> | ResponseWithError>(
       `${this.showtimeUrl}/${id}`,
-      show
+      show, { withCredentials: true }
     );
   }
 
   deleteShowtime(id: number): Observable<any> {
     return this.http.delete<ResponseOne<Show> | ResponseWithError>(
-      `${this.showtimeUrl}/${id}`
+      `${this.showtimeUrl}/${id}`, { withCredentials: true }
     );
   }
 }

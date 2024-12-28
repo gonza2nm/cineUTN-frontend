@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable} from 'rxjs';
-import { Buy, ResponseList, ResponseOne, ResponseWithError, Show, Ticket } from './interfaces/interfaces';
+import { forkJoin, Observable } from 'rxjs';
+import { Buy, ResponseList, ResponseOne, ResponseWithError, Show, Ticket } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -9,18 +9,18 @@ import { Buy, ResponseList, ResponseOne, ResponseWithError, Show, Ticket } from 
 export class TicketService {
 
   constructor(private http: HttpClient) { }
-  
+
   readonly urlTicket = "http://localhost:3000/api/tickets"
   readonly ticketsUrlByBuy = "http://localhost:3000/api/tickets/byBuy"
   readonly ticketsUrlDelted = "http://localhost:3000/api/tickets/remove2"
 
 
-  getTicketsByBuy(id: number):Observable<any>{
-    return this.http.post<ResponseList<Ticket> | ResponseWithError>(`${this.ticketsUrlByBuy}`, {buy: id});
+  getTicketsByBuy(id: number): Observable<any> {
+    return this.http.post<ResponseList<Ticket> | ResponseWithError>(`${this.ticketsUrlByBuy}`, { buy: id });
   }
 
-  updatebuy(id: number, ticketData:any):Observable<any>{
-    return this.http.put<ResponseOne<Buy> | ResponseWithError>(`${this.urlTicket}/${id}`, {ticketData});
+  updatebuy(id: number, ticketData: any): Observable<any> {
+    return this.http.put<ResponseOne<Buy> | ResponseWithError>(`${this.urlTicket}/${id}`, { ticketData });
   }
 
   addtickets(show: number, buy: number, cantidad: number) {
@@ -38,7 +38,7 @@ export class TicketService {
   //--------------------------------------------------------------------------------
 
   deleteTickets(buy: number): Observable<any> {
-    return this.http.post<ResponseOne<Buy> | ResponseWithError>(`${this.ticketsUrlDelted}`, {buy})
+    return this.http.post<ResponseOne<Buy> | ResponseWithError>(`${this.ticketsUrlDelted}`, { buy })
   }
 
 
@@ -47,7 +47,7 @@ export class TicketService {
 
   readonly urlShow = 'http://localhost:3000/api/shows'
 
-  getShow(id: number):Observable<any> {
+  getShow(id: number): Observable<any> {
     return this.http.get<ResponseOne<Show> | ResponseWithError>(`${this.urlShow}/${id}`);
   }
 }

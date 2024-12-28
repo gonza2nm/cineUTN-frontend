@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ResponseOne,Cinema, ResponseList, ResponseWithError} from "../interfaces/interfaces";
+import { ResponseOne, Cinema, ResponseList, ResponseWithError } from "../interfaces/interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -27,16 +27,16 @@ export class CinemaService {
 
   updateCinema(id: number, cinema: Cinema): Observable<any> {
     return this.http
-      .put<ResponseOne<Cinema> | ResponseWithError>(`${this.apiUrl}/${id}`, cinema)
+      .put<ResponseOne<Cinema> | ResponseWithError>(`${this.apiUrl}/${id}`, cinema, { withCredentials: true })
   }
 
   addCinema(cinema: Cinema): Observable<any> {
     return this.http
-      .post<ResponseOne<Cinema> | ResponseWithError>(this.apiUrl, cinema) //no hace falta el `${}` porque no se incluye ningun valor dinamico en al url
+      .post<ResponseOne<Cinema> | ResponseWithError>(this.apiUrl, cinema, { withCredentials: true }) //no hace falta el `${}` porque no se incluye ningun valor dinamico en al url
   }
 
   deleteCinema(id: number): Observable<any> {
     return this.http
-      .delete<ResponseOne<Cinema> | ResponseWithError>(`${this.apiUrl}/${id}`)
+      .delete<ResponseOne<Cinema> | ResponseWithError>(`${this.apiUrl}/${id}`, { withCredentials: true })
   }
 }
