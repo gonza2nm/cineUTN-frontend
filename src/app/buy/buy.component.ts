@@ -4,7 +4,7 @@ import { MovieDetailsService } from '../movie-details/movie-details.service';
 import { BuyService } from './buy.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { TicketService } from '../tickets/ticket.service.js';
+import { TicketService } from '../tickets/ticket.service';
 
 interface Item {
   descripcion: string;
