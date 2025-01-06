@@ -31,16 +31,16 @@ export class MovieService {
 
   updateMovie(id: number, movie: Movie): Observable<any> {
     return this.http
-      .put<ResponseOne<Movie> | ResponseWithError>(`${this.urlMovies}/${id}`, movie, { withCredentials: true })
+      .put<ResponseOne<Movie> | ResponseWithError>(`${this.urlMovies}/${id}`, movie)
   }
 
   addMovie(movie: Movie): Observable<any> {
     return this.http
-      .post<ResponseOne<Movie> | ResponseWithError>(this.urlMovies, movie, { withCredentials: true }) //no hace falta el `${}` porque no se incluye ningun valor dinamico en al url
+      .post<ResponseOne<Movie> | ResponseWithError>(this.urlMovies, movie) 
   }
 
   deleteMovie(id: number): Observable<any> {
     return this.http
-      .delete<ResponseOne<Movie> | ResponseWithError>(`${this.urlMovies}/${id}`, { withCredentials: true })
+      .delete<ResponseOne<Movie> | ResponseWithError>(`${this.urlMovies}/${id}`)
   }
 }

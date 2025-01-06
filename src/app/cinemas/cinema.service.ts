@@ -27,16 +27,16 @@ export class CinemaService {
 
   updateCinema(id: number, cinema: Cinema): Observable<any> {
     return this.http
-      .put<ResponseOne<Cinema> | ResponseWithError>(`${this.apiUrl}/${id}`, cinema, { withCredentials: true })
+      .put<ResponseOne<Cinema> | ResponseWithError>(`${this.apiUrl}/${id}`, cinema)
   }
 
   addCinema(cinema: Cinema): Observable<any> {
     return this.http
-      .post<ResponseOne<Cinema> | ResponseWithError>(this.apiUrl, cinema, { withCredentials: true }) //no hace falta el `${}` porque no se incluye ningun valor dinamico en al url
+      .post<ResponseOne<Cinema> | ResponseWithError>(this.apiUrl, cinema)
   }
 
   deleteCinema(id: number): Observable<any> {
     return this.http
-      .delete<ResponseOne<Cinema> | ResponseWithError>(`${this.apiUrl}/${id}`, { withCredentials: true })
+      .delete<ResponseOne<Cinema> | ResponseWithError>(`${this.apiUrl}/${id}`)
   }
 }

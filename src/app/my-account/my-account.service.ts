@@ -14,17 +14,6 @@ export class MyAccountService {
 
   buy!: Buy;
 
-  /*
-  setPurchase(purchase: Buy):void {
-    this.buy = purchase;
-  }
-
-  getOnePurchase(): Buy {
-    return this.buy;
-  }
-  */
-
-
   getBuyByUser(id: number):Observable<any>{
     return this.http.post<ResponseList<Buy> | ResponseWithError>(`${this.ticketsUrlByUser}`, {user: id});
   }

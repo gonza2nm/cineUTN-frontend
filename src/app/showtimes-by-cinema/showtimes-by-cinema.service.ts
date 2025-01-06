@@ -49,22 +49,14 @@ export class ShowtimesByCinemaService {
   }
 
   addShowtime(show: Show): Observable<any> {
-    return this.http.post<ResponseOne<Show> | ResponseWithError>(
-      this.showtimeUrl,
-      show, { withCredentials: true }
-    );
+    return this.http.post<ResponseOne<Show> | ResponseWithError>(this.showtimeUrl, show);
   }
 
   updateShowtime(id: number, show: Show): Observable<any> {
-    return this.http.put<ResponseOne<Show> | ResponseWithError>(
-      `${this.showtimeUrl}/${id}`,
-      show, { withCredentials: true }
-    );
+    return this.http.put<ResponseOne<Show> | ResponseWithError>(`${this.showtimeUrl}/${id}`, show);
   }
 
   deleteShowtime(id: number): Observable<any> {
-    return this.http.delete<ResponseOne<Show> | ResponseWithError>(
-      `${this.showtimeUrl}/${id}`, { withCredentials: true }
-    );
+    return this.http.delete<ResponseOne<Show> | ResponseWithError>(`${this.showtimeUrl}/${id}`);
   }
 }

@@ -20,7 +20,7 @@ export class LoginService {
 
 
   getUser(userData: any): Observable<any> {
-    return this.http.post<ResponseOne<User> | ResponseWithError>(`${this.url}/login`, userData, { withCredentials: true });
+    return this.http.post<ResponseOne<User> | ResponseWithError>(`${this.url}/login`, userData);
   }
 
   addUser(userData: User): Observable<any> {
@@ -28,23 +28,23 @@ export class LoginService {
   }
 
   updateUser(id: number | undefined, userData: User): Observable<any> {
-    return this.http.put<ResponseOne<User> | ResponseWithError>(`${this.url}/${id}`, userData, { withCredentials: true })
+    return this.http.put<ResponseOne<User> | ResponseWithError>(`${this.url}/${id}`, userData)
   }
 
   deleteUser(id: number | undefined): Observable<any> {
-    return this.http.delete<ResponseOne<User> | ResponseWithError>(`${this.url}/${id}`, { withCredentials: true })
+    return this.http.delete<ResponseOne<User> | ResponseWithError>(`${this.url}/${id}`)
   }
 
   getAllManagers(): Observable<any> {
-    return this.http.get<ResponseList<User> | ResponseWithError>(`${this.url}/managers`, { withCredentials: true })
+    return this.http.get<ResponseList<User> | ResponseWithError>(`${this.url}/managers`)
   }
 
   getOneManager(id: number): Observable<any> {
-    return this.http.get<ResponseOne<User> | ResponseWithError>(`${this.url}/managers/${id}`, { withCredentials: true })
+    return this.http.get<ResponseOne<User> | ResponseWithError>(`${this.url}/managers/${id}`)
   }
 
   addManager(userData: any): Observable<any> {
-    return this.http.post<ResponseOne<User> | ResponseWithError>(`this.url`, userData, { withCredentials: true })
+    return this.http.post<ResponseOne<User> | ResponseWithError>(`this.url`, userData)
   }
 
 }

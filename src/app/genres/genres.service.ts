@@ -21,15 +21,15 @@ export class GenresService {
   }
 
   addGenre(genre: Genre): Observable<any> {
-    return this.http.post<ResponseOne<Genre> | ResponseWithError>(this.genresUrl, genre, { withCredentials: true });
+    return this.http.post<ResponseOne<Genre> | ResponseWithError>(this.genresUrl, genre);
   }
 
   updateGenre(id: number, genre: Genre): Observable<any> {
-    return this.http.put<ResponseOne<Genre> | ResponseWithError>(`${this.genresUrl}/${id}`, genre, { withCredentials: true });
+    return this.http.put<ResponseOne<Genre> | ResponseWithError>(`${this.genresUrl}/${id}`, genre);
   }
 
   deleteGenre(id: number): Observable<any> {
-    return this.http.delete<ResponseOne<Genre> | ResponseWithError>(`${this.genresUrl}/${id}`, { withCredentials: true });
+    return this.http.delete<ResponseOne<Genre> | ResponseWithError>(`${this.genresUrl}/${id}`);
   }
 
 }

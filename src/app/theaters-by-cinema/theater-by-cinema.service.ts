@@ -23,14 +23,14 @@ export class TheaterByCinemaService {
   }
 
   updateTheater(id: number, theater: Theater): Observable<any> {
-    return this.http.put<ResponseOne<Theater> | ResponseWithError>(`${this.theaterUrl}/${id}`, theater, { withCredentials: true });
+    return this.http.put<ResponseOne<Theater> | ResponseWithError>(`${this.theaterUrl}/${id}`, theater);
   }
 
   addTheater(theater: Theater): Observable<any> {
-    return this.http.post<ResponseOne<Theater> | ResponseWithError>(this.theaterUrl, theater, { withCredentials: true });
+    return this.http.post<ResponseOne<Theater> | ResponseWithError>(this.theaterUrl, theater);
   }
 
   deleteTheater(id: number) {
-    return this.http.delete<ResponseOne<Theater> | ResponseWithError>(`${this.theaterUrl}/${id}`, { withCredentials: true });
+    return this.http.delete<ResponseOne<Theater> | ResponseWithError>(`${this.theaterUrl}/${id}`);
   }
 }
