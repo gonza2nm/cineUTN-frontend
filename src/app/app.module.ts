@@ -30,7 +30,7 @@ import { MovieEditComponent } from './movie-edit/movie-edit.component';
 import { BuyComponent } from './buy/buy.component';
 import { BuyDetailsComponent } from './buy-details/buy-details.component';
 import { ManagersComponent } from './managers/managers.component';
-import { AuthInterceptor } from './auth.interceptor';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -70,9 +70,9 @@ import { AuthInterceptor } from './auth.interceptor';
   ],
   providers: [
     {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
     }
   ],
   bootstrap: [AppComponent],

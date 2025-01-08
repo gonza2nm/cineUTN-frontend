@@ -3,7 +3,7 @@ import { Show, User } from '../interfaces/interfaces.js';
 import { MovieDetailsService } from '../movie-details/movie-details.service';
 import { BuyService } from './buy.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../auth/auth.service.js';
 import { TicketService } from '../tickets/ticket.service';
 
 interface Item {
