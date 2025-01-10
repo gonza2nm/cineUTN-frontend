@@ -32,6 +32,7 @@ import { BuyDetailsComponent } from './buy-details/buy-details.component';
 import { ManagersComponent } from './managers/managers.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { EventsComponent } from './events/events.component';
+import { EventEditComponent } from './event-edit/event-edit.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { EventsComponent } from './events/events.component';
     BuyDetailsComponent,
     ManagersComponent,
     EventsComponent,
+    EventEditComponent,
   ],
   imports: [
     BrowserModule,
