@@ -1,1 +1,47 @@
-<p>events works!</p>
+<!--Ancho maximo y centrado, para que se vea bien en diferentes pantallas-->
+<div class="max-w-4xl mx-auto ">
+
+  <div class="flex justify-between">
+    <!-- Boton para volver-->
+    <button type="button" routerLink="/manager-home"
+      class="rounded-md border border-black mt-5 hover:bg-gray-300 ml-3 px-3 py-1">
+      &larr; Volver
+    </button>
+
+    <!-- Boton para new cinema-->
+    <button type="button" routerLink="/manager-home/events/new"
+      class="rounded-md border border-black mt-5 hover:bg-gray-300 mr-3 px-3 py-1">
+      Agregar Nuevo Evento
+    </button>
+  </div>
+
+  <!--Texto superior-->
+  <h1 class=" text-2xl font-bold text-center mb-5">Seleccione un evento para administrar</h1>
+
+  <!--Lista de eventos-->
+  <ul>
+    <li *ngFor="let event of events" class="border-2 border-black mx-3 mb-3">
+      
+      <button [routerLink]="['/manager-home/events', event.id]" class="w-full text-left hover:bg-gray-300 p-2">
+        <!--ese event.id es la variable que defini en el ngFor-->
+        <div class="ml-1">
+          {{event.name}}
+        </div>
+        <div class="ml-8">
+          {{event.description}}
+        </div>
+      </button>
+    </li>
+  </ul>
+
+  <!--Muestra mensaje si no hay eventos-->
+  <p *ngIf="events.length === 0 && !errorMessage && !loading" class="text-xl  text-red-600 text-center">
+    No existen eventos creados. Por favor, intente crear uno.
+  </p>
+
+  <p *ngIf="errorMessage"
+    class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+    {{ errorMessage }}
+  </p>
+
+</div>

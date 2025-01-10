@@ -79,4 +79,12 @@ export interface User {
   cinema?: Cinema; //Opcionales por si es user
   buys: Buy[]; //Opcionales por si es manager
 }
+export interface Event {
+  id: number;
+  name: string;
+  description: string;
+  startDate: Date;
+  finishDate: Date;
+  cinemas: number[];
+}
 
