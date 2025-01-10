@@ -23,6 +23,7 @@ import { AuthManagerGuard } from './auth/authManager.guard';
 import { ManagersComponent } from './managers/managers.component';
 import { BuyDetailsComponent } from './buy-details/buy-details.component';
 import { AuthGeneralGuard } from './auth/authGeneral.guard';
+import { EventsComponent } from './events/events.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'buy-details/:id', component: BuyDetailsComponent, canActivate: [AuthGeneralGuard] },
 
   { path: 'manager-home', component: ManagerHomeComponent, canActivate: [AuthManagerGuard], },
+
   { path: 'manager-home/cinemas', component: CinemasComponent, canActivate: [AuthManagerGuard], },
   { path: 'manager-home/cinemas/new', component: CinemaEditComponent, canActivate: [AuthManagerGuard], },//uso mismo componente para editar y crear
   { path: 'manager-home/cinemas/:id', component: CinemaEditComponent, canActivate: [AuthManagerGuard], }, //cuidado! si la ruta del new queda abajo de la del id entonces toma a "new" como ID y no funciona.
@@ -65,6 +67,8 @@ const routes: Routes = [
   { path: 'manager-home/genres', component: GenresComponent, canActivate: [AuthManagerGuard] },
   { path: 'manager-home/genres/:gid', component: GenresEditComponent, canActivate: [AuthManagerGuard] },
   { path: 'manager-home/genres/new', component: GenresEditComponent, canActivate: [AuthManagerGuard] },
+
+  { path: 'manager-home/events', component: EventsComponent, canActivate: [AuthManagerGuard] },
 
   { path: "**", component: HomeComponent }
 ];
