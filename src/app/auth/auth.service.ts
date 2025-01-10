@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ResponseOne, User } from './interfaces/interfaces.js';
+import { ResponseOne, User } from '../interfaces/interfaces.js';
 import { BehaviorSubject, catchError, map, Observable, of, } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 

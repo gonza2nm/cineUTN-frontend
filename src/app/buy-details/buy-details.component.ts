@@ -4,7 +4,7 @@ import { Buy, Movie, Show, Ticket, User } from '../interfaces/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MyAccountService } from '../my-account/my-account.service';
 import { TicketService } from '../tickets/ticket.service';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../auth/auth.service';
 import { MovieDetailsService } from '../movie-details/movie-details.service';
 
 @Component({

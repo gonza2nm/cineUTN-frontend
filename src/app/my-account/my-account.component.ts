@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User, Buy, Ticket } from '../interfaces/interfaces';
 import { MyAccountService } from './my-account.service';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../login/login.service';
@@ -14,11 +14,11 @@ import { LoginService } from '../login/login.service';
 export class MyAccountComponent implements OnInit {
 
   constructor(
-    private authService: AuthService, 
+    private authService: AuthService,
     private loginService: LoginService,
     private myAccountservice: MyAccountService,
     private router: Router
-  ) {}
+  ) { }
 
   user: User | null = null;
   buys: Buy[] | undefined;
@@ -28,7 +28,7 @@ export class MyAccountComponent implements OnInit {
   showDetails$ = false;
   userEditForm!: FormGroup;
   messageError = '';
-  errorMessage:string | null = null
+  errorMessage: string | null = null
   band: boolean = false;
 
   ngOnInit(): void {
@@ -38,7 +38,7 @@ export class MyAccountComponent implements OnInit {
     }
     //this.buys = this.user?.buys;
     //deberiamos hacer una peticion cada vez que se inicia para conseguir las nuevas compras
-  
+
 
     this.userEditForm = new FormGroup({
       name: new FormControl(this.user?.name, [Validators.required]),
@@ -48,7 +48,7 @@ export class MyAccountComponent implements OnInit {
       dni: new FormControl(this.user?.dni, [Validators.required]),
       type: new FormControl('user')
     });
-    
+
   }
 
   changeOption(opt: string) {
@@ -67,13 +67,13 @@ export class MyAccountComponent implements OnInit {
         this.band = true;
         this.messageError = '¡Los cambios se guardaron correctamente!';
         console.log(response);
-      }, 
+      },
       error: (error) => {
         this.messageError = 'Ocurrio un error, por favor intente mas tarde.';
         console.log(error);
       }
     })
-    
+
   }
 
   deleteUser() {
@@ -104,7 +104,7 @@ export class MyAccountComponent implements OnInit {
       },
     });
   }
-  
+
 
 
 }
