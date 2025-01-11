@@ -36,7 +36,7 @@ export class MovieService {
 
   addMovie(movie: Movie): Observable<any> {
     return this.http
-      .post<ResponseOne<Movie> | ResponseWithError>(this.urlMovies, movie) //no hace falta el `${}` porque no se incluye ningun valor dinamico en al url
+      .post<ResponseOne<Movie> | ResponseWithError>(this.urlMovies, movie) 
   }
 
   deleteMovie(id: number): Observable<any> {

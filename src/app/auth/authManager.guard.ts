@@ -3,7 +3,7 @@ import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { map } from 'rxjs';
 
-export const AuthGuard: CanActivateFn = (route, state) => {
+export const AuthManagerGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService); // Inyectar el servicio
   const router = inject(Router);
   return authService.isLoggedIn.pipe(
@@ -18,7 +18,6 @@ export const AuthGuard: CanActivateFn = (route, state) => {
         }
       } else {
         router.navigate(['/login']);
-        console.log("no pase")
         return false;
       }
     })

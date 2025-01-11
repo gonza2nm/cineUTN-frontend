@@ -2,50 +2,23 @@
   <app-slider [movies]="movies"></app-slider>
 </section>
 <section>
-  <div
-    class="flex flex-row flex-wrap items-center justify-center gap-4 py-4 px-4"
-  >
-    <app-selector
-      filter="Cine"
-      placeholder="Seleccionar Cine"
-      [items]="cinemas"
-      [selectedValue]="null"
-      (change)="onSelect($event)"
-      (selectionChange)="handleItemSelected($event)"
-    ></app-selector>
-    <app-selector
-      filter="Genero"
-      placeholder="Seleccionar Genero"
-      [items]="genres"
-      [selectedValue]="null"
-      (change)="onSelect($event)"
-      (selectionChange)="handleItemSelected($event)"
-    ></app-selector>
+  <div class="flex flex-row flex-wrap items-center justify-center gap-4 py-4 px-4">
+    <app-selector filter="Cine" placeholder="Seleccionar Cine" [items]="cinemas" [selectedValue]="null"
+      (change)="onSelect($event)" (selectionChange)="handleItemSelected($event)"></app-selector>
+    <app-selector filter="Genero" placeholder="Seleccionar Genero" [items]="genres" [selectedValue]="null"
+      (change)="onSelect($event)" (selectionChange)="handleItemSelected($event)"></app-selector>
   </div>
   <div class="w-full flex justify-center" id="movies">
-    <div
-      class="flex flex-wrap flex-row justify-around md:justify-center my-6 mx-4 gap-9"
-    >
-      <p
-        *ngIf="filteredMovies.length === 0 || filteredMovies === null"
-        class="text-xl py-32 text-red-600 text-center"
-      >
+    <div class="flex flex-wrap flex-row justify-around md:justify-center my-6 mx-4 gap-9">
+      <p *ngIf="(filteredMovies.length === 0 || filteredMovies === null) && loading"
+        class="text-xl py-32 text-red-600 text-center">
         Lo lamento, no se encontraron peliculas que cumplan esta condicion
       </p>
-      <a
-        class="flex w-40 cursor-pointer flex-wrap my-5 mx-4"
-        *ngFor="let movie of filteredMovies"
-        [title]="movie.name"
-        (click)="navigateToMovie(movie)"
-      >
-        <img
-          class="object-cover w-full h-full"
-          src="{{ movie.imageLink }}"
-          alt="{{ movie.name }}"
-        />
+      <a class="flex w-40 cursor-pointer flex-wrap my-5 mx-4" *ngFor="let movie of filteredMovies" [title]="movie.name"
+        (click)="navigateToMovie(movie)">
+        <img class="object-cover w-full h-full" src="{{ movie.imageLink }}" alt="{{ movie.name }}" />
         <p
-          class="bg-blue-900 text-center text-white max-h-8 py-0.5 px-2 min-w-full overflow-hidden text-ellipsis whitespace-nowrap"
-        >
+          class="bg-blue-900 text-center text-white max-h-8 py-0.5 px-2 min-w-full overflow-hidden text-ellipsis whitespace-nowrap">
           {{ movie.name }}
         </p>
       </a>

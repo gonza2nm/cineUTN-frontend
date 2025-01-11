@@ -8,7 +8,7 @@ import {
   Movie,
   Show,
 } from '../interfaces/interfaces';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../auth/auth.service';
 
 
 @Component({
@@ -42,7 +42,7 @@ export class MovieDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
 
   ngOnInit() {
@@ -61,7 +61,7 @@ export class MovieDetailsComponent implements OnInit {
 
     // Verifica el estado de autenticación
     this.authService.isLoggedIn.subscribe((status: boolean) => {
-      this.isLoggedIn = status; 
+      this.isLoggedIn = status;
     });
     this.authService.checkLoginStatus();
   }
@@ -85,7 +85,7 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   getNextDays(): { name: string; date: Date }[] {
-    const daysOfWeek = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado',];
+    const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado',];
     const daysArray: { name: string; date: Date }[] = [];
     const today = new Date();
     const todayIndex = today.getDay();
@@ -173,6 +173,8 @@ export class MovieDetailsComponent implements OnInit {
   handleItemSelected(item: Cinema | { clear: string }): void {
     if ('clear' in item) {
       this.cinema = null;
+      this.shows = []
+      this.filteredShows = [];
     } else {
       this.cinema = item;
       this.loadShows(this.movieId, this.cinema.id);

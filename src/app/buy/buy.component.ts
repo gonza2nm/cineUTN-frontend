@@ -3,8 +3,8 @@ import { Show, User } from '../interfaces/interfaces.js';
 import { MovieDetailsService } from '../movie-details/movie-details.service';
 import { BuyService } from './buy.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../auth.service';
-import { TicketService } from '../ticket.service';
+import { AuthService } from '../auth/auth.service';
+import { TicketService } from '../tickets/ticket.service';
 
 interface Item {
   descripcion: string;
@@ -21,22 +21,23 @@ export class BuyComponent implements OnInit {
   errorMessage: string | null = null;
   showId!: number;
   show: Show = {
-    id:0,
-    dayAndTime:new Date(),
-    finishTime:new Date(),
-    format: {id:0,formatName:""},
-    language:{id:0, languageName:""},
-    movie:{cinemas:[],
-      description:"",
-      formats:[],
-      genres:[],
-      id:0,
-      imageLink:"",
+    id: 0,
+    dayAndTime: new Date(),
+    finishTime: new Date(),
+    format: { id: 0, formatName: "" },
+    language: { id: 0, languageName: "" },
+    movie: {
+      cinemas: [],
+      description: "",
+      formats: [],
+      genres: [],
+      id: 0,
+      imageLink: "",
       languages: [],
-      name:""
+      name: ""
     },
-    theater:{cinema:0,id:0,numChairs:0},
-    tickets:[]
+    theater: { cinema: 0, id: 0, numChairs: 0 },
+    tickets: []
   }
   loading = true;
   items: Item[] = [
@@ -52,9 +53,10 @@ export class BuyComponent implements OnInit {
   //showHour = this.movieDatialsService.getShowHourAndDay(this.show);
   showDay: string = '';
   showHour: string = '';
+  //showDay = this.movieDatialsService.getFormattedWeekday(this.show.dayAndTime);
   step: number = 1;
   buyAcepted = false;
-  
+
 
   constructor(
     private movieDatialsService: MovieDetailsService,
@@ -63,7 +65,7 @@ export class BuyComponent implements OnInit {
     private ticketService: TicketService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.showId = this.route.snapshot.params['id'];
@@ -86,6 +88,14 @@ export class BuyComponent implements OnInit {
       });
       this.loading = false;
     }
+  }
+
+  formatHour(show: Show) {
+    return this.movieDatialsService.getShowHourAndDay(show);
+  }
+
+  formatDay(show: Show) {
+    return this.movieDatialsService.getFormattedWeekday(show.dayAndTime);
   }
 
   nextStep() {
@@ -117,10 +127,10 @@ export class BuyComponent implements OnInit {
   }
   confirmPurchase() {
     this.buyAcepted = true;
-    console.log("total de tickets: ",this.totalEntradas)
+    console.log("total de tickets: ", this.totalEntradas)
     this.calculateTotal();
-    console.log("total: ",this.total)
-    if(this.user){
+    console.log("total: ", this.total)
+    if (this.user) {
       this.buyService
         .addBuy('Compra de entradas', this.total, this.user.id)
         .subscribe({

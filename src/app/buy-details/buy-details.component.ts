@@ -3,8 +3,8 @@ import { BuyService } from '../buy/buy.service';
 import { Buy, Movie, Show, Ticket, User } from '../interfaces/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MyAccountService } from '../my-account/my-account.service';
-import { TicketService } from '../ticket.service';
-import { AuthService } from '../auth.service';
+import { TicketService } from '../tickets/ticket.service';
+import { AuthService } from '../auth/auth.service';
 import { MovieDetailsService } from '../movie-details/movie-details.service';
 
 @Component({
@@ -51,7 +51,7 @@ export class BuyDetailsComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private buyService: BuyService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.user = this.authService.getUser();

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ResponseOne,Cinema, ResponseList, ResponseWithError} from "../interfaces/interfaces";
+import { ResponseOne, Cinema, ResponseList, ResponseWithError } from "../interfaces/interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,7 @@ export class CinemaService {
 
   addCinema(cinema: Cinema): Observable<any> {
     return this.http
-      .post<ResponseOne<Cinema> | ResponseWithError>(this.apiUrl, cinema) //no hace falta el `${}` porque no se incluye ningun valor dinamico en al url
+      .post<ResponseOne<Cinema> | ResponseWithError>(this.apiUrl, cinema)
   }
 
   deleteCinema(id: number): Observable<any> {
