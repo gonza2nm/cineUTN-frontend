@@ -33,6 +33,7 @@ import { ManagersComponent } from './managers/managers.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { EventsComponent } from './events/events.component';
 import { EventEditComponent } from './event-edit/event-edit.component';
+import { EventsUserViewComponent } from './events-user-view/events-user-view.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { EventEditComponent } from './event-edit/event-edit.component';
     ManagersComponent,
     EventsComponent,
     EventEditComponent,
+    EventsUserViewComponent,
   ],
   imports: [
     BrowserModule,
