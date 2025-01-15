@@ -117,4 +117,4 @@ export class CinemaEditComponent implements OnInit {
       })
     }
   }
-} //Ultimo intento reformateo.
+} 

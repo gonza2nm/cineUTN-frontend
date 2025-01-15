@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ResponseList, ResponseOne, ResponseWithError } from '../interfaces/interfaces.js';
+import { Event, ResponseList, ResponseOne, ResponseWithError } from '../interfaces/interfaces.js';
 
 @Injectable({
   providedIn: 'root'
