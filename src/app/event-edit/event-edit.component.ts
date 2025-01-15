@@ -70,7 +70,7 @@ export class EventEditComponent implements OnInit {
             finishDate: this.formatToDateTimeLocal(this.eventData.finishDate),
           });
 
-          //poner aca comentario correctoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+          //extraemos los IDs de lo cines asociados al evento
           this.eventCinemasIds = this.eventData.cinemas.map(cinema => cinema.id).filter((id): id is number => id !== undefined)
           this.loadAllCinemas();
 
@@ -102,9 +102,8 @@ export class EventEditComponent implements OnInit {
     this.eventData.startDate = this.eventForm.get('startDate')?.value;
     this.eventData.finishDate = this.eventForm.get('finishDate')?.value;
 
-    // comentar bien estooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+    // guarda en el eventData objetos cines solo con el id y sus propiedades vacias. Para despues en el back usar el assing()
     this.eventData.cinemas = this.eventCinemasIds.map(id => ({ id, name: '', address: '', theaters: [], movies: [] }));
-
     if (this.isEditMode) {
       if (this.eventId) { //sin este if no deja entrar al metodo porque dice que puede ser null
         this.eventService.updateEvent(this.eventId, this.eventData).subscribe({
