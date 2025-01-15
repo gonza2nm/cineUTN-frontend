@@ -25,6 +25,7 @@ import { BuyDetailsComponent } from './buy-details/buy-details.component';
 import { AuthGeneralGuard } from './auth/authGeneral.guard';
 import { EventsComponent } from './events/events.component';
 import { EventEditComponent } from './event-edit/event-edit.component';
+import { EventsUserViewComponent } from './events-user-view/events-user-view.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'my-account', component: MyAccountComponent, canActivate: [AuthGeneralGuard] },
+  { path: 'events', component: EventsUserViewComponent },
 
   { path: 'movies/:id', component: MovieDetailsComponent },
   { path: 'buy/:id', component: BuyComponent, canActivate: [AuthGeneralGuard] },
