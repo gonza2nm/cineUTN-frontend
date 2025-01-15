@@ -85,6 +85,6 @@ export interface Event {
   description: string;
   startDate: Date;
   finishDate: Date;
-  cinemas: number[];
+  cinemas: Cinema[];
 }
 
