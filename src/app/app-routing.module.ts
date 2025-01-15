@@ -24,6 +24,7 @@ import { ManagersComponent } from './managers/managers.component';
 import { BuyDetailsComponent } from './buy-details/buy-details.component';
 import { AuthGeneralGuard } from './auth/authGeneral.guard';
 import { EventsComponent } from './events/events.component';
+import { EventEditComponent } from './event-edit/event-edit.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -69,6 +70,8 @@ const routes: Routes = [
   { path: 'manager-home/genres/new', component: GenresEditComponent, canActivate: [AuthManagerGuard] },
 
   { path: 'manager-home/events', component: EventsComponent, canActivate: [AuthManagerGuard] },
+  { path: 'manager-home/events/new', component: EventEditComponent, canActivate: [AuthManagerGuard], },
+  { path: 'manager-home/events/:id', component: EventEditComponent, canActivate: [AuthManagerGuard], },
 
   { path: "**", component: HomeComponent }
 ];

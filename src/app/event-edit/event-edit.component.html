@@ -1,1 +1,76 @@
-<p>event-edit works!</p>
+<!--Ancho maximo y centrado, para que se vea bien en diferentes pantallas-->
+<div class="max-w-4xl mx-auto ">
+  <div class="flex justify-between">
+
+    <!-- Boton para volver-->
+    <button type="button" routerLink="/manager-home/events"
+      class="rounded-md border border-black mt-5  hover:bg-gray-300 ml-3 px-3 py-1">
+      &larr; Volver
+    </button>
+
+    <!-- Boton para eliminar-->
+    <button type="button" *ngIf="isEditMode" (click)="deleteEvent()"
+      class="rounded-md border border-black mt-5 bg-red-600 text-white hover:bg-red-800 mr-3 px-3 py-1">
+      Eliminar Cine
+    </button>
+  </div>
+
+  <!--Texto superior si es edit-->
+  <h1 *ngIf="isEditMode" class=" text-2xl font-bold text-center mb-5">Complete los campos que desea editar</h1>
+  <!--Texto superior si es new event-->
+  <h1 *ngIf="!isEditMode" class=" text-2xl font-bold text-center mb-5">Complete los campos para crear el nuevo evento</h1>
+
+  <!--Formularios-->
+  <form [formGroup]="eventForm" (ngSubmit)="saveEvent()" class=" flex flex-col mx-3 mb-3">
+    <label>Nombre:</label>
+    <input type="text" formControlName='name'
+      class=" border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500">
+
+    <label class="mt-4">Descripcion:</label>
+    <input type="text" formControlName='description'
+      class=" border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500">
+
+    <label class="mt-4">Fecha de inicio</label>
+    <input type="datetime-local" formControlName='startDate'
+      class=" border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500">
+    
+    <label class="mt-4">Fecha de fin</label>
+    <input type="datetime-local" formControlName='finishDate'
+      class=" border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500">
+
+    <!--Cines-->
+
+    <label class="mt-4">Cines:</label>
+    <ul *ngIf="allCinemas && eventCinemasIds">
+      <li *ngFor="let cinema of allCinemas" (click)="toggleCinemaSelection(cinema.id)"
+        [class.active]="eventCinemasIds.includes(cinema.id)"
+        class="border border-gray-400 mx-3 mb-3 p-2 mt-2 hover:bg-gray-300">
+        <!--ese cinema.id es la variable que defini en el ngFor-->
+        <div class="ml-1">
+          {{cinema.name}}
+        </div>
+        <div class="ml-8">
+          {{cinema.address}}
+        </div>
+      </li>
+    </ul>
+
+    <!--Mensajes de error-->
+    <p *ngIf="errorMessage"
+      class="text-xl font-bold text-center mt-8 text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+      {{ errorMessage }}
+    </p>
+
+    <p *ngIf="!eventForm.valid ||eventCinemasIds.length === 0"
+      class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+      El evento debe tener al menos un valor en cada campo.
+    </p>
+
+    <!--Boton-->
+    <button type="submit" [disabled]="!eventForm.valid || eventCinemasIds.length === 0"
+      class="border-2 border-black mt-8 py-2 px-4 w-auto mx-auto rounded-md hover:bg-gray-300 fel disabled:border-gray-400 disabled:text-gray-400">
+      {{ isEditMode ? 'Guardar Cambios' : 'Agregar Evento' }}
+    </button>
+  </form>
+
+</div>
