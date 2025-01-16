@@ -41,16 +41,16 @@
       </p>
 
     </div>
-
   </div>
+
     <!-- Mensaje si no hay eventos -->
-    <p *ngIf="events.length === 0 && !errorMessage && !loading" class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+    <p *ngIf="events.length === 0 && !errorMessage && !loading" class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg" >
       No existen eventos disponibles para este cine.
     </p>
     
     <!-- Mensaje de error -->
     <p *ngIf="errorMessage"
-      class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 col-span-full shadow-lg">
+      class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
       {{ errorMessage }}
     </p>
 </div>
