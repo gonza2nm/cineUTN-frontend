@@ -19,23 +19,40 @@
   <h1 class=" text-2xl font-bold text-center mb-5">Seleccione un evento para administrar</h1>
 
   <!--Lista de eventos-->
-  <ul>
-    <li *ngFor="let event of events" class="border-2 border-black mx-3 mb-3">
-      
-      <button [routerLink]="['/manager-home/events', event.id]" class="w-full text-left hover:bg-gray-300 p-2">
-        <!--ese event.id es la variable que defini en el ngFor-->
-        <div class="ml-1">
-          {{event.name}}
-        </div>
-        <div class="ml-8">
-          {{event.description}}
-        </div>
-      </button>
-    </li>
-  </ul>
+  <!-- Max-width para que no se alarguen tanto los eventos-->
+  <div class="max-w-4xl mx-auto lg:max-w-7xl">
+    <!--Grid para organizar los eventos-->
+    <div class="grid grids-cols-1 gap-4 mx-4 mb-4 md:grid-cols-2">
 
+      <!-- Lista de eventos -->
+      <div *ngFor="let event of events" class="border-2 border-black rounded-lg shadow-md ">
+        <button [routerLink]="['/manager-home/events', event.id]" class="w-full h-full text-left hover:bg-gray-300 p-2">
+
+          <h3 class="text-xl font-semibold mb-1 text-center">{{ event.name }}</h3>
+
+          <!--fechas flex -->
+          <div class="flex justify-between mb-2">
+            <!--izquierda -->
+            <div class="">
+              <h5 class="font-medium">Desde:</h5>
+              <h4 class="font-semibold">{{ event.startDate | date: 'yyyy-MM-dd'}}</h4>
+            </div>
+            <!--derecha -->
+            <div class="">
+              <h5 class="font-medium">Hasta:</h5>
+              <h4 class="font-semibold">{{ event.finishDate | date: 'yyyy-MM-dd'}}</h4>
+            </div>
+          </div>
+
+          <p class="whitespace-pre-line mt-4 text-left">{{ event.description }}</p>
+
+        </button>
+      </div>
+    </div>
+  </div>
+  
   <!--Muestra mensaje si no hay eventos-->
-  <p *ngIf="events.length === 0 && !errorMessage && !loading" class="text-xl  text-red-600 text-center">
+  <p *ngIf="events.length === 0 && !errorMessage && !loading" class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
     No existen eventos creados. Por favor, intente crear uno.
   </p>
 
