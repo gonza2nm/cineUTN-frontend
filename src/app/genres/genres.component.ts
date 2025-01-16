@@ -8,30 +8,31 @@ import { Router } from '@angular/router';
   templateUrl: './genres.component.html',
   styleUrls: ['./genres.component.css']
 })
-export class GenresComponent implements OnInit{
-  genres: Genre [] = [];
-  errorMessage : string | null = null;
-  loading : string | null = null;
+export class GenresComponent implements OnInit {
+  genres: Genre[] = [];
+  errorMessage: string | null = null;
+  loading: boolean = true;
 
   constructor(
-    private service : GenresService,
-    private router : Router
-  ){}
+    private service: GenresService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loadGenres()
   }
 
-  loadGenres(){
+  loadGenres() {
     this.service.getGenres().subscribe({
       next: (response) => {
         this.genres = response.data;
         this.errorMessage = null;
+        this.loading = false;
       },
       error: () => {
-        this.errorMessage = 'An error occurred while fetching genre.';
+        this.errorMessage = 'Ocurrio un error buscando los generos, intente nuevamente.';
         console.error('Error getting genre:');
-        this.router.navigate(['/manager-home']);
+        this.loading = false;
       },
     });
   }

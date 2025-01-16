@@ -32,7 +32,7 @@ export class MoviesComponent implements OnInit {
       },
       error: (err) => {  //el observable emitio un error 
         //Si ocurre un error durante la solicitud HTTP, se asigna un mensaje genérico a errorMessage, y el error se imprime en la consola
-        this.errorMessage = 'An error occurred while fetching movies.';
+        this.errorMessage = 'Ocurrio un error buscando las peliculas, intente nuevamente.';
         console.error('Error getting movies:', err.error.message);
         this.loading = false;
       }

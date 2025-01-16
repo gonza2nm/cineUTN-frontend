@@ -7,26 +7,26 @@ import { CinemaService } from '../cinemas/cinema.service';
   templateUrl: './showtimes.component.html',
   styleUrls: ['./showtimes.component.css']
 })
-export class ShowtimesComponent implements OnInit  {
+export class ShowtimesComponent implements OnInit {
 
   cinemas: Cinema[] = [];
   errorMessage: string | null = null;
   loading: boolean = true;
 
   constructor(private service: CinemaService) { }
-  
+
   ngOnInit(): void {
     this.loadCinemas();
   }
   loadCinemas() {
     this.service.getAllCinemas().subscribe({
       next: (response) => {
-          this.cinemas = response.data;
-          this.errorMessage = null;
-          this.loading = false;
+        this.cinemas = response.data;
+        this.errorMessage = null;
+        this.loading = false;
       },
-      error: () => {  
-        this.errorMessage = 'An error occurred while fetching cinemas.';
+      error: () => {
+        this.errorMessage = 'Ocurrio un error buscando los cines, intente nuevamente.';
         console.error('Error getting cinemas:');
         this.loading = false;
       }
