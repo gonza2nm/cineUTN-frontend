@@ -13,7 +13,7 @@
 <!-- Max-width para que no se alarguen tanto los eventos-->
 <div class="max-w-4xl mx-auto lg:max-w-7xl">
   <!--Grid para organizar los eventos-->
-  <div class="grid grids-cols-1 gap-4 mx-4 mb-4 md:grid-cols-2 lg:grid-cols-3">
+  <div class="grid grid-cols-1 gap-4 mx-4 mb-4 md:grid-cols-2 lg:grid-cols-3">
 
     <!-- Lista de eventos -->
     <div *ngFor="let event of events" class="border-2 border-black rounded-lg p-3 shadow-md ">
@@ -43,8 +43,8 @@
     </div>
     
     <!-- Mensaje si no hay eventos -->
-    <p *ngIf="events.length === 0 && !errorMessage && !loading" class="text-xl text-red-600 text-center col-span-full">
-      No existen eventos disponibles.
+    <p *ngIf="events.length === 0 && !errorMessage && !loading" class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+      No existen eventos disponibles para este cine.
     </p>
     
     <!-- Mensaje de error -->
