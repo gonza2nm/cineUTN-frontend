@@ -24,6 +24,11 @@ export class EventService {
       .get<ResponseOne<Event> | ResponseWithError>(`${this.apiUrl}/${id}`)
   }
 
+  getEventsByCinema(cinemaId: number) {
+    return this.http
+      .get<ResponseList<Event> | ResponseWithError>(`${this.apiUrl}/cinema/${cinemaId}`)
+  }
+
   updateEvent(id: number, event: Event): Observable<any> {
     return this.http
       .put<ResponseOne<Event> | ResponseWithError>(`${this.apiUrl}/${id}`, event)

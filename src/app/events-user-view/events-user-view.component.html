@@ -1,7 +1,13 @@
 
 <!--Texto de arriba-->
-<div class="my-5">
+<div class="mt-5">
   <h1 class="text-2xl font-bold text-center">Eventos</h1>
+  <h2 class="text-lg  text-center">Filtra y explora los eventos disponibles en los cines seleccionados.</h2>
+</div>
+
+<!--Selector filtro de eventos por cinema-->
+<div class="flex flex-row flex-wrap items-center justify-center gap-4 py-6 px-4">
+  <app-selector filter="" placeholder="Seleccionar Cine" [items]="cinemas" [selectedValue]="null" (selectionChange)="handleItemSelected($event)"></app-selector>  
 </div>
 
 <!-- Max-width para que no se alarguen tanto los eventos-->
