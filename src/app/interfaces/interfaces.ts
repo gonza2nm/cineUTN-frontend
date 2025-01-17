@@ -80,3 +80,18 @@ export interface User {
   buys: Buy[]; //Opcionales por si es manager
 }
 
+export interface Promotion {
+  code: number;
+  name: string;
+  description: string;
+  startDate: Date;
+  finishDate: Date;
+  discount: number;
+}
+
+export interface Product {
+  id: number;
+  name: string;
+  description: string;
+}
+

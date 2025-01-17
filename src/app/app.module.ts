@@ -31,6 +31,8 @@ import { BuyComponent } from './buy/buy.component';
 import { BuyDetailsComponent } from './buy-details/buy-details.component';
 import { ManagersComponent } from './managers/managers.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { PromotionsComponent } from './promotions/promotions.component';
+import { ProductsComponent } from './products/products.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     BuyComponent,
     BuyDetailsComponent,
     ManagersComponent,
+    PromotionsComponent,
+    ProductsComponent,
   ],
   imports: [
     BrowserModule,
