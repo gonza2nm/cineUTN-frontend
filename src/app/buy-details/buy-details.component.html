@@ -11,7 +11,8 @@
 
     <div>
       <h2 class="text-xl font-semibold md:text-2xl mb-2">Detalle de la Compra</h2>
-      <p class="text-gray-600 text-base md:text-lg mb-8">Revisa los detalles de tu compra.</p>
+      <p class="text-gray-600 text-base md:text-lg mb-0">Revisa los detalles de tu compra.</p>
+      <p class="text-gray-600 text-sm md:text-base mb-10 italic">NOTA: La compra solo se puede cancelar con 12hs de antelación.</p>
     </div>
 
 
@@ -67,6 +68,10 @@
               <p class="font-semibold">Lenguaje:</p>
               <p class="text-gray-700">{{show.language.languageName}}</p>
             </div>
+            <div class="flex gap-2 mb-1">
+              <p class="font-semibold">Entradas:</p>
+              <p class="text-gray-700">{{tickets.length}}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -104,8 +109,9 @@
         class="bg-blue-600 text-white px-7 py-2 rounded-lg hover:bg-blue-800 transition duration-300">
         Atras
       </button>
-      <button *ngIf="isExpired" (click)="cancelPurchase()"
-      class="bg-red-600 text-white font-semibold px-5 py-1.5 rounded-lg hover:bg-red-800 transition duration-300">
+      <!-- Boton de cancelar compra -->
+      <button [disabled]="!isExpired" (click)="cancelPurchase()"
+      class="bg-red-600 text-white font-semibold px-5 py-1.5 rounded-lg hover:bg-red-800 transition duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed">
         Cancelar compra
       </button>
     </div>

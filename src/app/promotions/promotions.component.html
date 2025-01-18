@@ -1,1 +1,12 @@
 <p>promotions works!</p>
+
+<h2>Promociones</h2>
+
+<ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+  <li *ngFor="let ticket of tickets">
+    <div class="shadow-md border-t-2 border-gray-100 rounded-lg p-6 mb-4 text-left bg-white hover:shadow-xl ">
+      <h3 class="text-xl font-semibold mb-2">{{ticket.id}}</h3>
+      <h3 class="text-xl font-semibold mb-2">{{ticket.show.id}}</h3>
+    </div>
+  </li>
+</ul>
