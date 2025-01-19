@@ -19,10 +19,10 @@
       </button>
     </li>
   </ul>
-  <p *ngIf="genres.length === 0 && !errorMessage && !loading" class="text-xl  text-red-600 text-center">
+  <p *ngIf="genres.length === 0 && !errorMessage && !loading" class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
     No existen generos creados. Por favor, intente crear uno.
   </p>
-  <p *ngIf="errorMessage && !loading" class="text-xl  text-red-600 text-center">
+  <p *ngIf="errorMessage" class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
     {{ errorMessage }}
   </p>
 </div>

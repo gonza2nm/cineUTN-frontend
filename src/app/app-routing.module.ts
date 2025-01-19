@@ -23,6 +23,9 @@ import { AuthManagerGuard } from './auth/authManager.guard';
 import { ManagersComponent } from './managers/managers.component';
 import { BuyDetailsComponent } from './buy-details/buy-details.component';
 import { AuthGeneralGuard } from './auth/authGeneral.guard';
+import { EventsComponent } from './events/events.component';
+import { EventEditComponent } from './event-edit/event-edit.component';
+import { EventsUserViewComponent } from './events-user-view/events-user-view.component';
 import { PromotionsComponent } from './promotions/promotions.component';
 
 const routes: Routes = [
@@ -31,6 +34,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'my-account', component: MyAccountComponent, canActivate: [AuthGeneralGuard] },
+  { path: 'events', component: EventsUserViewComponent },
 
   { path: 'movies/:id', component: MovieDetailsComponent },
   { path: 'buy/:id', component: BuyComponent, canActivate: [AuthGeneralGuard] },
@@ -39,6 +43,7 @@ const routes: Routes = [
   { path: 'promotions', component: PromotionsComponent },
 
   { path: 'manager-home', component: ManagerHomeComponent, canActivate: [AuthManagerGuard], },
+
   { path: 'manager-home/cinemas', component: CinemasComponent, canActivate: [AuthManagerGuard], },
   { path: 'manager-home/cinemas/new', component: CinemaEditComponent, canActivate: [AuthManagerGuard], },//uso mismo componente para editar y crear
   { path: 'manager-home/cinemas/:id', component: CinemaEditComponent, canActivate: [AuthManagerGuard], }, //cuidado! si la ruta del new queda abajo de la del id entonces toma a "new" como ID y no funciona.
@@ -68,6 +73,10 @@ const routes: Routes = [
   { path: 'manager-home/genres', component: GenresComponent, canActivate: [AuthManagerGuard] },
   { path: 'manager-home/genres/:gid', component: GenresEditComponent, canActivate: [AuthManagerGuard] },
   { path: 'manager-home/genres/new', component: GenresEditComponent, canActivate: [AuthManagerGuard] },
+
+  { path: 'manager-home/events', component: EventsComponent, canActivate: [AuthManagerGuard] },
+  { path: 'manager-home/events/new', component: EventEditComponent, canActivate: [AuthManagerGuard], },
+  { path: 'manager-home/events/:id', component: EventEditComponent, canActivate: [AuthManagerGuard], },
 
   { path: "**", component: HomeComponent }
 ];

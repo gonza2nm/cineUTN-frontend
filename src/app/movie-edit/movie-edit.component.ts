@@ -203,7 +203,7 @@ export class MovieEditComponent implements OnInit {
     }
   }
 
-  // (Ojito, que no deje borrar si existen eventos para A.D)
+
   deleteMovie() {
     if (this.movieId) {
       this.movieService.deleteMovie(this.movieId).subscribe({

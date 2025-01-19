@@ -31,6 +31,9 @@ import { BuyComponent } from './buy/buy.component';
 import { BuyDetailsComponent } from './buy-details/buy-details.component';
 import { ManagersComponent } from './managers/managers.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { EventsComponent } from './events/events.component';
+import { EventEditComponent } from './event-edit/event-edit.component';
+import { EventsUserViewComponent } from './events-user-view/events-user-view.component';
 import { PromotionsComponent } from './promotions/promotions.component';
 import { ProductsComponent } from './products/products.component';
 
@@ -62,6 +65,9 @@ import { ProductsComponent } from './products/products.component';
     BuyComponent,
     BuyDetailsComponent,
     ManagersComponent,
+    EventsComponent,
+    EventEditComponent,
+    EventsUserViewComponent,
     PromotionsComponent,
     ProductsComponent,
   ],

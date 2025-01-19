@@ -1,0 +1,56 @@
+
+<!--Texto de arriba-->
+<div class="mt-5">
+  <h1 class="text-2xl font-bold text-center">Eventos</h1>
+  <h2 class="text-lg  text-center">Filtra y explora los eventos disponibles en los cines seleccionados.</h2>
+</div>
+
+<!--Selector filtro de eventos por cinema-->
+<div class="flex flex-row flex-wrap items-center justify-center gap-4 py-6 px-4">
+  <app-selector filter="" placeholder="Seleccionar Cine" [items]="cinemas" [selectedValue]="null" (selectionChange)="handleItemSelected($event)"></app-selector>  
+</div>
+
+<!-- Max-width para que no se alarguen tanto los eventos-->
+<div class="max-w-4xl mx-auto lg:max-w-7xl">
+  <!--Grid para organizar los eventos-->
+  <div class="grid grid-cols-1 gap-4 mx-4 mb-4 md:grid-cols-2 lg:grid-cols-3">
+
+    <!-- Lista de eventos -->
+    <div *ngFor="let event of events" class="border-2 border-black rounded-lg p-3 shadow-md ">
+      <h3 class="text-xl font-semibold mb-1 text-center">{{ event.name }}</h3>
+
+      <!--fechas flex -->
+      <div class="flex justify-between mb-2">
+        <!--izquierda -->
+        <div class="">
+          <h5 class="font-medium">Desde:</h5>
+          <h4 class="font-semibold">{{ event.startDate | date: 'yyyy-MM-dd'}}</h4>
+        </div>
+        <!--derecha -->
+        <div class="">
+          <h5 class="font-medium">Hasta:</h5>
+          <h4 class="font-semibold">{{ event.finishDate | date: 'yyyy-MM-dd'}}</h4>
+        </div> 
+      </div>
+
+      <p class="whitespace-pre-line mt-4 text-left">{{ event.description }}</p>
+
+      <!-- nombres de cines -->
+      <p class="mt-2 font-medium text-center">
+        En: {{ getCinemasNames(event)}}
+      </p>
+
+    </div>
+  </div>
+
+    <!-- Mensaje si no hay eventos -->
+    <p *ngIf="events.length === 0 && !errorMessage && !loading" class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg" >
+      No existen eventos disponibles para este cine.
+    </p>
+    
+    <!-- Mensaje de error -->
+    <p *ngIf="errorMessage"
+      class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+      {{ errorMessage }}
+    </p>
+</div>
