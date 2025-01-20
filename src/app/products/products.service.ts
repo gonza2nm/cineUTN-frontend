@@ -10,9 +10,9 @@ export class ProductsService {
 
   constructor(private http: HttpClient) { }
 
-  readonly urlProducts = 'http://localhost:3000/api/urlProducts';
+  readonly urlProducts = 'http://localhost:3000/api/snacks';
 
-  getProducts():Observable<any>{
+  getAllProducts():Observable<any>{
     return this.http.get<ResponseList<Product> | ResponseWithError>(this.urlProducts);
   }
 
@@ -20,12 +20,12 @@ export class ProductsService {
     return this.http.get<ResponseOne<Product> | ResponseWithError>(`${this.urlProducts}/${id}`)
   }
 
-  addProduct(id: number):Observable<any> {
-    return this.http.post<ResponseOne<Product> | ResponseWithError>(`${this.urlProducts}`, {id} )
+  addProduct(productData: Product):Observable<any> {
+    return this.http.post<ResponseOne<Product> | ResponseWithError>(`${this.urlProducts}`, productData )
   }
 
-  updateProduct(id: number):Observable<any>{
-    return this.http.put<ResponseOne<Product> | ResponseWithError>(`${this.urlProducts}/${id}`, {id});
+  updateProduct(id: number, productData: Product):Observable<any>{
+    return this.http.put<ResponseOne<Product> | ResponseWithError>(`${this.urlProducts}/${id}`, productData);
   }
     
   deleteProduct(id: number): Observable<any> {

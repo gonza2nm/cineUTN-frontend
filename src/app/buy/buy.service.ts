@@ -27,7 +27,7 @@ export class BuyService {
   }
   
   updatebuy(id: number, status:string):Observable<any>{
-    return this.http.put<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}/${id}`, {status});
+    return this.http.patch<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}/${id}`, {status});
   }
 
   deleteBuy(id: number): Observable<any> {

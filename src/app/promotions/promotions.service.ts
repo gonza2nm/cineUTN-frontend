@@ -14,7 +14,7 @@ export class PromotionsService {
   readonly urlPromotion = 'http://localhost:3000/api/promotions';
 
 
-  getPromotions():Observable<any>{
+  getAllPromotions():Observable<any>{
       return this.http.get<ResponseList<Promotion> | ResponseWithError>(this.urlPromotion);
     }
   
@@ -22,23 +22,15 @@ export class PromotionsService {
     return this.http.get<ResponseOne<Promotion> | ResponseWithError>(`${this.urlPromotion}/${id}`)
   }
     
-  addPromotion(id: number):Observable<any> {
-    return this.http.post<ResponseOne<Promotion> | ResponseWithError>(`${this.urlPromotion}`, {id} )
+  addPromotion(promotionData: Promotion):Observable<any> {
+    return this.http.post<ResponseOne<Promotion> | ResponseWithError>(`${this.urlPromotion}`, promotionData )
   }
     
-  updatePromotion(id: number):Observable<any>{
-    return this.http.put<ResponseOne<Promotion> | ResponseWithError>(`${this.urlPromotion}/${id}`, {id});
+  updatePromotion(id: number, promotionData: Promotion):Observable<any>{
+    return this.http.put<ResponseOne<Promotion> | ResponseWithError>(`${this.urlPromotion}/${id}`, promotionData);
   }
   
   deletePromotion(id: number): Observable<any> {
     return this.http.delete<ResponseOne<Promotion> | ResponseWithError>(`${this.urlPromotion}/${id}`)
-  }
-
-
-  //Esto es de prueba.
-  readonly urltickets = 'http://localhost:3000/api/tickets/buy';
-
-  getTicketsbyId():Observable<any> {
-    return this.http.get<ResponseList<Ticket> | ResponseWithError>(`${this.urltickets}/${2}/tickets`)
   }
 }

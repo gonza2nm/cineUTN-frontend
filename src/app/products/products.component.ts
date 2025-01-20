@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ProductsService } from './products.service';
+import { Product } from '../interfaces/interfaces';
 
 @Component({
   selector: 'app-products',
@@ -7,4 +9,30 @@ import { Component } from '@angular/core';
 })
 export class ProductsComponent {
 
+  products: Product[] = [];
+  errorMessage: string | null = null;
+  loading: boolean = true
+
+
+  constructor(private productsSerive: ProductsService) {}
+
+  ngOnInit(): void {
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    this.productsSerive.getAllProducts().subscribe({
+      next: (response) => {
+        this.products = response.data;
+        this.errorMessage = null;
+        this.loading = false;
+      },
+
+      error: (err) => {
+        this.errorMessage = 'Ocurrio un error buscando los productos, intente nuevamente.';
+        console.error('Error getting products:', err.error.message);
+        this.loading = false;
+      }
+    })
+  }
 }

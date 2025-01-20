@@ -1,12 +1,46 @@
-<p>promotions works!</p>
+<div class="max-w-4xl mx-auto">
 
-<h2>Promociones</h2>
+  <div class="flex justify-between">
+    <button type="button" routerLink="/manager-home"
+      class="rounded-md border border-black mt-5 hover:bg-gray-300 ml-3 px-3 py-1">
+      &larr; Volver
+    </button>
 
-<ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-  <li *ngFor="let ticket of tickets">
-    <div class="shadow-md border-t-2 border-gray-100 rounded-lg p-6 mb-4 text-left bg-white hover:shadow-xl ">
-      <h3 class="text-xl font-semibold mb-2">{{ticket.id}}</h3>
-      <h3 class="text-xl font-semibold mb-2">{{ticket.show.id}}</h3>
+    <button type="button" routerLink="/manager-home/products/new"
+      class="rounded-md border border-black mt-5 hover:bg-gray-300 mr-3 px-3 py-1">
+      Agregar Nuevo Promoción
+    </button>
+  </div>
+
+  <h1 class="text-2xl font-bold text-center mb-5">Seleccione una promoción para administrar</h1>
+
+  <div class="w-full flex justify-center">
+    <div class="flex flex-wrap flex-row justify-around mb-8 mx-4 gap-9 md:justify-center">
+
+      <a *ngFor="let promotion of promotions" class="flex flex-wrap w-56 cursor-pointer my-5 mx-4 md:w-60"
+        [title]="promotion.name" [routerLink]="['/manager-home/products', promotion.code]">
+
+        <img class="object-cover w-full h-full" src="{{promotion}}" alt="{{promotion.name}}">
+        <p class="bg-blue-900 text-center text-lg text-white mb-2 py-1.5 px-3 min-w-full overflow-hidden text-ellipsis 
+                whitespace-nowrap">
+          {{ promotion.name }}
+        </p>
+      </a>
+
     </div>
-  </li>
-</ul>
+  </div>
+
+
+  <p *ngIf="promotions.length === 0 && !errorMessage && !loading"
+    class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+    No existen productos creados. Por favor, intente crear uno.
+  </p>
+
+  <p *ngIf="errorMessage"
+    class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+    {{ errorMessage }}
+  </p>
+
+
+
+</div>

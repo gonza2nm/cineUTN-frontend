@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { Promotion, Ticket } from '../interfaces/interfaces';
+import { Promotion } from '../interfaces/interfaces';
 import { PromotionsService } from './promotions.service';
+import { CinemaService } from '../cinemas/cinema.service';
 
 @Component({
   selector: 'app-promotions',
@@ -10,43 +11,31 @@ import { PromotionsService } from './promotions.service';
 export class PromotionsComponent {
 
   promotions: Promotion[] = [];
-  //
-  tickets: Ticket[] = []
+  errorMessage: string | null = null;
+  loading: boolean = true
+  
+  
+    constructor(private promotionService: PromotionsService) {}
+  
+    ngOnInit(): void {
+      this.loadPromotions();
+    }
+  
+    loadPromotions() {
+      this.promotionService.getAllPromotions().subscribe({
+        next: (response) => {
+          this.promotions = response.data;
+          this.errorMessage = null;
+          this.loading = false;
+        },
+  
+        error: (err) => {
+          this.errorMessage = 'Ocurrio un error buscando las promociones, intente nuevamente.';
+          console.error('Error getting promotions:', err.error.message);
+          this.loading = false;
+        }
+      })
+    }
 
-
-  constructor(private promotionService: PromotionsService) { }
-
-  ngOnInit(): void {
-
-    //this.loadPromotions();
-    //
-    this.loadTickets();
-  }
-
-
-
-  loadPromotions() {
-    this.promotionService.getPromotions().subscribe({
-      next: (response) => {
-        this.promotions = response.data;
-      },
-
-      error: (err) => {
-        console.log(err)
-      }
-    })
-  }
-
-  //
-  loadTickets() {
-    this.promotionService.getTicketsbyId().subscribe({
-      next: (response) => {
-        this.tickets = response.data;
-      },
-
-      error: (err) => {
-        console.log('Hubo un problema', err)
-      }
-    })
-  }
+    
 }

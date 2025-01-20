@@ -36,6 +36,8 @@ import { EventEditComponent } from './event-edit/event-edit.component';
 import { EventsUserViewComponent } from './events-user-view/events-user-view.component';
 import { PromotionsComponent } from './promotions/promotions.component';
 import { ProductsComponent } from './products/products.component';
+import { ProductsEditComponent } from './products-edit/products-edit.component';
+import { PromotionsEditComponent } from './promotions-edit/promotions-edit.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +72,8 @@ import { ProductsComponent } from './products/products.component';
     EventsUserViewComponent,
     PromotionsComponent,
     ProductsComponent,
+    ProductsEditComponent,
+    PromotionsEditComponent,
   ],
   imports: [
     BrowserModule,

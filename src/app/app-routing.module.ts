@@ -27,6 +27,8 @@ import { EventsComponent } from './events/events.component';
 import { EventEditComponent } from './event-edit/event-edit.component';
 import { EventsUserViewComponent } from './events-user-view/events-user-view.component';
 import { PromotionsComponent } from './promotions/promotions.component';
+import { ProductsComponent } from './products/products.component';
+import { ProductsEditComponent } from './products-edit/products-edit.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -39,8 +41,6 @@ const routes: Routes = [
   { path: 'movies/:id', component: MovieDetailsComponent },
   { path: 'buy/:id', component: BuyComponent, canActivate: [AuthGeneralGuard] },
   { path: 'buy-details/:id', component: BuyDetailsComponent, canActivate: [AuthGeneralGuard] },
-
-  { path: 'promotions', component: PromotionsComponent },
 
   { path: 'manager-home', component: ManagerHomeComponent, canActivate: [AuthManagerGuard], },
 
@@ -77,6 +77,15 @@ const routes: Routes = [
   { path: 'manager-home/events', component: EventsComponent, canActivate: [AuthManagerGuard] },
   { path: 'manager-home/events/new', component: EventEditComponent, canActivate: [AuthManagerGuard], },
   { path: 'manager-home/events/:id', component: EventEditComponent, canActivate: [AuthManagerGuard], },
+
+
+  { path: 'manager-home/promotions', component: PromotionsComponent },
+
+  { path: 'manager-home/products', component: ProductsComponent, canActivate: [AuthManagerGuard], },
+  { path: 'manager-home/products/new', component: ProductsEditComponent, canActivate: [AuthManagerGuard], },
+  { path: 'manager-home/products/:id', component: ProductsEditComponent, canActivate: [AuthManagerGuard], },
+
+  
 
   { path: "**", component: HomeComponent }
 ];
