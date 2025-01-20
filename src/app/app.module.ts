@@ -34,6 +34,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { EventsComponent } from './events/events.component';
 import { EventEditComponent } from './event-edit/event-edit.component';
 import { EventsUserViewComponent } from './events-user-view/events-user-view.component';
+import { BuyValidateQrComponent } from './buy-validate-qr/buy-validate-qr.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { EventsUserViewComponent } from './events-user-view/events-user-view.com
     EventsComponent,
     EventEditComponent,
     EventsUserViewComponent,
+    BuyValidateQrComponent,
   ],
   imports: [
     BrowserModule,
