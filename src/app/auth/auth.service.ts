@@ -67,4 +67,19 @@ export class AuthService {
     return this.http.post<ResponseOne<User>>(`${this.url}/login`, userData, { withCredentials: true });
   }
 
+  //controlar esto
+  checkCookieAndPermissions(role: string | null): boolean {
+
+    //se verifica en la ruta del backend si estan sus datos y se devuelve en base a los roles que pide
+    // primero se hace la peticion y despues se verifica
+    return true
+  }
+
+  isManager():boolean{
+    return true;
+  }
+
+  isUser(){
+    return true;
+  }
 }
