@@ -42,6 +42,7 @@ export class BuyDetailsComponent implements OnInit {
   isExpired: boolean = false;
   showDay: string = '';
   showHour: string = '';
+  qrCodeUrl: string = '';
 
   constructor(
     private myAcountService: MyAccountService,
@@ -63,6 +64,7 @@ export class BuyDetailsComponent implements OnInit {
     } else {
       this.loadPurchase();
       this.loadTickets(this.buyId);
+      this.loadQRcode();
     }
   }
 
@@ -139,6 +141,19 @@ export class BuyDetailsComponent implements OnInit {
         console.log('Error de Tickets');
         console.log(err.message);
         console.log(err.error);
+      },
+    });
+  }
+
+  loadQRcode() {
+    this.buyService.getQRCodeBuy(this.buyId).subscribe({
+      next: (response) => {
+        if (response.qrCodeUrl) {
+          this.qrCodeUrl = response.qrCodeUrl;
+        }
+      },
+      error: (err) => {
+        console.error('Error loading the QR code', err.error)
       },
     });
   }
