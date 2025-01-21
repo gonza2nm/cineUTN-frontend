@@ -30,6 +30,10 @@ export class BuyService {
     return this.http.post<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}`, { description, total, user, status: 'valido' })
   }
 
+  validateQRCode(token: string): Observable<any> {
+    return this.http.post<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}/validateQr`, { token });
+  }
+
   updatebuy(id: number, status: string): Observable<any> {
     return this.http.put<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}/${id}`, { status });
   }

@@ -1,1 +1,41 @@
-<p>buy-validate-qr works!</p>
+<!--Ancho maximo y centrado, para que se vea bien en diferentes pantallas-->
+<div class="max-w-4xl mx-auto ">
+
+  <div class="flex justify-between">
+    <!-- Boton para volver-->
+    <button type="button" routerLink="/manager-home"
+      class="rounded-md border border-black mt-5 hover:bg-gray-300 ml-3 px-3 py-1">
+      &larr; Volver
+    </button>
+  </div>
+
+  <!--Texto superior-->
+  <h1 class=" text-2xl font-bold text-center mb-5">Validar compra con codigo QR</h1>
+
+  <!--Parte del QR-->
+  <div class="flex flex-col items-center space-y-4">
+    <!-- Botón para escanear -->
+    <button (click)="scanQRCode()"
+      class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+        Iniciar Escaneo
+    </button>
+
+    <!-- Video para mostrar la cámara -->
+    <div class="mt-4 border border-gray-300 rounded">
+      <video id="video" class="w-64 h-64 md:w-80 md:h-80"></video>
+    </div>
+
+    <!-- Mensajes de error -->
+    <p *ngIf="errorMessage" class="text-red-500 font-medium">
+      {{ errorMessage }}
+    </p>
+
+    <!-- Mostrar datos de la compra validada -->
+    <div *ngIf="buyData" class="mt-4 p-4 bg-green-100 border border-green-500 rounded">
+      <h2 class="text-lg font-bold">Compra Validada</h2>
+      <p><strong>Descripción:</strong> {{ buyData.description }}</p>
+      <p><strong>Total:</strong> {{ buyData.total | currency }}</p>
+      <p><strong>Estado:</strong> {{ buyData.status }}</p>
+    </div>
+  </div>
+</div>
