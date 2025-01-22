@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ProductsService } from './products.service';
-import { Product } from '../interfaces/interfaces';
+import { Snack } from '../interfaces/interfaces';
 
 @Component({
   selector: 'app-products',
@@ -9,7 +9,7 @@ import { Product } from '../interfaces/interfaces';
 })
 export class ProductsComponent {
 
-  products: Product[] = [];
+  products: Snack[] = [];
   errorMessage: string | null = null;
   loading: boolean = true
 

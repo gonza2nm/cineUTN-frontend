@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Product, ResponseList, ResponseOne, ResponseWithError } from '../interfaces/interfaces';
+import { Snack, ResponseList, ResponseOne, ResponseWithError } from '../interfaces/interfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -13,22 +13,22 @@ export class ProductsService {
   readonly urlProducts = 'http://localhost:3000/api/snacks';
 
   getAllProducts():Observable<any>{
-    return this.http.get<ResponseList<Product> | ResponseWithError>(this.urlProducts);
+    return this.http.get<ResponseList<Snack> | ResponseWithError>(this.urlProducts);
   }
 
   getOneProduct(id: number): Observable<any> {
-    return this.http.get<ResponseOne<Product> | ResponseWithError>(`${this.urlProducts}/${id}`)
+    return this.http.get<ResponseOne<Snack> | ResponseWithError>(`${this.urlProducts}/${id}`)
   }
 
-  addProduct(productData: Product):Observable<any> {
-    return this.http.post<ResponseOne<Product> | ResponseWithError>(`${this.urlProducts}`, productData )
+  addProduct(productData: Snack):Observable<any> {
+    return this.http.post<ResponseOne<Snack> | ResponseWithError>(`${this.urlProducts}`, productData )
   }
 
-  updateProduct(id: number, productData: Product):Observable<any>{
-    return this.http.put<ResponseOne<Product> | ResponseWithError>(`${this.urlProducts}/${id}`, productData);
+  updateProduct(id: number, productData: Snack):Observable<any>{
+    return this.http.put<ResponseOne<Snack> | ResponseWithError>(`${this.urlProducts}/${id}`, productData);
   }
     
   deleteProduct(id: number): Observable<any> {
-    return this.http.delete<ResponseOne<Product> | ResponseWithError>(`${this.urlProducts}/${id}`)
+    return this.http.delete<ResponseOne<Snack> | ResponseWithError>(`${this.urlProducts}/${id}`)
   }
 }

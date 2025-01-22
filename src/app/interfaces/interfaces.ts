@@ -89,15 +89,17 @@ export interface Event {
 }
 
 export interface Promotion {
-  code: number;
+  code: string;
   name: string;
   description: string;
-  startDate: Date;
-  finishDate: Date;
+  promotionStartDate: Date;
+  promotionFinishDate: Date;
   discount: number;
+  cinemas: Cinema[];
+  snacks: Snack[];
 }
 
-export interface Product {
+export interface Snack {
   id: number;
   name: string;
   description: string;

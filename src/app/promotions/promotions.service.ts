@@ -16,21 +16,25 @@ export class PromotionsService {
 
   getAllPromotions():Observable<any>{
       return this.http.get<ResponseList<Promotion> | ResponseWithError>(this.urlPromotion);
-    }
+  }
+
+  getAllPromotionsbyCinema(cinemaId: number):Observable<any>{
+      return this.http.get<ResponseList<Promotion> | ResponseWithError>(`${this.urlPromotion}/bycinema/${cinemaId}`);
+  }
   
-  getOnePromotions(id: number): Observable<any> {
-    return this.http.get<ResponseOne<Promotion> | ResponseWithError>(`${this.urlPromotion}/${id}`)
+  getOnePromotions(code: string): Observable<any> {
+    return this.http.get<ResponseOne<Promotion> | ResponseWithError>(`${this.urlPromotion}/${code}`)
   }
     
   addPromotion(promotionData: Promotion):Observable<any> {
     return this.http.post<ResponseOne<Promotion> | ResponseWithError>(`${this.urlPromotion}`, promotionData )
   }
     
-  updatePromotion(id: number, promotionData: Promotion):Observable<any>{
-    return this.http.put<ResponseOne<Promotion> | ResponseWithError>(`${this.urlPromotion}/${id}`, promotionData);
+  updatePromotion(code: string, promotionData: Promotion):Observable<any>{
+    return this.http.put<ResponseOne<Promotion> | ResponseWithError>(`${this.urlPromotion}/${code}`, promotionData);
   }
   
-  deletePromotion(id: number): Observable<any> {
-    return this.http.delete<ResponseOne<Promotion> | ResponseWithError>(`${this.urlPromotion}/${id}`)
+  deletePromotion(code: string): Observable<any> {
+    return this.http.delete<ResponseOne<Promotion> | ResponseWithError>(`${this.urlPromotion}/${code}`)
   }
 }

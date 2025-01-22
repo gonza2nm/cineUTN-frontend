@@ -29,6 +29,7 @@ import { EventsUserViewComponent } from './events-user-view/events-user-view.com
 import { PromotionsComponent } from './promotions/promotions.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductsEditComponent } from './products-edit/products-edit.component';
+import { PromotionsEditComponent } from './promotions-edit/promotions-edit.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -79,7 +80,9 @@ const routes: Routes = [
   { path: 'manager-home/events/:id', component: EventEditComponent, canActivate: [AuthManagerGuard], },
 
 
-  { path: 'manager-home/promotions', component: PromotionsComponent },
+  { path: 'manager-home/promotions', component: PromotionsComponent, canActivate: [AuthManagerGuard], },
+  { path: 'manager-home/promotion/new', component: PromotionsEditComponent, canActivate: [AuthManagerGuard], },
+  { path: 'manager-home/promotions/:code', component: PromotionsEditComponent, canActivate: [AuthManagerGuard], },
 
   { path: 'manager-home/products', component: ProductsComponent, canActivate: [AuthManagerGuard], },
   { path: 'manager-home/products/new', component: ProductsEditComponent, canActivate: [AuthManagerGuard], },

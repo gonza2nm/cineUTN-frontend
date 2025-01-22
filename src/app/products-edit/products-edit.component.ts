@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../products/products.service';
-import { Product } from '../interfaces/interfaces';
+import { Snack } from '../interfaces/interfaces';
 
 @Component({
   selector: 'app-products-edit',
@@ -12,7 +12,7 @@ import { Product } from '../interfaces/interfaces';
 export class ProductsEditComponent {
 
   productId: number | null = null;
-  productData: Product = {
+  productData: Snack = {
     id: 0,
     name: "",
     description: "",
@@ -46,9 +46,7 @@ export class ProductsEditComponent {
       this.isEditMode = true;
       this.loadOneProduct();
     }
-
   }
-
 
   loadOneProduct() {
     if(this.productId) {
@@ -72,7 +70,6 @@ export class ProductsEditComponent {
   }
 
   saveProduct() {
-
     if(this.isEditMode) {
       if(this.productId) {
         this.productService.updateProduct(this.productId, this.productsForm.value).subscribe({
