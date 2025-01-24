@@ -92,3 +92,21 @@ export interface Event {
   cinemas: Cinema[];
 }
 
+export interface Promotion {
+  code: string;
+  name: string;
+  description: string;
+  promotionStartDate: Date;
+  promotionFinishDate: Date;
+  discount: number;
+  cinemas: Cinema[];
+  snacks: Snack[];
+}
+
+export interface Snack {
+  id: number;
+  name: string;
+  description: string;
+  urlPhoto: string;
+}
+

@@ -57,7 +57,6 @@ export class BuyDetailsComponent implements OnInit {
   ngOnInit() {
     this.user = this.authService.getUser();
     this.buyId = this.route.snapshot.params['id'];
-    console.log(this.buyId);
     if (!this.buyId) {
       this.errorMessage =
         'No se encontro el id de la compra, por favor retroceda y vuelva a seleccionarla';
@@ -72,6 +71,7 @@ export class BuyDetailsComponent implements OnInit {
     this.router.navigate(['/my-account']);
   }
 
+  
   checkIfExpired() {
     if (this.show.dayAndTime) {
       let showDate = new Date(this.show.dayAndTime);

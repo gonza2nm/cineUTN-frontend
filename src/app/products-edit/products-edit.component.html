@@ -1,0 +1,60 @@
+
+<div class="max-w-4xl mx-auto">
+
+  <div class="flex justify-between">
+  
+    <button type="button" routerLink="/manager-home/products"
+      class="rounded-md border border-black mt-5  hover:bg-gray-300 ml-3 px-3 py-1">
+      &larr; Volver
+    </button>
+  
+    
+    <button type="button" *ngIf="isEditMode" (click)="deleteProduct()"
+      class="rounded-md border border-black mt-5 bg-red-600 text-white hover:bg-red-800 mr-3 px-3 py-1">
+      Eliminar Pelicula
+    </button>
+  </div>
+
+  <h1 *ngIf="isEditMode" class=" text-2xl font-bold text-center mb-5">
+    Complete los campos que desea editar.
+  </h1>
+  
+  <h1 *ngIf="!isEditMode" class=" text-2xl font-bold text-center mb-5">
+    Complete los campos para crear el nuevo producto.
+  </h1>
+
+  <form [formGroup]="productsForm" (ngSubmit)="saveProduct()" class=" flex flex-col mx-3 mb-3">
+    <label>Nombre:</label>
+    <input type="text" formControlName='name'
+      class="border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500">
+    
+    <label class="mt-4">Descripción:</label>
+    <textarea rows="8" type="text" formControlName='description'
+      class=" border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500">
+        </textarea>
+    
+    <label class="mt-4">Link imagen:</label>
+    <textarea type="text" formControlName="urlPhoto"
+      class=" border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500">
+    </textarea>
+
+    <img [src]="urlPhoto" alt="Imagen del producto" class="flex self-center w-40 flex-wrap my-5 mx-4">
+
+    <p *ngIf="errorMessage"
+      class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+      {{ errorMessage }}
+    </p>
+
+    <p *ngIf="!productsForm.valid"
+    class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+      El producto debe tener al menos un valor en cada campo.
+    </p>
+
+    <button type="submit" [disabled]="!productsForm.valid"
+    class="border-2 border-black mt-8 py-2 px-4 w-auto mx-auto rounded-md hover:bg-gray-300 fel disabled:border-gray-400 disabled:bg-gray-400 disabled:text-white disabled:cursor-not-allowed">
+      {{ isEditMode ? 'Guardar Cambios' : 'Agregar producto' }}
+    </button>
+
+  </form>
+
+</div>
