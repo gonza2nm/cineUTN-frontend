@@ -56,6 +56,7 @@ export class BuyComponent implements OnInit {
   //showDay = this.movieDatialsService.getFormattedWeekday(this.show.dayAndTime);
   step: number = 1;
   buyAcepted = false;
+  errorMessageBuy: boolean = true;
 
 
   constructor(
@@ -125,7 +126,38 @@ export class BuyComponent implements OnInit {
     //this.showThaterCantSillas2 = this.showThaterCantSillas;
     //this.showThaterCantSillas2 = this.showThaterCantSillas2 - this.totalEntradas;
   }
+
+
   confirmPurchase() {
+    this.calculateTotal();
+    if(this.user) {
+      this.buyService.addBuy('Compra de entradas', this.total, this.user.id, this.show.id, this.totalEntradas).subscribe({
+        next: (response) => {
+          console.log(response.data);
+          this.errorMessageBuy = true;
+          this.buyAcepted = true;
+          setTimeout(() => {
+            this.buyAcepted = false;
+            this.router.navigate(['/my-account']);
+          }, 3000); 
+        },
+        error: (err) => {
+          console.log('No se pudo realizar la compra');
+          console.log('Error', err.error)
+          this.errorMessageBuy = false;
+          this.buyAcepted = true;
+          setTimeout(() => {
+            this.buyAcepted = false;
+            this.router.navigate(['/my-account']);
+          }, 3000);
+        }
+      })
+    }
+  }
+
+
+  /*
+  confirmPurchase() {,
     this.buyAcepted = true;
     console.log("total de tickets: ", this.totalEntradas)
     this.calculateTotal();
@@ -163,6 +195,7 @@ export class BuyComponent implements OnInit {
         });
     }
   }
+    */
 
   updateQuantity(ticket: Item, change: number) {
     ticket.counter = Math.max(0, ticket.counter + change);

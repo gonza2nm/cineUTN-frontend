@@ -109,9 +109,9 @@
             </div>
           </div>
         </div>
-        <div *ngIf="totalEntradas !==0 " class="w-full flex">
-          <button (click)="nextStep()"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-auto mt-5">
+        <div class="w-full flex">
+          <button [disabled]="totalEntradas === 0" (click)="nextStep()"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-auto mt-5 disabled:border-gray-400 disabled:bg-gray-400 disabled:text-white disabled:cursor-not-allowed">
             Siguiente
           </button>
         </div>
@@ -162,23 +162,25 @@
     </div>
   </div>
 
-  <div *ngIf="buyAcepted" class="h-[50vh] flex gap-2 justify-center items-center">
-    <div>
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-7 fill-green-500" viewBox="0 0 512 512">
-        <path
-          d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
-      </svg>
+  <div *ngIf="buyAcepted">
+    <div *ngIf="errorMessageBuy" class="h-[50vh] flex gap-2 justify-center items-center">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 fill-green-500" viewBox="0 0 512 512">
+          <path
+            d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
+        </svg>
+      </div>
+      <p class="text-xl">La compra se realizó con exito.</p>
     </div>
-    <p class="text-xl">Gracias por tu compra, {{user.name }}</p>
-    <!--
-    <div>
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-7 fill-red-500"
-        viewBox="0 0 512 512">
-        <path
-          d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z" />
-      </svg>
+    
+    <div *ngIf="!errorMessageBuy" class="h-[50vh] flex gap-2 justify-center items-center">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 fill-red-500" viewBox="0 0 512 512">
+          <path
+            d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z" />
+        </svg>
+      </div>
+      <p class="text-xl">La compra no se pudo realizar, intente más tarde.</p>
     </div>
-    <p class="text-xl">La compra no se pudo realizar, intente más tarde.</p>
-    -->
   </div>
 </div>

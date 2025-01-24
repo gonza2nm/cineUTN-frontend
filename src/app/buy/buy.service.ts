@@ -22,8 +22,8 @@ export class BuyService {
     return this.http.get<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}/${id}`)
   }
   
-  addBuy(description: string, total:number, user:number):Observable<any> {
-    return this.http.post<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}`, {description, total, user, status: 'valido'} )
+  addBuy(description: string, total:number, user:number, show: number, cantElements: number):Observable<any> {
+    return this.http.post<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}`, {description, total, user, status: 'valido', show, cantElements} )
   }
   
   updatebuy(id: number, status:string):Observable<any>{
