@@ -26,6 +26,7 @@ import { AuthGeneralGuard } from './auth/authGeneral.guard';
 import { EventsComponent } from './events/events.component';
 import { EventEditComponent } from './event-edit/event-edit.component';
 import { EventsUserViewComponent } from './events-user-view/events-user-view.component';
+import { BuyValidateQrComponent } from './buy-validate-qr/buy-validate-qr.component';
 import { PromotionsComponent } from './promotions/promotions.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductsEditComponent } from './products-edit/products-edit.component';
@@ -38,8 +39,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'my-account', component: MyAccountComponent, canActivate: [AuthGeneralGuard] },
   { path: 'events', component: EventsUserViewComponent },
-
   { path: 'movies/:id', component: MovieDetailsComponent },
+
   { path: 'buy/:id', component: BuyComponent, canActivate: [AuthGeneralGuard] },
   { path: 'buy-details/:id', component: BuyDetailsComponent, canActivate: [AuthGeneralGuard] },
 
@@ -79,6 +80,7 @@ const routes: Routes = [
   { path: 'manager-home/events/new', component: EventEditComponent, canActivate: [AuthManagerGuard], },
   { path: 'manager-home/events/:id', component: EventEditComponent, canActivate: [AuthManagerGuard], },
 
+  { path: 'manager-home/buy-validate-qr', component: BuyValidateQrComponent, canActivate: [AuthGeneralGuard] },
 
   { path: 'manager-home/promotions', component: PromotionsComponent, canActivate: [AuthManagerGuard], },
   { path: 'manager-home/promotion/new', component: PromotionsEditComponent, canActivate: [AuthManagerGuard], },
@@ -88,7 +90,7 @@ const routes: Routes = [
   { path: 'manager-home/products/new', component: ProductsEditComponent, canActivate: [AuthManagerGuard], },
   { path: 'manager-home/products/:id', component: ProductsEditComponent, canActivate: [AuthManagerGuard], },
 
-  
+
 
   { path: "**", component: HomeComponent }
 ];
