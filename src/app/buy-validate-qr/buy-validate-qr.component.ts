@@ -31,12 +31,14 @@ export class BuyValidateQrComponent implements OnDestroy {
 
   }
 
+  pressOnce: boolean = false; // Para que el boton solo pueda apretarse una vez.
   private scannerControls: IScannerControls | null = null;
 
   constructor(private buyService: BuyService) { }
 
   scanQRCode() {
     const codeReader = new BrowserQRCodeReader(); //viene de @zxing/browser
+    this.pressOnce = true;
 
     codeReader.decodeFromVideoDevice(undefined, 'video',
       (result, error, controls) => {
@@ -70,7 +72,6 @@ export class BuyValidateQrComponent implements OnDestroy {
   ngOnDestroy() { //mata la camara cuando salismos del componente
     if (this.scannerControls) {
       this.scannerControls.stop(); // detenemos la camara
-      console.log('Cámara detenida al salir del componente.');
     }
   }
 }
