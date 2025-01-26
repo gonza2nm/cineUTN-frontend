@@ -83,12 +83,12 @@
     </div>
     -->
 
-    <div class="flex flex-col items-center bg-white rounded-lg p-6 shadow-sm md:shadow-md mt-6">
-      <div class="rounded-full bg-gray-50 p-4 shadow-md">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Commons_QR_code.png" alt="QR Code"
-          class="w-32 h-32 rounded-lg md:w-36">
+    <div class="flex flex-col items-center rounded-lg p-4 shadow-sm md:shadow-md">
+      <div class="">
+        <img [src]="qrCodeUrl" alt="QR Code"
+          class="w-44 h-44 rounded-lg">
       </div>
-      <p class="mt-4 text-sm text-gray-600 italic">Escanea este código para más detalles</p>
+      <p class="mt-4 text-sm text-gray-600 italic">El encargado usara este codigo para validar tu compra</p>
     </div>
 
     <div class="border-t-2 border-gray-300 px-2 py-3 md:hidden">

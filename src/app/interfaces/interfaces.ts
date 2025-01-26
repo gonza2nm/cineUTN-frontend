@@ -10,6 +10,10 @@ export interface ResponseOne<T> {
   message: string;
   data: T;
 }
+export interface ResponseQR {
+  message: string;
+  qrCodeUrl: string;
+}
 export interface Cinema {
   id: number;
   name: string;

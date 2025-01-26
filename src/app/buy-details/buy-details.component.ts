@@ -50,6 +50,9 @@ export class BuyDetailsComponent implements OnInit {
   errorMessage: string | null = null;
   messageCanceled = '';
   isExpired: boolean = false;
+  showDay: string = '';
+  showHour: string = '';
+  qrCodeUrl: string = '';
 
   constructor(
     private movieDatialsService: MovieDetailsService,
@@ -70,6 +73,7 @@ export class BuyDetailsComponent implements OnInit {
     } else {
       this.loadPurchase();
       this.loadTickets(this.buyId);
+      this.loadQRcode();
     }
   }
 
@@ -159,6 +163,62 @@ export class BuyDetailsComponent implements OnInit {
     let minutes = fecha.getMinutes().toString().padStart(2,'0');
     return `${diaMes}/${mes}/${year} - ${hour}:${minutes} hs`;
   }
+
+
+  loadQRcode() {
+    this.buyService.getQRCodeBuy(this.buyId).subscribe({
+      next: (response) => {
+        if (response.qrCodeUrl) {
+          this.qrCodeUrl = response.qrCodeUrl;
+        }
+      },
+      error: (err) => {
+        console.error('Error loading the QR code', err.error)
+      },
+    });
+  }
+
+  /*
+
+  cancelPurchase(showDate: Date) {
+    
+    let showDate$ = new Date(showDate)
+    let dateToday = new Date()
+
+    let date2 = showDate$.getTime() - dateToday.getTime() ;
+
+    if(date2 > (12*60*60*1000)) {
+
+      this.ticketService.deleteTickets(this.buyId).subscribe({
+        next: (response) => {
+          console.log(response.data);
+          let status = 'cancelado';
+          this.buyService.updatebuy(this.buyId, status).subscribe({
+            next: () => {
+              console.log(response.data);
+              this.messageCanceled = "La compra fue cancelada.";
+            },
+
+            error: (err) => {
+              console.log('Error de compra');
+              console.log(err.message);
+              console.log(err.error);
+            }
+          })
+        },
+        error: (err) => {
+          console.log('Error de Tickets')
+          console.log(err.message);
+          console.log(err.error);
+        }
+      })
+
+    } else {
+      this.messageCanceled = "La compra solo se puede cancelar hasta 12hs antes de la función."
+    }
+
+  }
+    */
 
   scrollToTop(): void {
     window.scrollTo({
