@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Show, User } from '../interfaces/interfaces.js';
+import { Show, Snack, User } from '../interfaces/interfaces.js';
 import { MovieDetailsService } from '../movie-details/movie-details.service';
 import { BuyService } from './buy.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
-import { TicketService } from '../tickets/ticket.service';
+import { ProductsService } from '../products/products.service';
 
 interface Item {
   descripcion: string;
@@ -17,7 +17,10 @@ interface Item {
   templateUrl: './buy.component.html',
   styleUrls: ['./buy.component.css'],
 })
+
 export class BuyComponent implements OnInit {
+
+  user: User | null = this.authService.getUser();
   errorMessage: string | null = null;
   showId!: number;
   show: Show = {
@@ -45,59 +48,39 @@ export class BuyComponent implements OnInit {
     { descripcion: 'Para niños', costo: 3000, counter: 0 },
     { descripcion: 'Para adultos', costo: 3500, counter: 0 },
   ];
-  total = 0;
-  totalEntradas = 0;
-  user: User | null = this.authService.getUser();
-  numbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-  //showDay = this.movieDatialsService.getFormattedWeekday(this.show.dayAndTime);
-  //showHour = this.movieDatialsService.getShowHourAndDay(this.show);
-  showDay: string = '';
-  showHour: string = '';
-  //showDay = this.movieDatialsService.getFormattedWeekday(this.show.dayAndTime);
+
+  totalPriceTickets = 0;
+  totalCantTickets = 0;
   step: number = 1;
   buyAcepted = false;
   errorMessageBuy: boolean = true;
+
+  purchaseChoice: string = 'entrada';
+  snacks: Snack[] = [];
+  selectedSnacks: { id: number, name: string, price: number}[] = []
+  
 
 
   constructor(
     private movieDatialsService: MovieDetailsService,
     private authService: AuthService,
     private buyService: BuyService,
-    private ticketService: TicketService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snackService: ProductsService
   ) { }
 
   ngOnInit(): void {
     this.showId = this.route.snapshot.params['id'];
     if (!this.showId) {
-      this.errorMessage =
-        'No se encontro el id de esa funcion, por favor retroceda y vuelva a seleccionarla';
+      this.errorMessage = 'No se encontro el id de esa funcion, por favor retroceda y vuelva a seleccionarla';
     } else {
-      this.movieDatialsService.getOneShow(this.showId).subscribe({
-        next: (response) => {
-          this.show = response;
-          this.showDay = this.movieDatialsService.getFormattedWeekday(this.show.dayAndTime);
-          this.showHour = this.movieDatialsService.getShowHourAndDay(this.show);
-          this.errorMessage = null;
-        },
-        error: () => {
-          this.errorMessage = 'Ocurrio un error al buscar la funcion';
-          console.error('Ocurrio un error al buscar la funcion');
-          this.router.navigate(['/']);
-        },
-      });
+      this.loadShow();
       this.loading = false;
     }
+    this.loadSnacks();
   }
 
-  formatHour(show: Show) {
-    return this.movieDatialsService.getShowHourAndDay(show);
-  }
-
-  formatDay(show: Show) {
-    return this.movieDatialsService.getFormattedWeekday(show.dayAndTime);
-  }
 
   nextStep() {
     if (this.step < 3) {
@@ -111,27 +94,99 @@ export class BuyComponent implements OnInit {
     }
   }
 
+  handleChangeOption(option: string) {
+    this.purchaseChoice = option;
+  }
+
+  updateQuantityTickets(ticket: Item, change: number) {
+    ticket.counter = Math.max(0, ticket.counter + change);
+    this.totalCantTickets = this.items.reduce(
+      (sum, ticket) => sum + ticket.counter,
+      0
+    );
+  }
+
+  addProductToList(snack: Snack) {
+    const indexSnack = this.selectedSnacks.findIndex(item => item.id === snack.id)
+    if(indexSnack === -1) {
+      this.selectedSnacks.push({id: snack.id, name: snack.name, price: snack.price});
+      
+    } else {
+      this.selectedSnacks.splice(indexSnack, 1)
+      
+    }
+  }
+
+  isInList(snack: any) {
+    const indexSnack = this.selectedSnacks.findIndex(item => item.id === snack.id)
+    if(indexSnack === -1) {
+      return false
+    } else {
+      return true
+    }
+  }
+
+  getTotalTickets() {
+    return this.items.reduce(
+      (subtotal, ticket) => subtotal + ticket.costo * ticket.counter,
+      0
+    );
+  }
+
+  getTotalSnacks() {
+    return this.selectedSnacks.reduce(
+      (subtotal, snack) => subtotal + snack.price,
+      0
+    );
+  }
+
   calculateTotal() {
-    this.total = this.items.reduce(
+    this.totalPriceTickets = this.items.reduce(
       (sum, item) => sum + item.costo * item.counter,
       0
     );
   }
 
-  calculateTotalTickets() {
-    this.totalEntradas = this.items.reduce(
-      (sum, item) => sum + item.counter,
-      0
-    );
-    //this.showThaterCantSillas2 = this.showThaterCantSillas;
-    //this.showThaterCantSillas2 = this.showThaterCantSillas2 - this.totalEntradas;
+  formatDateAndHour(show: Show) {
+    const fecha = new Date(show.dayAndTime);
+    const year = fecha.getFullYear();
+    const diaMes = fecha.getDate().toString().padStart(2, '0');
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    let hour = fecha.getHours().toString().padStart(2,'0');
+    let minutes = fecha.getMinutes().toString().padStart(2,'0');
+    return `${diaMes}/${mes}/${year} - ${hour}:${minutes} hs`;
   }
 
+  loadShow() {
+    this.movieDatialsService.getOneShow(this.showId).subscribe({
+        next: (response) => {
+          this.show = response;
+          this.errorMessage = null;
+        },
+        error: () => {
+          this.errorMessage = 'Ocurrio un error al buscar la funcion';
+          console.error('Ocurrio un error al buscar la funcion');
+          this.router.navigate(['/']);
+        },
+      });
+  }
+
+  loadSnacks() {
+    this.snackService.getAllProducts().subscribe({
+        next: (response) => {
+          this.snacks = response.data;
+        },
+        error: () => {
+          this.errorMessage = 'Ocurrio un error al buscar los snacks';
+          console.error('Ocurrio un error al buscar los snacks');
+        },
+    });
+  }
 
   confirmPurchase() {
     this.calculateTotal();
     if(this.user) {
-      this.buyService.addBuy('Compra de entradas', this.total, this.user.id, this.show.id, this.totalEntradas).subscribe({
+      this.buyService.addBuy('Compra de entradas', this.totalPriceTickets, this.user.id, this.show.id, this.totalCantTickets, this.selectedSnacks).subscribe({
         next: (response) => {
           console.log(response.data);
           this.errorMessageBuy = true;
@@ -154,64 +209,4 @@ export class BuyComponent implements OnInit {
       })
     }
   }
-
-
-  /*
-  confirmPurchase() {,
-    this.buyAcepted = true;
-    console.log("total de tickets: ", this.totalEntradas)
-    this.calculateTotal();
-    console.log("total: ", this.total)
-    if (this.user) {
-      this.buyService
-        .addBuy('Compra de entradas', this.total, this.user.id)
-        .subscribe({
-          next: (response: any) => {
-            this.ticketService.
-              addtickets(this.show.id, response.data.id, this.totalEntradas)
-              .subscribe({
-                next: () => {
-                  console.log('Todas las entradas completadas:');
-                },
-                error: () => {
-                  console.log('No se pudo realizar la compra de la entrada');
-                  // Si ocurre un error al crear las entradas, elimina la compra.
-                  this.buyService.deleteBuy(response.data.id).subscribe({
-                    next: () => {
-                      console.log(
-                        'Compra revertida debido al fallo en la creación de entradas'
-                      );
-                    },
-                    error: () => {
-                      console.log('No se pudo revertir la compra');
-                    },
-                  });
-                },
-              });
-          },
-          error: () => {
-            console.log('No se pudo realizar la compra');
-          },
-        });
-    }
-  }
-    */
-
-  updateQuantity(ticket: Item, change: number) {
-    ticket.counter = Math.max(0, ticket.counter + change);
-    this.totalEntradas = this.items.reduce(
-      (sum, ticket) => sum + ticket.counter,
-      0
-    );
-  }
-
-  getTotal() {
-    return this.items.reduce(
-      (subtotal, ticket) => subtotal + ticket.costo * ticket.counter,
-      0
-    );
-  }
-
-  //showThaterCantSillas = this.show.theater.numChairs;
-  //showThaterCantSillas2 = this.show.theater.numChairs;
 }

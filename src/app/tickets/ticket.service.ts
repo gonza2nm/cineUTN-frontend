@@ -17,19 +17,21 @@ export class TicketService {
     return this.http.get<ResponseList<Ticket> | ResponseWithError>(`${this.urlTicket}/byBuy/${id}`);
   }
 
-
-  addtickets(show: number, buy: number, cantidad: number) {
-    const requests = [];
-    // Repetir la llamada según la cantidad especificada
-    for (let i = 0; i < cantidad; i++) {
-      const request = this.http.post(`${this.urlTicket}`, { show, buy });
-      requests.push(request); // Guardar cada solicitud en el array
-    }
-
-    // Ejecutar todas las solicitudes simultáneamente
-    return forkJoin(requests);
+  getTickets():Observable<any>{
+    return this.http.get<ResponseList<Buy> | ResponseWithError>(this.urlTicket);
   }
 
+  getOneTicket(id: number): Observable<any> {
+    return this.http.get<ResponseOne<Ticket> | ResponseWithError>(`${this.urlTicket}/${id}`)
+  }
+  
+  addTickets(ticketData: Ticket):Observable<any> {
+    return this.http.post<ResponseOne<Ticket> | ResponseWithError>(`${this.urlTicket}`, ticketData )
+  }
+  
+  updateTicket(id: number, ticketData: Ticket):Observable<any>{
+    return this.http.patch<ResponseOne<Ticket> | ResponseWithError>(`${this.urlTicket}/${id}`, ticketData);
+  }
 
   deleteTickets(id: number): Observable<any> {
     return this.http.delete<ResponseList<Ticket> | ResponseWithError>(`${this.urlTicket}/byBuy/${id}`)

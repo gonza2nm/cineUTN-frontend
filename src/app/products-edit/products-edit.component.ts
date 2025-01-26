@@ -16,7 +16,8 @@ export class ProductsEditComponent {
     id: 0,
     name: "",
     description: "",
-    urlPhoto: ""
+    urlPhoto: "",
+    price: 0,
   }
   isEditMode: boolean = false;
   productsForm!: FormGroup;
@@ -31,6 +32,7 @@ export class ProductsEditComponent {
     
     this.productsForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
+      price: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
       urlPhoto: new FormControl('', [Validators.required]),
     })
@@ -57,7 +59,8 @@ export class ProductsEditComponent {
           this.productsForm.setValue({
             name: this.productData.name,
             description: this.productData.description,
-            urlPhoto: this.productData.urlPhoto
+            urlPhoto: this.productData.urlPhoto,
+            price: this.productData.price,
           })
         }, 
         error: (err) => {
