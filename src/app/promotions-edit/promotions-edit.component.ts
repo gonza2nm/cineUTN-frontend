@@ -104,7 +104,7 @@ export class PromotionsEditComponent {
     this.promotionData.promotionFinishDate = this.promotionsForm.get('promotionFinishDate')?.value;
     this.promotionData.discount = this.promotionsForm.get('discount')?.value;
     this.promotionData.cinemas = this.cinemasIds.map(id => ({ id, name: '', address: '', theaters: [], movies: [] }));
-    this.promotionData.snacks = this.productsIds.map(id => ({ id, name: '', description: "", urlPhoto: "" }));
+    this.promotionData.snacks = this.productsIds.map(id => ({ id, name: '', description: "", urlPhoto: "", price: 0 }));
 
     if(this.isEditMode) {
       if(this.promotionCode) {

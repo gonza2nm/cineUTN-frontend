@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BuyService } from '../buy/buy.service';
-import { Buy, Movie, Show, Ticket, User } from '../interfaces/interfaces';
+import { Buy, Movie, Show, Snack, Ticket, User } from '../interfaces/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MyAccountService } from '../my-account/my-account.service';
 import { TicketService } from '../tickets/ticket.service';
 import { AuthService } from '../auth/auth.service';
 import { MovieDetailsService } from '../movie-details/movie-details.service';
@@ -13,10 +12,21 @@ import { MovieDetailsService } from '../movie-details/movie-details.service';
   styleUrls: ['./buy-details.component.css'],
 })
 export class BuyDetailsComponent implements OnInit {
-  buy: Buy | null = null;
+  buy: Buy = {
+    id: 0,
+    description: '',
+    user: {
+      id: 0
+    } as User,
+    total: 0,
+    fechaHora: new Date(),
+    status: '',
+    tickets: []   
+  }
   user: User | null = null;
   buyId!: number;
   tickets: Ticket[] = [];
+  snacks: Snack[] = [];
   show: Show = {
     id: 0,
     dayAndTime: new Date(),
@@ -45,7 +55,6 @@ export class BuyDetailsComponent implements OnInit {
   qrCodeUrl: string = '';
 
   constructor(
-    private myAcountService: MyAccountService,
     private movieDatialsService: MovieDetailsService,
     private authService: AuthService,
     private ticketService: TicketService,
@@ -55,6 +64,7 @@ export class BuyDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.scrollToTop();
     this.user = this.authService.getUser();
     this.buyId = this.route.snapshot.params['id'];
     if (!this.buyId) {
@@ -88,6 +98,7 @@ export class BuyDetailsComponent implements OnInit {
     this.buyService.getOneBuy(this.buyId).subscribe({
       next: (response) => {
         this.buy = response.data;
+        this.snacks = response.data.snacks;
         console.log(response);
       },
 
@@ -105,8 +116,6 @@ export class BuyDetailsComponent implements OnInit {
         this.errorMessage = null;
         if (this.tickets[0]) {
           this.show = this.tickets[0].show;
-          this.showDay = this.movieDatialsService.getFormattedWeekday(this.show.dayAndTime);
-          this.showHour = this.movieDatialsService.getShowHourAndDay(this.show);
           this.checkIfExpired();
         }
       },
@@ -122,7 +131,7 @@ export class BuyDetailsComponent implements OnInit {
     this.ticketService.deleteTickets(this.buyId).subscribe({
       next: (response) => {
         console.log(response.data);
-        let status = 'cancelado';
+        let status = 'Cancelada';
         this.buyService.updatebuy(this.buyId, status).subscribe({
           next: () => {
             console.log(response.data);
@@ -144,6 +153,17 @@ export class BuyDetailsComponent implements OnInit {
       },
     });
   }
+
+  formatDateAndHour(date: Date) {
+    const fecha = new Date(date);
+    const year = fecha.getFullYear();
+    const diaMes = fecha.getDate().toString().padStart(2, '0');
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    let hour = fecha.getHours().toString().padStart(2,'0');
+    let minutes = fecha.getMinutes().toString().padStart(2,'0');
+    return `${diaMes}/${mes}/${year} - ${hour}:${minutes} hs`;
+  }
+
 
   loadQRcode() {
     this.buyService.getQRCodeBuy(this.buyId).subscribe({
@@ -198,6 +218,12 @@ export class BuyDetailsComponent implements OnInit {
     }
 
   }
+    */
 
-  */
+  scrollToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
 }

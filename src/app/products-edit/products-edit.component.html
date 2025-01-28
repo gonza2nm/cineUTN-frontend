@@ -11,7 +11,7 @@
     
     <button type="button" *ngIf="isEditMode" (click)="deleteProduct()"
       class="rounded-md border border-black mt-5 bg-red-600 text-white hover:bg-red-800 mr-3 px-3 py-1">
-      Eliminar Pelicula
+      Eliminar Producto
     </button>
   </div>
 
@@ -26,6 +26,10 @@
   <form [formGroup]="productsForm" (ngSubmit)="saveProduct()" class=" flex flex-col mx-3 mb-3">
     <label>Nombre:</label>
     <input type="text" formControlName='name'
+      class="border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500">
+
+    <label class="mt-4">Precio:</label>
+    <input type="number" formControlName='price'
       class="border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500">
     
     <label class="mt-4">Descripción:</label>

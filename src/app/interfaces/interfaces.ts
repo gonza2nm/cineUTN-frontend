@@ -108,5 +108,17 @@ export interface Snack {
   name: string;
   description: string;
   urlPhoto: string;
+  price: number;
+}
+
+export interface buyDataSend {
+  description: string;
+  total: number;
+  fechaHora: Date;
+  user: number;
+  status: string;
+  cantElements: number;
+  show?: number;
+  snacks?: []
 }
 

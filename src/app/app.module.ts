@@ -39,6 +39,7 @@ import { PromotionsComponent } from './promotions/promotions.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductsEditComponent } from './products-edit/products-edit.component';
 import { PromotionsEditComponent } from './promotions-edit/promotions-edit.component';
+import { BuySnacksComponent } from './buy-snacks/buy-snacks.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { PromotionsEditComponent } from './promotions-edit/promotions-edit.compo
     ProductsComponent,
     ProductsEditComponent,
     PromotionsEditComponent,
+    BuySnacksComponent,
   ],
   imports: [
     BrowserModule,

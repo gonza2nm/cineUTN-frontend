@@ -21,13 +21,13 @@ export class BuyService {
   getOneBuy(id: number): Observable<any> {
     return this.http.get<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}/${id}`)
   }
-
+  
+  addBuy(description: string, total: number, user:number, show: number, cantElements: number , snacks: { id: number, name: string, price: number }[]):Observable<any> {
+    return this.http.post<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}`, {description, total, user, show, cantElements, snacks} )
+  }
+  
   getQRCodeBuy(id: number): Observable<any> {
     return this.http.get<ResponseQR | ResponseWithError>(`${this.urlBuy}/generateQr/${id}`)
-  }
-
-  addBuy(description: string, total: number, user: number): Observable<any> {
-    return this.http.post<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}`, { description, total, user, status: 'valido' })
   }
 
   validateQRCode(token: string): Observable<any> {
