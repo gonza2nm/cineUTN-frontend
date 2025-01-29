@@ -66,6 +66,8 @@ export class PromotionsEditComponent {
       this.loadAllProducts();
     }
   }
+
+  
   
   
   loadOnePromotion() {
@@ -200,16 +202,9 @@ export class PromotionsEditComponent {
   }
 
   validateDates() {
-    const startDate = new Date(this.promotionsForm.value.promotionStartDate);
-    const endDate = new Date(this.promotionsForm.value.promotionFinishDate);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    startDate.setHours(0, 0, 0, 0);
-    endDate.setHours(0, 0, 0, 0);
-
-    if (!this.promotionsForm.value.promotionStartDate || !this.promotionsForm.value.promotionFinishDate) {
-      return ''; // No hay error si las fechas no están completas
-    }
+    const startDate = this.promotionsForm.value.promotionStartDate;
+    const endDate = this.promotionsForm.value.promotionFinishDate;
+    const today = this.formatToDateTimeLocal(new Date());
 
     if (startDate < today || endDate < today) {
       return 'La fecha de inicio o de fin no puede ser anterior a la fecha de hoy.';
