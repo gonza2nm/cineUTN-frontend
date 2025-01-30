@@ -9,7 +9,7 @@ import { AuthService } from '../auth/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent{
 
   isLoggedIn: boolean = false;
 
@@ -18,17 +18,6 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) { }
 
-
-
-  ngOnInit(): void {
-    this.authService.isLoggedIn.subscribe((status: boolean) => {
-      this.isLoggedIn = status;
-    });
-    this.authService.checkLoginStatus();
-    if (this.isLoggedIn) {
-      this.router.navigate(["/"])
-    }
-  }
 
   messageError: string = '';
   credentialsError: boolean = false;
@@ -41,14 +30,14 @@ export class LoginComponent implements OnInit {
   });
 
 
-  getUser(): void {
+  login(): void {
     if (this.loginForm.invalid) {
       return;
     }
     this.authService.login(this.loginForm.value).subscribe({
       next: (success) => {
         if (success) {
-          if (this.authService.getUser()?.type == "manager") {
+          if (this.authService.isManager()) {
             this.router.navigate(["/manager-home"]);
           } else {
             this.router.navigate(['/my-account']);

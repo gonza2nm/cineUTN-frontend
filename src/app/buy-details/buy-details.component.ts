@@ -54,7 +54,7 @@ export class BuyDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.user = this.authService.getUser();
+    this.authService.user.subscribe((user)=> this.user = user);
     this.buyId = this.route.snapshot.params['id'];
     console.log(this.buyId);
     if (!this.buyId) {

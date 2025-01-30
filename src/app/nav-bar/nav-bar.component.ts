@@ -17,7 +17,7 @@ export class NavBarComponent implements OnInit {
     private route: ActivatedRoute
   ) { }
 
-  isManager = this.authService.getUser()?.type == "manager" ? true : false;
+  isManager: boolean = false;
   isMenuOpen = false;
   isLoggedIn: boolean = false;
 
@@ -29,13 +29,22 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.isLoggedIn.subscribe((status: boolean) => {
-      this.isLoggedIn = status;
+    this.authService.isLoggedIn().subscribe(isLoggedIn => {
+        this.isLoggedIn = isLoggedIn;
     });
-    this.authService.checkLoginStatus();
+    this.authService.isManager().subscribe(isManager =>{ 
+      this.isManager = isManager;
+    });
   }
 
   logout() {
-    this.authService.logout();
+    this.authService.logout().subscribe(success => {
+      if(success){
+        console.log("se deslogeo")
+        this.router.navigate(["/login"]);
+      }else{
+        console.log("no se logeo")
+      }
+    });
   }
 }

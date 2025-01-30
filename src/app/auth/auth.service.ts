@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ResponseOne, User } from '../interfaces/interfaces.js';
-import { BehaviorSubject, catchError, map, Observable, of, } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, tap, } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -8,78 +8,66 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AuthService {
 
-  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
-
-  isLoggedIn: Observable<boolean> = this.isLoggedInSubject.asObservable();
-
+  private loggedIn: BehaviorSubject<boolean>
+  private userSubject : BehaviorSubject<User | null>;
+  user : Observable<User| null>
   readonly url = 'http://localhost:3000/api/users';
+  
 
-  constructor(private http: HttpClient) { }
-
-  setUser(value: User) {
-    sessionStorage.setItem("user", JSON.stringify(value));
+  constructor(private http: HttpClient) { 
+    this.userSubject = new BehaviorSubject<User | null>(null);
+    this.user = this.userSubject.asObservable();
+    this.loggedIn = new BehaviorSubject<boolean>(false);
+    this.checkTokenFindData();
   }
 
-  getUser(): User | null {
-    const json = sessionStorage.getItem("user")
-    const user = json ? JSON.parse(json) : null
-    return user;
-  }
-
-  removeUser(): void {
-    sessionStorage.removeItem("user");
-  }
-
-  clearSessionStorage(): void {
-    sessionStorage.clear();
-  }
-
-  login(userData: any): Observable<boolean> {
-    return this.loginUser(userData).pipe(
-      map((response) => {
-        if (response && response.data) {
-          this.setUser(response.data);
-          this.isLoggedInSubject.next(true);
-          return true; // Login exitoso
-        }// la funcion map lo convierte al true en observable automaticamente
-
-        return false; // Si no hay datos, falló el login
+  login(userData: any): Observable<ResponseOne<User>> {
+    return this.http.post<ResponseOne<User>>(`${this.url}/login`, userData, { withCredentials: true }).pipe(
+      tap((response) =>{
+        const user = response.data;
+        this.userSubject.next(user);
+        this.loggedIn.next(true)
       }),
       catchError((error) => {
         console.error('Error en login:', error.error);
-        this.isLoggedInSubject.next(false);
-        return of(false); //el of transforma el false en un observable
+        this.userSubject.next(null);
+        this.loggedIn.next(false)
+        throw error;
       })
     );
   }
 
-  logout(): void {
-    this.removeUser();
-    this.isLoggedInSubject.next(false);
+  logout(): Observable<boolean> {
+    return this.http.post<any>(`${this.url}/logout`,{}).pipe(
+    map(() => {
+        this.userSubject.next(null);
+        this.loggedIn.next(false);
+        return true; 
+      }),
+      catchError((error) => {
+        console.error('Error en login:', error.error);
+        return of(false);
+      })  
+    );
   }
 
-  checkLoginStatus(): void {
-    const loggedIn = !!this.getUser();
-    this.isLoggedInSubject.next(loggedIn);
+  checkTokenFindData():void{
+    this.http.get<ResponseOne<User>>(`${this.url}/verify-token-find-data`).subscribe(
+      (response: ResponseOne<User>)=>{
+        this.userSubject.next(response.data);
+        this.loggedIn.next(true);
+      },
+      (error:any) =>{
+        this.logout();
+      }
+    )
   }
 
-  loginUser(userData: any): Observable<any> {
-    return this.http.post<ResponseOne<User>>(`${this.url}/login`, userData, { withCredentials: true });
+  isLoggedIn():Observable<boolean> {
+    return this.loggedIn.asObservable();
   }
 
-  //controlar esto
-  checkCookieAndPermissions(role: string | null): boolean {
-
-    //se verifica en la ruta del backend si estan sus datos y se devuelve en base a los roles que pide
-    // primero se hace la peticion y despues se verifica
-    return true
-  }
-
-  isManager():boolean{
-    return true;
-  }
-
-  isUser(){
-    return true;
+  isManager(): Observable<boolean>{
+    return this.user.pipe(map(user => user?.type === "manager"));
   }
 }
