@@ -8,30 +8,26 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AuthService {
 
-  private loggedIn: BehaviorSubject<boolean>
-  private userSubject : BehaviorSubject<User | null>;
-  user : Observable<User| null>
+  private loggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private userSubject : BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
+  user = this.userSubject.asObservable();
+  loggedIn = this.loggedInSubject.asObservable();
   readonly url = 'http://localhost:3000/api/users';
   
 
-  constructor(private http: HttpClient) { 
-    this.userSubject = new BehaviorSubject<User | null>(null);
-    this.user = this.userSubject.asObservable();
-    this.loggedIn = new BehaviorSubject<boolean>(false);
-    this.checkTokenFindData();
-  }
+  constructor(private http: HttpClient) { }
 
   login(userData: any): Observable<ResponseOne<User>> {
     return this.http.post<ResponseOne<User>>(`${this.url}/login`, userData, { withCredentials: true }).pipe(
       tap((response) =>{
         const user = response.data;
         this.userSubject.next(user);
-        this.loggedIn.next(true)
+        this.loggedInSubject.next(true)
       }),
       catchError((error) => {
         console.error('Error en login:', error.error);
         this.userSubject.next(null);
-        this.loggedIn.next(false)
+        this.loggedInSubject.next(false)
         throw error;
       })
     );
@@ -41,7 +37,7 @@ export class AuthService {
     return this.http.post<any>(`${this.url}/logout`,{}).pipe(
     map(() => {
         this.userSubject.next(null);
-        this.loggedIn.next(false);
+        this.loggedInSubject.next(false);
         return true; 
       }),
       catchError((error) => {
@@ -51,20 +47,30 @@ export class AuthService {
     );
   }
 
-  checkTokenFindData():void{
-    this.http.get<ResponseOne<User>>(`${this.url}/verify-token-find-data`).subscribe(
-      (response: ResponseOne<User>)=>{
-        this.userSubject.next(response.data);
-        this.loggedIn.next(true);
-      },
-      (error:any) =>{
-        this.logout();
-      }
-    )
+  checkTokenFindData(): Observable<any> {
+    return this.http.get<ResponseOne<User>>(`${this.url}/verify-token-find-data`).pipe(
+      tap({
+        next: (response: ResponseOne<User>) => {
+          this.userSubject.next(response.data);
+          this.loggedInSubject.next(true);
+        },
+        error: (error: any) => {
+          console.error('Error verificando token:', error);
+          this.loggedInSubject.next(false);
+          this.userSubject.next(null);
+        }
+      }),
+      catchError((error) => {
+        console.error('Error en verificación de token:', error);
+        this.loggedInSubject.next(false);
+        this.userSubject.next(null);
+        return of(null);
+      })
+    );
   }
 
   isLoggedIn():Observable<boolean> {
-    return this.loggedIn.asObservable();
+    return this.loggedIn;
   }
 
   isManager(): Observable<boolean>{
