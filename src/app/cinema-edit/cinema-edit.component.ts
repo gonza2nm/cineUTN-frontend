@@ -111,8 +111,8 @@ export class CinemaEditComponent implements OnInit {
           this.router.navigate(['/manager-home/cinemas'])
         },
         error: (err) => {
-          this.errorMessage = 'An error occurred while deleting the cinema.'
-          console.error('Error deleting cinema:', err.error.error);
+          this.errorMessage = err.error.message
+          console.error('Error deleting cinema:', err.error);
         }
       })
     }

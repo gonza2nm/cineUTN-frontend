@@ -21,7 +21,8 @@ export class BuyDetailsComponent implements OnInit {
     total: 0,
     fechaHora: new Date(),
     status: '',
-    tickets: []   
+    tickets: [],
+    snacks: []
   }
   user: User | null = null;
   buyId!: number;
@@ -65,7 +66,7 @@ export class BuyDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.scrollToTop();
-    this.authService.user.subscribe((user)=> this.user = user);
+    this.authService.user.subscribe((user) => this.user = user);
     this.buyId = this.route.snapshot.params['id'];
     if (!this.buyId) {
       this.errorMessage =
@@ -158,8 +159,8 @@ export class BuyDetailsComponent implements OnInit {
     const year = fecha.getFullYear();
     const diaMes = fecha.getDate().toString().padStart(2, '0');
     const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
-    let hour = fecha.getHours().toString().padStart(2,'0');
-    let minutes = fecha.getMinutes().toString().padStart(2,'0');
+    let hour = fecha.getHours().toString().padStart(2, '0');
+    let minutes = fecha.getMinutes().toString().padStart(2, '0');
     return `${diaMes}/${mes}/${year} - ${hour}:${minutes} hs`;
   }
 

@@ -71,6 +71,7 @@ export interface Buy {
   user: User;
   status: string;
   tickets: Ticket[];
+  snacks: Snack[];
 }
 export interface User {
   id: number;
