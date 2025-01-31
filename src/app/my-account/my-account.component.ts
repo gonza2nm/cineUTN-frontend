@@ -32,13 +32,14 @@ export class MyAccountComponent implements OnInit {
   band: boolean = false;
 
   ngOnInit(): void {
-    this.user = this.authService.getUser();
-    if (this.user) {
-      this.loadBuys(this.user.id);
+    
+    this.authService.user.subscribe(user => {
+      this.user = user;
+    });
+    if (this.user !== null) {
+      console.log(this.user.id);
+      this.loadBuys(this.user.id); // Cargar las compras si el usuario está disponible
     }
-    //this.buys = this.user?.buys;
-    //deberiamos hacer una peticion cada vez que se inicia para conseguir las nuevas compras
-
 
     this.userEditForm = new FormGroup({
       name: new FormControl(this.user?.name, [Validators.required]),

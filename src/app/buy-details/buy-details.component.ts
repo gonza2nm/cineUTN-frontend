@@ -66,7 +66,7 @@ export class BuyDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.scrollToTop();
-    this.user = this.authService.getUser();
+    this.authService.user.subscribe((user) => this.user = user);
     this.buyId = this.route.snapshot.params['id'];
     if (!this.buyId) {
       this.errorMessage =
@@ -81,7 +81,6 @@ export class BuyDetailsComponent implements OnInit {
   detailsOff() {
     this.router.navigate(['/my-account']);
   }
-
 
   checkIfExpired() {
     if (this.show.dayAndTime) {
