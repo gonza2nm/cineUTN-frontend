@@ -158,7 +158,7 @@ export class EventEditComponent implements OnInit {
     const startDate = new Date(start);
     const endDate = new Date(end);
 
-    return startDate && endDate && startDate < endDate
+    return startDate && endDate && startDate <= endDate
       ? null
       : { invalidDates: true };
   };
