@@ -90,7 +90,7 @@ export class RegisterComponent {
       error: (error) => {
         this.band = false;
         this.messageError = 'Ocurrio un error, por favor intente mas tarde.';
-        console.error(error);
+        console.error(error.error);
       }
     })
   }

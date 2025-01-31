@@ -12,11 +12,8 @@ export class MyAccountService {
 
   readonly ticketsUrlByUser = "http://localhost:3000/api/buys/byUser"
 
-  buy!: Buy;
-
   getBuyByUser(id: number):Observable<any>{
     return this.http.get<ResponseList<Buy> | ResponseWithError>(`${this.ticketsUrlByUser}/${id}`);
   }
-
   
 }

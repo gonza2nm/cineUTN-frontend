@@ -34,6 +34,12 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { EventsComponent } from './events/events.component';
 import { EventEditComponent } from './event-edit/event-edit.component';
 import { EventsUserViewComponent } from './events-user-view/events-user-view.component';
+import { BuyValidateQrComponent } from './buy-validate-qr/buy-validate-qr.component';
+import { PromotionsComponent } from './promotions/promotions.component';
+import { ProductsComponent } from './products/products.component';
+import { ProductsEditComponent } from './products-edit/products-edit.component';
+import { PromotionsEditComponent } from './promotions-edit/promotions-edit.component';
+import { BuySnacksComponent } from './buy-snacks/buy-snacks.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +72,12 @@ import { EventsUserViewComponent } from './events-user-view/events-user-view.com
     EventsComponent,
     EventEditComponent,
     EventsUserViewComponent,
+    BuyValidateQrComponent,
+    PromotionsComponent,
+    ProductsComponent,
+    ProductsEditComponent,
+    PromotionsEditComponent,
+    BuySnacksComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,46 @@
+
+<div class="max-w-4xl mx-auto">
+
+  <div class="flex justify-between">
+    <button type="button" routerLink="/manager-home" class="rounded-md border border-black mt-5 hover:bg-gray-300 ml-3 px-3 py-1">
+      &larr; Volver
+    </button>
+
+    <button type="button" routerLink="/manager-home/products/new" class="rounded-md border border-black mt-5 hover:bg-gray-300 mr-3 px-3 py-1">
+      Agregar Nuevo Producto
+    </button>
+  </div>
+
+  <h1 class="text-2xl font-bold text-center mb-5">Seleccione un producto para administrar</h1>
+
+  <div class="w-full flex justify-center">
+    <div class="flex flex-wrap flex-row justify-around mb-8 mx-4 gap-9 md:justify-center">
+
+      <a *ngFor="let product of products" class="flex flex-wrap w-56 cursor-pointer my-5 mx-4 md:w-60" 
+      [title]="product.name" [routerLink]="['/manager-home/products', product.id]">
+        
+        <img class="object-cover w-full h-full" src="{{product.urlPhoto}}" alt="{{product.name}}">
+        <p class="bg-blue-900 text-center text-lg text-white mb-2 py-1.5 px-3 min-w-full overflow-hidden text-ellipsis 
+                whitespace-nowrap">
+          {{ product.name }}
+        </p>
+      </a>
+      
+    </div>
+  </div>
+
+  
+  <p *ngIf="products.length === 0 && !errorMessage && !loading"  class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+    No existen productos creados. Por favor, intente crear uno.
+  </p>
+
+  <p *ngIf="errorMessage"
+    class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+    {{ errorMessage }}
+  </p>
+
+
+
+</div>
+
+

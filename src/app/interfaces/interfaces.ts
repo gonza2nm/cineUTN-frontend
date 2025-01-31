@@ -10,6 +10,10 @@ export interface ResponseOne<T> {
   message: string;
   data: T;
 }
+export interface ResponseQR {
+  message: string;
+  qrCodeUrl: string;
+}
 export interface Cinema {
   id: number;
   name: string;
@@ -86,5 +90,35 @@ export interface Event {
   startDate: Date;
   finishDate: Date;
   cinemas: Cinema[];
+}
+
+export interface Promotion {
+  code: string;
+  name: string;
+  description: string;
+  promotionStartDate: Date;
+  promotionFinishDate: Date;
+  discount: number;
+  cinemas: Cinema[];
+  snacks: Snack[];
+}
+
+export interface Snack {
+  id: number;
+  name: string;
+  description: string;
+  urlPhoto: string;
+  price: number;
+}
+
+export interface buyDataSend {
+  description: string;
+  total: number;
+  fechaHora: Date;
+  user: number;
+  status: string;
+  cantElements: number;
+  show?: number;
+  snacks?: []
 }
 
