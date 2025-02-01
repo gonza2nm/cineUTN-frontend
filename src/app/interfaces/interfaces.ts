@@ -28,7 +28,7 @@ export interface Genre {
 export interface Theater {
   id: number;
   numChairs: number;
-  cinema: number;
+  cinema: Cinema;
 }
 export interface Movie {
   id: number;

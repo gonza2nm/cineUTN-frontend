@@ -40,7 +40,15 @@ export class BuyComponent implements OnInit {
       languages: [],
       name: ""
     },
-    theater: { cinema: 0, id: 0, numChairs: 0 },
+    theater: {
+      cinema: {
+        id: 0,
+        name: '',
+        address: '',
+        theaters: [],
+        movies: [],
+      }, id: 0, numChairs: 0
+    },
     tickets: []
   }
   loading = true;
@@ -60,11 +68,11 @@ export class BuyComponent implements OnInit {
 
   purchaseChoice: string = 'entrada';
   snacks: Snack[] = [];
-  selectedSnacks: { id: number, name: string, price: number}[] = []
+  selectedSnacks: { id: number, name: string, price: number }[] = []
 
   promotions: Promotion[] = [];
-  selectedPromotions: { code: string, name: string, price: number}[] = []
-  
+  selectedPromotions: { code: string, name: string, price: number }[] = []
+
 
 
   constructor(
@@ -119,18 +127,18 @@ export class BuyComponent implements OnInit {
 
   addProductToList(snack: Snack) {
     const indexSnack = this.selectedSnacks.findIndex(item => item.id === snack.id)
-    if(indexSnack === -1) {
-      this.selectedSnacks.push({id: snack.id, name: snack.name, price: snack.price});
-      
+    if (indexSnack === -1) {
+      this.selectedSnacks.push({ id: snack.id, name: snack.name, price: snack.price });
+
     } else {
       this.selectedSnacks.splice(indexSnack, 1)
-      
+
     }
   }
 
   snackIsInList(snack: any) {
     const indexSnack = this.selectedSnacks.findIndex(item => item.id === snack.id)
-    if(indexSnack === -1) {
+    if (indexSnack === -1) {
       return false
     } else {
       return true
@@ -139,18 +147,18 @@ export class BuyComponent implements OnInit {
 
   addPromotionToList(promo: Promotion) {
     const indexPromotion = this.selectedPromotions.findIndex(item => item.code === promo.code)
-    if(indexPromotion === -1) {
-      this.selectedPromotions.push({code: promo.code, name: promo.name, price: promo.price});
-      
+    if (indexPromotion === -1) {
+      this.selectedPromotions.push({ code: promo.code, name: promo.name, price: promo.price });
+
     } else {
       this.selectedPromotions.splice(indexPromotion, 1)
-      
+
     }
   }
 
   promoIsInList(promo: Promotion) {
     const indexPromo = this.selectedPromotions.findIndex(item => item.code === promo.code)
-    if(indexPromo === -1) {
+    if (indexPromo === -1) {
       return false
     } else {
       return true
@@ -187,52 +195,52 @@ export class BuyComponent implements OnInit {
     const year = fecha.getFullYear();
     const diaMes = fecha.getDate().toString().padStart(2, '0');
     const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
-    let hour = fecha.getHours().toString().padStart(2,'0');
-    let minutes = fecha.getMinutes().toString().padStart(2,'0');
+    let hour = fecha.getHours().toString().padStart(2, '0');
+    let minutes = fecha.getMinutes().toString().padStart(2, '0');
     return `${diaMes}/${mes}/${year} - ${hour}:${minutes} hs`;
   }
 
   loadShow() {
     this.movieDatialsService.getOneShow(this.showId).subscribe({
-        next: (response) => {
-          this.show = response;
-          this.errorMessage = null;
-        },
-        error: () => {
-          this.errorMessage = 'Ocurrio un error al buscar la funcion';
-          console.error('Ocurrio un error al buscar la funcion');
-          this.router.navigate(['/']);
-        },
-      });
+      next: (response) => {
+        this.show = response;
+        this.errorMessage = null;
+      },
+      error: () => {
+        this.errorMessage = 'Ocurrio un error al buscar la funcion';
+        console.error('Ocurrio un error al buscar la funcion');
+        this.router.navigate(['/']);
+      },
+    });
   }
 
   loadSnacks() {
     this.snackService.getAllProducts().subscribe({
-        next: (response) => {
-          this.snacks = response.data;
-        },
-        error: () => {
-          this.errorMessage = 'Ocurrio un error al buscar los snacks';
-          console.error('Ocurrio un error al buscar los snacks');
-        },
+      next: (response) => {
+        this.snacks = response.data;
+      },
+      error: () => {
+        this.errorMessage = 'Ocurrio un error al buscar los snacks';
+        console.error('Ocurrio un error al buscar los snacks');
+      },
     });
   }
 
   loadPromotions() {
     this.promotionService.getAllPromotions().subscribe({
-        next: (response) => {
-          this.promotions = response.data;
-        },
-        error: () => {
-          this.errorMessage = 'Ocurrio un error al buscar las promociones';
-          console.error('Ocurrio un error al buscar las promociones');
-        },
+      next: (response) => {
+        this.promotions = response.data;
+      },
+      error: () => {
+        this.errorMessage = 'Ocurrio un error al buscar las promociones';
+        console.error('Ocurrio un error al buscar las promociones');
+      },
     });
   }
 
   confirmPurchase() {
     this.calculateTotal();
-    if(this.user) {
+    if (this.user) {
       this.buyService.addBuy('Compra de entradas', this.totalPrice, this.user.id, this.show.id, this.totalCantTickets, this.selectedSnacks, this.selectedPromotions).subscribe({
         next: (response) => {
           console.log(response.data);
@@ -241,7 +249,7 @@ export class BuyComponent implements OnInit {
           setTimeout(() => {
             this.buyAcepted = false;
             this.router.navigate(['/my-account']);
-          }, 3000); 
+          }, 3000);
         },
         error: (err) => {
           console.log('No se pudo realizar la compra');
