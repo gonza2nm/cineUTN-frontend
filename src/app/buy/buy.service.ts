@@ -22,7 +22,7 @@ export class BuyService {
     return this.http.get<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}/${id}`)
   }
   
-  addBuy(description: string, total: number, user:number, show: number, cantElements: number , snacks: { id: number, name: string, price: number }[], promotions: {code:string, name:string, discount: number}[]):Observable<any> {
+  addBuy(description: string, total: number, user:number, show: number, cantElements: number , snacks: { id: number, name: string, price: number }[], promotions: {code:string, name:string, price: number}[]):Observable<any> {
     return this.http.post<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}`, {description, total, user, show, cantElements, snacks, promotions} )
   }
   

@@ -115,7 +115,7 @@
                 <div class="flex justify-between mt-2">
                   <div>
                     <span class="mr-2">Precio:</span>
-                    <span>{{promo.discount}}%</span>
+                    <span>{{promo.price | currency }}</span>
                   </div>
                   <div>
                     <button (click)="addPromotionToList(promo)"
@@ -203,13 +203,13 @@
               <table class="table-auto w-full border-collapse border border-gray-700 border-t-0">
                 <thead class="bg-gray-200 text-gray-700">
                   <th class="p-4">Tipos de promociones</th>
-                  <th class="p-4">Descuento</th>
+                  <th class="p-4">Precio</th>
                   <th class="p-4"></th>
                 </thead>
                 <tbody class="text-center">
                   <tr *ngFor="let promo of promotions" class="space-y-5">
                     <td>{{promo.name}}</td>
-                    <td>{{promo.discount}}%</td>
+                    <td>{{promo.price | currency }}</td>
                     <td class="flex items-center justify-center space-x-2">
                       <button (click)="addPromotionToList(promo)"
                         class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -325,7 +325,7 @@
               <li *ngFor="let promos of selectedPromotions">
                 <div class="flex justify-between">
                   <p>{{promos.name}}</p>
-                  <p>{{promos.discount | currency}}</p>
+                  <p>{{promos.price | currency}}</p>
                 </div>
               </li>
             </ul>

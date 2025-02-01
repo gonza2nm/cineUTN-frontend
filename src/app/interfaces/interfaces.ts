@@ -98,7 +98,7 @@ export interface Promotion {
   description: string;
   promotionStartDate: Date;
   promotionFinishDate: Date;
-  discount: number;
+  price: number;
   cinemas: Cinema[];
   snacks: Snack[];
 }

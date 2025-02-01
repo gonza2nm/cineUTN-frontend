@@ -61,7 +61,7 @@ export class BuyComponent implements OnInit {
   selectedSnacks: { id: number, name: string, price: number}[] = []
 
   promotions: Promotion[] = [];
-  selectedPromotions: { code: string, name: string, discount: number}[] = []
+  selectedPromotions: { code: string, name: string, price: number}[] = []
   
 
 
@@ -135,7 +135,7 @@ export class BuyComponent implements OnInit {
   addPromotionToList(promo: Promotion) {
     const indexPromotion = this.selectedPromotions.findIndex(item => item.code === promo.code)
     if(indexPromotion === -1) {
-      this.selectedPromotions.push({code: promo.code, name: promo.name, discount: promo.discount});
+      this.selectedPromotions.push({code: promo.code, name: promo.name, price: promo.price});
       
     } else {
       this.selectedPromotions.splice(indexPromotion, 1)
@@ -168,7 +168,7 @@ export class BuyComponent implements OnInit {
 
   getTotalPromos() {
     return this.selectedPromotions.reduce(
-      (subtotal, promo) => subtotal + promo.discount,
+      (subtotal, promo) => subtotal + promo.price,
       0
     );
   }
