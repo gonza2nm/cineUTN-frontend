@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BuyService } from '../buy/buy.service';
-import { Buy, Movie, Show, Snack, Ticket, User } from '../interfaces/interfaces';
+import { Buy, Movie, Promotion, Show, Snack, Ticket, User } from '../interfaces/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TicketService } from '../tickets/ticket.service';
 import { AuthService } from '../auth/auth.service';
@@ -28,6 +28,7 @@ export class BuyDetailsComponent implements OnInit {
   buyId!: number;
   tickets: Ticket[] = [];
   snacks: Snack[] = [];
+  promotions: Promotion[] = []
   show: Show = {
     id: 0,
     dayAndTime: new Date(),
@@ -107,6 +108,7 @@ export class BuyDetailsComponent implements OnInit {
       next: (response) => {
         this.buy = response.data;
         this.snacks = response.data.snacks;
+        this.promotions = response.data.promotions;
         console.log(response);
       },
 
@@ -185,48 +187,6 @@ export class BuyDetailsComponent implements OnInit {
       },
     });
   }
-
-  /*
-
-  cancelPurchase(showDate: Date) {
-    
-    let showDate$ = new Date(showDate)
-    let dateToday = new Date()
-
-    let date2 = showDate$.getTime() - dateToday.getTime() ;
-
-    if(date2 > (12*60*60*1000)) {
-
-      this.ticketService.deleteTickets(this.buyId).subscribe({
-        next: (response) => {
-          console.log(response.data);
-          let status = 'cancelado';
-          this.buyService.updatebuy(this.buyId, status).subscribe({
-            next: () => {
-              console.log(response.data);
-              this.messageCanceled = "La compra fue cancelada.";
-            },
-
-            error: (err) => {
-              console.log('Error de compra');
-              console.log(err.message);
-              console.log(err.error);
-            }
-          })
-        },
-        error: (err) => {
-          console.log('Error de Tickets')
-          console.log(err.message);
-          console.log(err.error);
-        }
-      })
-
-    } else {
-      this.messageCanceled = "La compra solo se puede cancelar hasta 12hs antes de la función."
-    }
-
-  }
-    */
 
   scrollToTop(): void {
     window.scrollTo({

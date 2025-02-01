@@ -20,7 +20,7 @@ export class PromotionsEditComponent {
     description: "",
     promotionStartDate: new Date(),
     promotionFinishDate: new Date(),
-    discount: 0,
+    price: 0,
     cinemas: [],
     snacks: [],
 
@@ -48,7 +48,7 @@ export class PromotionsEditComponent {
       description: new FormControl('', [Validators.required]),
       promotionStartDate: new FormControl('', [Validators.required]),
       promotionFinishDate: new FormControl('', [Validators.required]),
-      discount: new FormControl('', [Validators.required])
+      price: new FormControl('', [Validators.required])
     })
 
     this.promotionsForm.valueChanges.subscribe(() => {
@@ -66,6 +66,8 @@ export class PromotionsEditComponent {
       this.loadAllProducts();
     }
   }
+
+  
   
   
   loadOnePromotion() {
@@ -79,7 +81,7 @@ export class PromotionsEditComponent {
               description: this.promotionData.description,
               promotionStartDate: this.formatToDateTimeLocal(this.promotionData.promotionStartDate),
               promotionFinishDate: this.formatToDateTimeLocal(this.promotionData.promotionFinishDate),
-              discount: this.promotionData.discount
+              price: this.promotionData.price
             })
             
             this.cinemasIds = this.promotionData.cinemas.map(cinema => cinema.id).filter((id): id is number => id !== undefined)
@@ -102,7 +104,7 @@ export class PromotionsEditComponent {
     this.promotionData.description = this.promotionsForm.get('description')?.value;
     this.promotionData.promotionStartDate = this.promotionsForm.get('promotionStartDate')?.value;
     this.promotionData.promotionFinishDate = this.promotionsForm.get('promotionFinishDate')?.value;
-    this.promotionData.discount = this.promotionsForm.get('discount')?.value;
+    this.promotionData.price = this.promotionsForm.get('price')?.value;
     this.promotionData.cinemas = this.cinemasIds.map(id => ({ id, name: '', address: '', theaters: [], movies: [] }));
     this.promotionData.snacks = this.productsIds.map(id => ({ id, name: '', description: "", urlPhoto: "", price: 0 }));
 
@@ -156,7 +158,7 @@ export class PromotionsEditComponent {
     const year = d.getFullYear();
     const month = String(d.getMonth() + 1).padStart(2, '0'); // +1 porque getMonth() devuelve un valor entre 0 y 11
     const day = String(d.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`; // Formato YYYY-MM-DD
+    return `${year}-${month}-${day}`;
   }
 
   loadAllCinemas() {
@@ -200,16 +202,9 @@ export class PromotionsEditComponent {
   }
 
   validateDates() {
-    const startDate = new Date(this.promotionsForm.value.promotionStartDate);
-    const endDate = new Date(this.promotionsForm.value.promotionFinishDate);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    startDate.setHours(0, 0, 0, 0);
-    endDate.setHours(0, 0, 0, 0);
-
-    if (!this.promotionsForm.value.promotionStartDate || !this.promotionsForm.value.promotionFinishDate) {
-      return ''; // No hay error si las fechas no están completas
-    }
+    const startDate = this.promotionsForm.value.promotionStartDate;
+    const endDate = this.promotionsForm.value.promotionFinishDate;
+    const today = this.formatToDateTimeLocal(new Date());
 
     if (startDate < today || endDate < today) {
       return 'La fecha de inicio o de fin no puede ser anterior a la fecha de hoy.';
