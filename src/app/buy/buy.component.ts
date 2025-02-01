@@ -21,7 +21,7 @@ interface Item {
 
 export class BuyComponent implements OnInit {
 
-  user: User | null = this.authService.getUser();
+  user: User | null = null;
   errorMessage: string | null = null;
   showId!: number;
   show: Show = {
@@ -52,6 +52,8 @@ export class BuyComponent implements OnInit {
 
   totalPrice = 0;
   totalCantTickets = 0;
+  numbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+  showDay = this.movieDatialsService.getFormattedWeekday(this.show.dayAndTime);
   step: number = 1;
   buyAcepted = false;
   errorMessageBuy: boolean = true;
@@ -76,6 +78,9 @@ export class BuyComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.authService.user.subscribe(user => {
+      this.user = user
+    })
     this.showId = this.route.snapshot.params['id'];
     if (!this.showId) {
       this.errorMessage = 'No se encontro el id de esa funcion, por favor retroceda y vuelva a seleccionarla';

@@ -19,10 +19,9 @@ import { GenresEditComponent } from './genres-edit/genres-edit.component';
 import { MoviesComponent } from './movies/movies.component';
 import { MovieEditComponent } from './movie-edit/movie-edit.component';
 import { BuyComponent } from './buy/buy.component';
-import { AuthManagerGuard } from './auth/authManager.guard';
+import { AuthGuard } from './auth/auth.guard';
 import { ManagersComponent } from './managers/managers.component';
 import { BuyDetailsComponent } from './buy-details/buy-details.component';
-import { AuthGeneralGuard } from './auth/authGeneral.guard';
 import { EventsComponent } from './events/events.component';
 import { EventEditComponent } from './event-edit/event-edit.component';
 import { EventsUserViewComponent } from './events-user-view/events-user-view.component';
@@ -37,62 +36,60 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
 
   { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'my-account', component: MyAccountComponent, canActivate: [AuthGeneralGuard] },
+  { path: 'login', component: LoginComponent,canActivate: [AuthGuard("user")] },
+  { path: 'my-account', component: MyAccountComponent, canActivate: [AuthGuard("user")] },
   { path: 'events', component: EventsUserViewComponent },
   { path: 'movies/:id', component: MovieDetailsComponent },
 
-  { path: 'buy/:id', component: BuyComponent, canActivate: [AuthGeneralGuard] },
-  { path: 'buy-details/:id', component: BuyDetailsComponent, canActivate: [AuthGeneralGuard] },
-  { path: 'buy-snacks', component: BuySnacksComponent},
+  { path: 'buy/:id', component: BuyComponent, canActivate: [AuthGuard("user")] },
+  { path: 'buy-details/:id', component: BuyDetailsComponent, canActivate: [AuthGuard("user")] },
+  { path: 'buy-snacks', component: BuySnacksComponent, canActivate:[AuthGuard("user")]},
+  
+  { path: 'manager-home', component: ManagerHomeComponent, canActivate: [AuthGuard("manager")], },
 
-  { path: 'manager-home', component: ManagerHomeComponent, canActivate: [AuthManagerGuard], },
+  { path: 'manager-home/cinemas', component: CinemasComponent, canActivate: [AuthGuard("manager")], },
+  { path: 'manager-home/cinemas/new', component: CinemaEditComponent, canActivate: [AuthGuard("manager")], },
+  { path: 'manager-home/cinemas/:id', component: CinemaEditComponent, canActivate: [AuthGuard("manager")], }, 
 
-  { path: 'manager-home/cinemas', component: CinemasComponent, canActivate: [AuthManagerGuard], },
-  { path: 'manager-home/cinemas/new', component: CinemaEditComponent, canActivate: [AuthManagerGuard], },//uso mismo componente para editar y crear
-  { path: 'manager-home/cinemas/:id', component: CinemaEditComponent, canActivate: [AuthManagerGuard], }, //cuidado! si la ruta del new queda abajo de la del id entonces toma a "new" como ID y no funciona.
+  { path: 'manager-home/theaters', component: TheatersComponent, canActivate: [AuthGuard("manager")], },
+  { path: 'manager-home/theaters/:cid', component: TheatersByCinemaComponent, canActivate: [AuthGuard("manager")], },
+  { path: 'manager-home/theaters/:cid/new', component: TheaterEditComponent, canActivate: [AuthGuard("manager")], },
+  { path: 'manager-home/theaters/:cid/edit/:tid', component: TheaterEditComponent, canActivate: [AuthGuard("manager")], },
 
-  { path: 'manager-home/theaters', component: TheatersComponent, canActivate: [AuthManagerGuard], },
-  { path: 'manager-home/theaters/:cid', component: TheatersByCinemaComponent, canActivate: [AuthManagerGuard], },
-  { path: 'manager-home/theaters/:cid/new', component: TheaterEditComponent, canActivate: [AuthManagerGuard], },
-  { path: 'manager-home/theaters/:cid/edit/:tid', component: TheaterEditComponent, canActivate: [AuthManagerGuard], },
+  { path: 'manager-home/showtimes', component: ShowtimesComponent, canActivate: [AuthGuard("manager")], },
+  { path: 'manager-home/showtimes/:cid', component: ShowtimesByCinemaComponent, canActivate: [AuthGuard("manager")], },
+  { path: 'manager-home/showtimes/:cid/new', component: ShowtimesEditComponent, canActivate: [AuthGuard("manager")], },
+  { path: 'manager-home/showtimes/:cid/edit/:sid', component: ShowtimesEditComponent, canActivate: [AuthGuard("manager")], },
 
-  { path: 'manager-home/showtimes', component: ShowtimesComponent, canActivate: [AuthManagerGuard], },
-  { path: 'manager-home/showtimes/:cid', component: ShowtimesByCinemaComponent, canActivate: [AuthManagerGuard], },
-  { path: 'manager-home/showtimes/:cid/new', component: ShowtimesEditComponent, canActivate: [AuthManagerGuard], },
-  { path: 'manager-home/showtimes/:cid/edit/:sid', component: ShowtimesEditComponent, canActivate: [AuthManagerGuard], },
+  { path: 'manager-home/genres', component: GenresComponent, canActivate: [AuthGuard("manager")], },
+  { path: 'manager-home/genres/:gid', component: GenresEditComponent, canActivate: [AuthGuard("manager")], },
+  { path: 'manager-home/genres/new', component: GenresEditComponent, canActivate: [AuthGuard("manager")], },
 
-  { path: 'manager-home/genres', component: GenresComponent, canActivate: [AuthManagerGuard], },
-  { path: 'manager-home/genres/:gid', component: GenresEditComponent, canActivate: [AuthManagerGuard], },
-  { path: 'manager-home/genres/new', component: GenresEditComponent, canActivate: [AuthManagerGuard], },
+  { path: 'manager-home/movies', component: MoviesComponent, canActivate: [AuthGuard("manager")], },
+  { path: 'manager-home/movies/new', component: MovieEditComponent, canActivate: [AuthGuard("manager")], },
+  { path: 'manager-home/movies/:id', component: MovieEditComponent, canActivate: [AuthGuard("manager")], },
 
-  { path: 'manager-home/movies', component: MoviesComponent, canActivate: [AuthManagerGuard], },
-  { path: 'manager-home/movies/new', component: MovieEditComponent, canActivate: [AuthManagerGuard], },
-  { path: 'manager-home/movies/:id', component: MovieEditComponent, canActivate: [AuthManagerGuard], },
+  { path: 'manager-home/managers', component: ManagersComponent, canActivate: [AuthGuard("manager")] },
+  { path: 'manager-home/managers/new', component: RegisterComponent, canActivate: [AuthGuard("manager")] },
+  { path: 'manager-home/managers/:id', component: RegisterComponent, canActivate: [AuthGuard("manager")] },
 
-  { path: 'manager-home/managers', component: ManagersComponent, canActivate: [AuthManagerGuard] },
-  { path: 'manager-home/managers/new', component: RegisterComponent, canActivate: [AuthManagerGuard] },
-  { path: 'manager-home/managers/:id', component: RegisterComponent, canActivate: [AuthManagerGuard] },
+  { path: 'manager-home/genres', component: GenresComponent, canActivate: [AuthGuard("manager")] },
+  { path: 'manager-home/genres/:gid', component: GenresEditComponent, canActivate: [AuthGuard("manager")] },
+  { path: 'manager-home/genres/new', component: GenresEditComponent, canActivate: [AuthGuard("manager")] },
 
-  { path: 'manager-home/genres', component: GenresComponent, canActivate: [AuthManagerGuard] },
-  { path: 'manager-home/genres/:gid', component: GenresEditComponent, canActivate: [AuthManagerGuard] },
-  { path: 'manager-home/genres/new', component: GenresEditComponent, canActivate: [AuthManagerGuard] },
+  { path: 'manager-home/events', component: EventsComponent, canActivate: [AuthGuard("manager")] },
+  { path: 'manager-home/events/new', component: EventEditComponent, canActivate: [AuthGuard("manager")], },
+  { path: 'manager-home/events/:id', component: EventEditComponent, canActivate: [AuthGuard("manager")], },
 
-  { path: 'manager-home/events', component: EventsComponent, canActivate: [AuthManagerGuard] },
-  { path: 'manager-home/events/new', component: EventEditComponent, canActivate: [AuthManagerGuard], },
-  { path: 'manager-home/events/:id', component: EventEditComponent, canActivate: [AuthManagerGuard], },
+  { path: 'manager-home/buy-validate-qr', component: BuyValidateQrComponent, canActivate: [AuthGuard("manager")] },
 
-  { path: 'manager-home/buy-validate-qr', component: BuyValidateQrComponent, canActivate: [AuthGeneralGuard] },
+  { path: 'manager-home/promotions', component: PromotionsComponent, canActivate: [AuthGuard("manager")], },
+  { path: 'manager-home/promotion/new', component: PromotionsEditComponent, canActivate: [AuthGuard("manager")], },
+  { path: 'manager-home/promotions/:code', component: PromotionsEditComponent, canActivate: [AuthGuard("manager")], },
 
-  { path: 'manager-home/promotions', component: PromotionsComponent, canActivate: [AuthManagerGuard], },
-  { path: 'manager-home/promotion/new', component: PromotionsEditComponent, canActivate: [AuthManagerGuard], },
-  { path: 'manager-home/promotions/:code', component: PromotionsEditComponent, canActivate: [AuthManagerGuard], },
-
-  { path: 'manager-home/products', component: ProductsComponent, canActivate: [AuthManagerGuard], },
-  { path: 'manager-home/products/new', component: ProductsEditComponent, canActivate: [AuthManagerGuard], },
-  { path: 'manager-home/products/:id', component: ProductsEditComponent, canActivate: [AuthManagerGuard], },
-
-
+  { path: 'manager-home/products', component: ProductsComponent, canActivate: [AuthGuard("manager")], },
+  { path: 'manager-home/products/new', component: ProductsEditComponent, canActivate: [AuthGuard("manager")], },
+  { path: 'manager-home/products/:id', component: ProductsEditComponent, canActivate: [AuthGuard("manager")], },
 
   { path: "**", component: HomeComponent }
 ];

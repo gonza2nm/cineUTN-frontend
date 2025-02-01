@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ResponseOne, User } from '../interfaces/interfaces.js';
-import { BehaviorSubject, catchError, map, Observable, of, } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, tap, } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -8,63 +8,72 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AuthService {
 
-  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
-
-  isLoggedIn: Observable<boolean> = this.isLoggedInSubject.asObservable();
-
+  private loggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private userSubject : BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
+  user = this.userSubject.asObservable();
+  loggedIn = this.loggedInSubject.asObservable();
   readonly url = 'http://localhost:3000/api/users';
+  
 
   constructor(private http: HttpClient) { }
 
-  setUser(value: User) {
-    sessionStorage.setItem("user", JSON.stringify(value));
-  }
-
-  getUser(): User | null {
-    const json = sessionStorage.getItem("user")
-    const user = json ? JSON.parse(json) : null
-    return user;
-  }
-
-  removeUser(): void {
-    sessionStorage.removeItem("user");
-  }
-
-  clearSessionStorage(): void {
-    sessionStorage.clear();
-  }
-
-  login(userData: any): Observable<boolean> {
-    return this.loginUser(userData).pipe(
-      map((response) => {
-        if (response && response.data) {
-          this.setUser(response.data);
-          this.isLoggedInSubject.next(true);
-          return true; // Login exitoso
-        }// la funcion map lo convierte al true en observable automaticamente
-
-        return false; // Si no hay datos, falló el login
+  login(userData: any): Observable<ResponseOne<User>> {
+    return this.http.post<ResponseOne<User>>(`${this.url}/login`, userData, { withCredentials: true }).pipe(
+      tap((response) =>{
+        const user = response.data;
+        this.userSubject.next(user);
+        this.loggedInSubject.next(true)
       }),
       catchError((error) => {
         console.error('Error en login:', error.error);
-        this.isLoggedInSubject.next(false);
-        return of(false); //el of transforma el false en un observable
+        this.userSubject.next(null);
+        this.loggedInSubject.next(false)
+        throw error;
       })
     );
   }
 
-  logout(): void {
-    this.removeUser();
-    this.isLoggedInSubject.next(false);
+  logout(): Observable<boolean> {
+    return this.http.post<any>(`${this.url}/logout`,{}).pipe(
+    map(() => {
+        this.userSubject.next(null);
+        this.loggedInSubject.next(false);
+        return true; 
+      }),
+      catchError((error) => {
+        console.error('Error en login:', error.error);
+        return of(false);
+      })  
+    );
   }
 
-  checkLoginStatus(): void {
-    const loggedIn = !!this.getUser();
-    this.isLoggedInSubject.next(loggedIn);
+  checkTokenFindData(): Observable<any> {
+    return this.http.get<ResponseOne<User>>(`${this.url}/verify-token-find-data`).pipe(
+      tap({
+        next: (response: ResponseOne<User>) => {
+          this.userSubject.next(response.data);
+          this.loggedInSubject.next(true);
+        },
+        error: (error: any) => {
+          console.error('Error verificando token:', error);
+          this.loggedInSubject.next(false);
+          this.userSubject.next(null);
+        }
+      }),
+      catchError((error) => {
+        console.error('Error en verificación de token:', error);
+        this.loggedInSubject.next(false);
+        this.userSubject.next(null);
+        return of(null);
+      })
+    );
   }
 
-  loginUser(userData: any): Observable<any> {
-    return this.http.post<ResponseOne<User>>(`${this.url}/login`, userData, { withCredentials: true });
+  isLoggedIn():Observable<boolean> {
+    return this.loggedIn;
   }
 
+  isManager(): Observable<boolean>{
+    return this.user.pipe(map(user => user?.type === "manager"));
+  }
 }

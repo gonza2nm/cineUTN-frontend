@@ -58,12 +58,9 @@ export class MovieDetailsComponent implements OnInit {
     this.days = this.getNextDays();
     this.loadLanguages();
     this.loadFormats();
-
-    // Verifica el estado de autenticación
-    this.authService.isLoggedIn.subscribe((status: boolean) => {
-      this.isLoggedIn = status;
+    this.authService.isLoggedIn().subscribe(isLoggedIn => {
+        this.isLoggedIn = isLoggedIn;
     });
-    this.authService.checkLoginStatus();
   }
 
   loadDataSelector() {

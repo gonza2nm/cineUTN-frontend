@@ -15,6 +15,5 @@ export class MyAccountService {
   getBuyByUser(id: number):Observable<any>{
     return this.http.get<ResponseList<Buy> | ResponseWithError>(`${this.ticketsUrlByUser}/${id}`);
   }
-
   
 }
