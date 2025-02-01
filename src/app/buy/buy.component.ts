@@ -39,7 +39,15 @@ export class BuyComponent implements OnInit {
       languages: [],
       name: ""
     },
-    theater: { cinema: 0, id: 0, numChairs: 0 },
+    theater: {
+      cinema: {
+        id: 0,
+        name: '',
+        address: '',
+        theaters: [],
+        movies: [],
+      }, id: 0, numChairs: 0
+    },
     tickets: []
   }
   loading = true;
@@ -59,8 +67,8 @@ export class BuyComponent implements OnInit {
 
   purchaseChoice: string = 'entrada';
   snacks: Snack[] = [];
-  selectedSnacks: { id: number, name: string, price: number}[] = []
-  
+  selectedSnacks: { id: number, name: string, price: number }[] = []
+
 
 
   constructor(
@@ -113,18 +121,18 @@ export class BuyComponent implements OnInit {
 
   addProductToList(snack: Snack) {
     const indexSnack = this.selectedSnacks.findIndex(item => item.id === snack.id)
-    if(indexSnack === -1) {
-      this.selectedSnacks.push({id: snack.id, name: snack.name, price: snack.price});
-      
+    if (indexSnack === -1) {
+      this.selectedSnacks.push({ id: snack.id, name: snack.name, price: snack.price });
+
     } else {
       this.selectedSnacks.splice(indexSnack, 1)
-      
+
     }
   }
 
   isInList(snack: any) {
     const indexSnack = this.selectedSnacks.findIndex(item => item.id === snack.id)
-    if(indexSnack === -1) {
+    if (indexSnack === -1) {
       return false
     } else {
       return true
@@ -157,40 +165,40 @@ export class BuyComponent implements OnInit {
     const year = fecha.getFullYear();
     const diaMes = fecha.getDate().toString().padStart(2, '0');
     const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
-    let hour = fecha.getHours().toString().padStart(2,'0');
-    let minutes = fecha.getMinutes().toString().padStart(2,'0');
+    let hour = fecha.getHours().toString().padStart(2, '0');
+    let minutes = fecha.getMinutes().toString().padStart(2, '0');
     return `${diaMes}/${mes}/${year} - ${hour}:${minutes} hs`;
   }
 
   loadShow() {
     this.movieDatialsService.getOneShow(this.showId).subscribe({
-        next: (response) => {
-          this.show = response;
-          this.errorMessage = null;
-        },
-        error: () => {
-          this.errorMessage = 'Ocurrio un error al buscar la funcion';
-          console.error('Ocurrio un error al buscar la funcion');
-          this.router.navigate(['/']);
-        },
-      });
+      next: (response) => {
+        this.show = response;
+        this.errorMessage = null;
+      },
+      error: () => {
+        this.errorMessage = 'Ocurrio un error al buscar la funcion';
+        console.error('Ocurrio un error al buscar la funcion');
+        this.router.navigate(['/']);
+      },
+    });
   }
 
   loadSnacks() {
     this.snackService.getAllProducts().subscribe({
-        next: (response) => {
-          this.snacks = response.data;
-        },
-        error: () => {
-          this.errorMessage = 'Ocurrio un error al buscar los snacks';
-          console.error('Ocurrio un error al buscar los snacks');
-        },
+      next: (response) => {
+        this.snacks = response.data;
+      },
+      error: () => {
+        this.errorMessage = 'Ocurrio un error al buscar los snacks';
+        console.error('Ocurrio un error al buscar los snacks');
+      },
     });
   }
 
   confirmPurchase() {
     this.calculateTotal();
-    if(this.user) {
+    if (this.user) {
       this.buyService.addBuy('Compra de entradas', this.totalPriceTickets, this.user.id, this.show.id, this.totalCantTickets, this.selectedSnacks).subscribe({
         next: (response) => {
           console.log(response.data);
@@ -199,7 +207,7 @@ export class BuyComponent implements OnInit {
           setTimeout(() => {
             this.buyAcepted = false;
             this.router.navigate(['/my-account']);
-          }, 3000); 
+          }, 3000);
         },
         error: (err) => {
           console.log('No se pudo realizar la compra');

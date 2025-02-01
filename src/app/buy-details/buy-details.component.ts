@@ -44,7 +44,15 @@ export class BuyDetailsComponent implements OnInit {
       languages: [],
       name: '',
     },
-    theater: { cinema: 0, id: 0, numChairs: 0 },
+    theater: {
+      cinema: {
+        id: 0,
+        name: '',
+        address: '',
+        theaters: [],
+        movies: [],
+      }, id: 0, numChairs: 0
+    },
     tickets: [],
   };
   movie!: Movie;
