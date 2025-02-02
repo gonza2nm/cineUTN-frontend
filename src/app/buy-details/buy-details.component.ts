@@ -38,6 +38,7 @@ export class BuyDetailsComponent implements OnInit {
     movie: {
       cinemas: [],
       description: '',
+      duration: 0,
       formats: [],
       genres: [],
       id: 0,

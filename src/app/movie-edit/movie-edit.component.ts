@@ -23,6 +23,7 @@ export class MovieEditComponent implements OnInit {
   movieData: Movie = {
     id: 0,
     name: '',
+    duration: 0,
     description: '',
     imageLink: '',
     genres: [],

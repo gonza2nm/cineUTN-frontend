@@ -47,6 +47,7 @@ export class ShowtimesEditComponent implements OnInit {
     movie: {
       id: 0,
       name: '',
+      duration: 0,
       description: '',
       imageLink: '',
       genres: [],

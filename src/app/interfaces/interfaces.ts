@@ -33,6 +33,7 @@ export interface Theater {
 export interface Movie {
   id: number;
   name: string;
+  duration: number;
   description: string;
   imageLink: string;
   genres: Genre[];
