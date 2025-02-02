@@ -28,7 +28,7 @@ export interface Genre {
 export interface Theater {
   id: number;
   numChairs: number;
-  cinema: number;
+  cinema: Cinema;
 }
 export interface Movie {
   id: number;
@@ -71,6 +71,7 @@ export interface Buy {
   user: User;
   status: string;
   tickets: Ticket[];
+  snacks: Snack[];
 }
 export interface User {
   id: number;
@@ -98,7 +99,7 @@ export interface Promotion {
   description: string;
   promotionStartDate: Date;
   promotionFinishDate: Date;
-  discount: number;
+  price: number;
   cinemas: Cinema[];
   snacks: Snack[];
 }

@@ -54,7 +54,15 @@ export class ShowtimesEditComponent implements OnInit {
       formats: [],
       languages: []
     },
-    theater: { id: 0, cinema: 0, numChairs: 0 },
+    theater: {
+      cinema: {
+        id: 0,
+        name: '',
+        address: '',
+        theaters: [],
+        movies: [],
+      }, id: 0, numChairs: 0
+    },
     tickets: [],
   };
 

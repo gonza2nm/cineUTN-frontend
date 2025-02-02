@@ -4,13 +4,13 @@
   
     <!-- Titulo de las secciones -->
     <div class="flex flex-row justify-center py-2 md:justify-between">
-      <h3 [ngClass]="{'block text-blue-600 text-xl': step === 1, 'text-black text-base hidden md:block': step !== 1}">
+      <h3 [ngClass]="step === 1 ? 'block text-blue-600 text-xl' : 'text-black text-base hidden md:block'">
         1. Selecciona tu entrada
       </h3>
-      <h3 [ngClass]="{'block text-blue-600 text-xl': step === 2, 'text-black text-base hidden md:block': step !== 2}">
+      <h3 [ngClass]="step === 2 ? 'block text-blue-600 text-xl' : 'text-black text-base hidden md:block'">
         2. Selecciona tu ubicación
       </h3>
-      <h3 [ngClass]="{'block text-blue-600 text-xl': step === 3, 'text-black text-base hidden md:block': step !== 3}">
+      <h3 [ngClass]="step === 3 ? 'block text-blue-600 text-xl' : 'text-black text-base hidden md:block'">
         3. Confirmar compra
       </h3>
     </div>
@@ -38,16 +38,16 @@
 
           <ul class="flex flex-row">
             <li class="font-bold px-4 py-2 cursor-pointer border-gray-400 md:text-lg" [ngClass]="purchaseChoice === 'entrada'
-              ? 'bg-blue-600 text-white': 'border' " (click)="handleChangeOption('entrada')">
+              ? 'bg-gradient-to-r from-blue-500 to-blue-700 text-white': 'border' " (click)="handleChangeOption('entrada')">
               Entradas
             </li>
             <li class="font-bold px-4 py-2 cursor-pointer w-min border-gray-400 md:text-lg"
-              [ngClass]="purchaseChoice === 'comida' ? 'bg-blue-600 text-white' : 'border' "
+              [ngClass]="purchaseChoice === 'comida' ? 'bg-gradient-to-r from-blue-500 to-blue-700 text-white' : 'border' "
               (click)="handleChangeOption('comida')">
               Comida
             </li>
             <li class="font-bold px-4 py-2 cursor-pointer w-min border-gray-400 md:text-lg"
-              [ngClass]="purchaseChoice === 'promociones' ? 'bg-blue-600 text-white' : 'border' "
+              [ngClass]="purchaseChoice === 'promociones' ? 'bg-gradient-to-r from-blue-500 to-blue-700 text-white' : 'border' "
               (click)="handleChangeOption('promociones')">
               Promociones
             </li>
@@ -99,13 +99,34 @@
                   <div>
                     <button (click)="addProductToList(snack)"
                       class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                      {{isInList(snack) ? 'Quitar' : 'Agregar'}}
+                      {{snackIsInList(snack) ? 'Quitar' : 'Agregar'}}
                     </button>
                   </div>
                 </div>
               </div>
               <div class="mt-4 text-right font-semibold">
                 Total: {{ getTotalSnacks() | currency }}
+              </div>
+            </div>
+
+            <div *ngIf="purchaseChoice === 'promociones'">
+              <div *ngFor="let promo of promotions" class="mb-4 p-4 bg-white shadow rounded">
+                <h3 class="font-semibold text-gray-700">{{ promo.name }}</h3>
+                <div class="flex justify-between mt-2">
+                  <div>
+                    <span class="mr-2">Precio:</span>
+                    <span>{{promo.price | currency }}</span>
+                  </div>
+                  <div>
+                    <button (click)="addPromotionToList(promo)"
+                      class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                      {{promoIsInList(promo) ? 'Quitar' : 'Agregar'}}
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-4 text-right font-semibold">
+                Total: {{ getTotalPromos() | currency }}
               </div>
             </div>
           </div>
@@ -164,7 +185,7 @@
                     <td class="flex items-center justify-center space-x-2">
                       <button (click)="addProductToList(snack)"
                         class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        {{isInList(snack) ? 'Quitar' : 'Agregar'}}
+                        {{snackIsInList(snack) ? 'Quitar' : 'Agregar'}}
                       </button>
                     </td>
                   </tr>
@@ -173,6 +194,34 @@
                   <tr class="bg-gray-200 font-semibold text-lg">
                     <td colspan="2" class="p-3 text-right">Total:</td>
                     <td class="p-3">{{ getTotalSnacks() | currency }}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <div *ngIf="purchaseChoice === 'promociones'">
+              <table class="table-auto w-full border-collapse border border-gray-700 border-t-0">
+                <thead class="bg-gray-200 text-gray-700">
+                  <th class="p-4">Tipos de promociones</th>
+                  <th class="p-4">Precio</th>
+                  <th class="p-4"></th>
+                </thead>
+                <tbody class="text-center">
+                  <tr *ngFor="let promo of promotions" class="space-y-5">
+                    <td>{{promo.name}}</td>
+                    <td>{{promo.price | currency }}</td>
+                    <td class="flex items-center justify-center space-x-2">
+                      <button (click)="addPromotionToList(promo)"
+                        class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        {{promoIsInList(promo) ? 'Quitar' : 'Agregar'}}
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr class="bg-gray-200 font-semibold text-lg">
+                    <td colspan="2" class="p-3 text-right">Total:</td>
+                    <td class="p-3">{{ getTotalPromos() | currency }}</td>
                   </tr>
                 </tfoot>
               </table>
@@ -271,9 +320,18 @@
                 </div>
               </li>
             </ul>
+            <ul>
+              <p class="font-semibold text-gray-700 mt-2">Promociones:</p>
+              <li *ngFor="let promos of selectedPromotions">
+                <div class="flex justify-between">
+                  <p>{{promos.name}}</p>
+                  <p>{{promos.price | currency}}</p>
+                </div>
+              </li>
+            </ul>
             <div class="flex justify-between border-t-2 border-gray-400 mt-4 py-3">
               <p class="font-semibold text-gray-700">Total:</p>
-              <p>{{ getTotalSnacks() + getTotalTickets() | currency }}</p>
+              <p>{{ getTotalSnacks() + getTotalTickets() + getTotalPromos() | currency }}</p>
             </div>
           </div>
         </div>

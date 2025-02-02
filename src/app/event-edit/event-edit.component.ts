@@ -102,7 +102,7 @@ export class EventEditComponent implements OnInit {
     this.eventData.startDate = this.eventForm.get('startDate')?.value;
     this.eventData.finishDate = this.eventForm.get('finishDate')?.value;
 
-    // guarda en el eventData objetos cines solo con el id y sus propiedades vacias. Para despues en el back usar el assing()
+    // guarda en el eventData objetos cines solo con el id y sus propiedades vacias. Para despues en el back usar el getReference()
     this.eventData.cinemas = this.eventCinemasIds.map(id => ({ id, name: '', address: '', theaters: [], movies: [] }));
     if (this.isEditMode) {
       if (this.eventId) { //sin este if no deja entrar al metodo porque dice que puede ser null
@@ -112,7 +112,7 @@ export class EventEditComponent implements OnInit {
             this.router.navigate(['/manager-home/events'])
           },
           error: (err) => {
-            this.errorMessage = 'An error occurred while updating the event.'
+            this.errorMessage = 'Ocurrio un error al actualizar el evento: ' + err.error.message
             console.error('Error updating event:', err.error);
           }
         });
@@ -124,7 +124,7 @@ export class EventEditComponent implements OnInit {
           this.router.navigate(['/manager-home/events'])
         },
         error: (err) => {
-          this.errorMessage = 'An error occurred while saving the event.'
+          this.errorMessage = 'Ocurrio un error al guardar el evento: ' + err.error.message
           console.error('Error saving event:', err.error);
         }
       })
@@ -158,7 +158,7 @@ export class EventEditComponent implements OnInit {
     const startDate = new Date(start);
     const endDate = new Date(end);
 
-    return startDate && endDate && startDate < endDate
+    return startDate && endDate && startDate <= endDate
       ? null
       : { invalidDates: true };
   };
