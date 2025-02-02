@@ -14,9 +14,16 @@ import {
   providedIn: 'root',
 })
 export class ShowtimesByCinemaService {
-  readonly showtimeUrl = 'http://localhost:3000/api/shows';
-  readonly movieUrl = 'http://localhost:3000/api/movies';
-  readonly cinemaUrl = 'http://localhost:3000/api/cinemas';
+
+  //Produccion
+  readonly showtimeUrl = 'https://cineutn-backend-deploy.onrender.com/api/shows'
+  readonly movieUrl = 'https://cineutn-backend-deploy.onrender.com/api/movies'
+  readonly cinemaUrl = 'https://cineutn-backend-deploy.onrender.com/api/cinemas'
+  //Desarrollo
+  //readonly showtimeUrl = 'http://localhost:3000/api/shows';
+  //readonly movieUrl = 'http://localhost:3000/api/movies';
+  //readonly cinemaUrl = 'http://localhost:3000/api/cinemas';
+
   constructor(private http: HttpClient) { }
 
   getCinema(id: number): Observable<any> {

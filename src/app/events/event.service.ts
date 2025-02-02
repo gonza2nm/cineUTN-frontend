@@ -8,7 +8,10 @@ import { Event, ResponseList, ResponseOne, ResponseWithError } from '../interfac
 })
 export class EventService {
 
-  readonly apiUrl = 'http://localhost:3000/api/events';
+  //Produccion
+  readonly apiUrl = 'https://cineutn-backend-deploy.onrender.com/api/events';
+  //Desarrollo
+  //readonly apiUrl = 'http://localhost:3000/api/events';
 
   //HttpClient Se inyecta en el servicio a través del constructor para que pueda usarse dentro de los métodos del servicio
   constructor(private http: HttpClient) { }

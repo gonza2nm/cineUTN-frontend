@@ -9,8 +9,12 @@ import { ResponseList, ResponseOne, ResponseWithError, User } from '../interface
 })
 export class LoginService {
 
-  readonly url = 'http://localhost:3000/api/users';
-  readonly urlManager = 'http://localhost:4200/manager-home/managers';
+  //Produccion
+  readonly url = 'https://cineutn-backend-deploy.onrender.com/api/users';
+  readonly urlManager = 'https://cine-utn-frontend-deploy.vercel.app/manager-home/managers'
+  //Desarrollo
+  //readonly url = 'http://localhost:3000/api/users';
+  //readonly urlManager = 'http://localhost:4200/manager-home/managers';
 
   constructor(private http: HttpClient) { }
 

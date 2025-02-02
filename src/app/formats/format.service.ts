@@ -8,7 +8,10 @@ import { Observable } from 'rxjs';
 })
 export class FormatService {
 
-  readonly urlFormats = 'http://localhost:3000/api/formats ';
+  //Produccion
+  readonly urlFormats = 'https://cineutn-backend-deploy.onrender.com/api/formats';
+  //Desarrollo
+  //readonly urlFormats = 'http://localhost:3000/api/formats ';
 
   //HttpClient Se inyecta en el servicio a través del constructor para que pueda usarse dentro de los métodos del servicio
   constructor(private http: HttpClient) { }

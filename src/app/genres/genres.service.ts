@@ -8,7 +8,10 @@ import { Genre, ResponseList, ResponseOne, ResponseWithError } from '../interfac
 })
 export class GenresService {
 
-  readonly genresUrl = "http://localhost:3000/api/genres"
+  //Produccion
+  readonly genresUrl = 'https://cineutn-backend-deploy.onrender.com/api/genres';
+  //Desarrollo
+  //readonly genresUrl = "http://localhost:3000/api/genres"
 
   constructor(private http: HttpClient) { }
 

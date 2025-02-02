@@ -9,7 +9,10 @@ import { ResponseOne, Cinema, ResponseList, ResponseWithError } from "../interfa
 
 export class CinemaService {
 
-  readonly apiUrl = 'http://localhost:3000/api/cinemas';
+  //Produccion
+  readonly apiUrl = 'https://cineutn-backend-deploy.onrender.com/api/cinemas';
+  //Desarrollo
+  //readonly apiUrl = 'http://localhost:3000/api/cinemas';
 
   //HttpClient Se inyecta en el servicio a través del constructor para que pueda usarse dentro de los métodos del servicio
   constructor(private http: HttpClient) { }
