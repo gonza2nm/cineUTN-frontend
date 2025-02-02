@@ -8,12 +8,15 @@ import { Buy, ResponseList, ResponseOne, ResponseWithError, Ticket, User } from 
 })
 export class MyAccountService {
 
-  constructor( private http: HttpClient ) { }
+  constructor(private http: HttpClient) { }
 
-  readonly ticketsUrlByUser = "http://localhost:3000/api/buys/byUser"
+  //Produccion
+  readonly ticketsUrlByUser = 'https://cineutn-backend-deploy.onrender.com/api/buys/byUser';
+  //Desarrollo
+  //readonly ticketsUrlByUser = "http://localhost:3000/api/buys/byUser"
 
-  getBuyByUser(id: number):Observable<any>{
+  getBuyByUser(id: number): Observable<any> {
     return this.http.get<ResponseList<Buy> | ResponseWithError>(`${this.ticketsUrlByUser}/${id}`);
   }
-  
+
 }

@@ -8,7 +8,10 @@ import { Movie, ResponseList, ResponseOne, ResponseWithError } from '../interfac
 })
 export class MovieService {
 
-  readonly urlMovies = 'http://localhost:3000/api/movies';
+  //Produccion
+  readonly urlMovies = 'https://cineutn-backend-deploy.onrender.com/api/movies';
+  //Desarrollo
+  //readonly urlMovies = 'http://localhost:3000/api/movies';
 
   //HttpClient Se inyecta en el servicio a través del constructor para que pueda usarse dentro de los métodos del servicio
   constructor(private http: HttpClient) { }
@@ -36,7 +39,7 @@ export class MovieService {
 
   addMovie(movie: Movie): Observable<any> {
     return this.http
-      .post<ResponseOne<Movie> | ResponseWithError>(this.urlMovies, movie) 
+      .post<ResponseOne<Movie> | ResponseWithError>(this.urlMovies, movie)
   }
 
   deleteMovie(id: number): Observable<any> {

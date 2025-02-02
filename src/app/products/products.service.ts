@@ -10,9 +10,12 @@ export class ProductsService {
 
   constructor(private http: HttpClient) { }
 
-  readonly urlProducts = 'http://localhost:3000/api/snacks';
+  //Produccion
+  readonly urlProducts = 'https://cineutn-backend-deploy.onrender.com/api/snacks';
+  //Desarrollo
+  //readonly urlProducts = 'http://localhost:3000/api/snacks';
 
-  getAllProducts():Observable<any>{
+  getAllProducts(): Observable<any> {
     return this.http.get<ResponseList<Snack> | ResponseWithError>(this.urlProducts);
   }
 
@@ -20,14 +23,14 @@ export class ProductsService {
     return this.http.get<ResponseOne<Snack> | ResponseWithError>(`${this.urlProducts}/${id}`)
   }
 
-  addProduct(productData: Snack):Observable<any> {
-    return this.http.post<ResponseOne<Snack> | ResponseWithError>(`${this.urlProducts}`, productData )
+  addProduct(productData: Snack): Observable<any> {
+    return this.http.post<ResponseOne<Snack> | ResponseWithError>(`${this.urlProducts}`, productData)
   }
 
-  updateProduct(id: number, productData: Snack):Observable<any>{
+  updateProduct(id: number, productData: Snack): Observable<any> {
     return this.http.put<ResponseOne<Snack> | ResponseWithError>(`${this.urlProducts}/${id}`, productData);
   }
-    
+
   deleteProduct(id: number): Observable<any> {
     return this.http.delete<ResponseOne<Snack> | ResponseWithError>(`${this.urlProducts}/${id}`)
   }

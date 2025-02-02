@@ -11,8 +11,11 @@ export class BuyService {
   constructor(private http: HttpClient) { }
 
 
-  readonly urlBuy = 'http://localhost:3000/api/buys';
 
+  //Produccion
+  readonly urlBuy = 'https://cineutn-backend-deploy.onrender.com/api/buys';
+  //Desarrollo
+  //readonly urlBuy = 'http://localhost:3000/api/buys';
 
   getBuys(): Observable<any> {
     return this.http.get<ResponseList<Buy> | ResponseWithError>(this.urlBuy);
@@ -21,11 +24,11 @@ export class BuyService {
   getOneBuy(id: number): Observable<any> {
     return this.http.get<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}/${id}`)
   }
-  
-  addBuy(description: string, total: number, user:number, show: number, cantElements: number , snacks: { id: number, name: string, price: number }[], promotions: {code:string, name:string, price: number}[]):Observable<any> {
-    return this.http.post<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}`, {description, total, user, show, cantElements, snacks, promotions} )
+
+  addBuy(description: string, total: number, user: number, show: number, cantElements: number, snacks: { id: number, name: string, price: number }[], promotions: { code: string, name: string, price: number }[]): Observable<any> {
+    return this.http.post<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}`, { description, total, user, show, cantElements, snacks, promotions })
   }
-  
+
   getQRCodeBuy(id: number): Observable<any> {
     return this.http.get<ResponseQR | ResponseWithError>(`${this.urlBuy}/generateQr/${id}`)
   }

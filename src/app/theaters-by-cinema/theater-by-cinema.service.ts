@@ -8,8 +8,12 @@ import { Cinema, ResponseList, ResponseOne, ResponseWithError, Theater } from '.
 })
 export class TheaterByCinemaService {
 
-  readonly cinemaUrl = 'http://localhost:3000/api/cinemas';
-  readonly theaterUrl = 'http://localhost:3000/api/theaters';
+  //Produccion
+  readonly cinemaUrl = 'https://cineutn-backend-deploy.onrender.com/api/cinemas';
+  readonly theaterUrl = 'https://cineutn-backend-deploy.onrender.com/api/theaters';
+  //Desarrollo
+  //readonly cinemaUrl = 'http://localhost:3000/api/cinemas';
+  //readonly theaterUrl = 'http://localhost:3000/api/theaters';
 
   constructor(private http: HttpClient) { }
 

@@ -8,7 +8,10 @@ import { Language, ResponseList, ResponseWithError } from '../interfaces/interfa
 })
 export class LanguageService {
 
-  readonly urlLanguages = 'http://localhost:3000/api/languages ';
+  //Produccion
+  readonly urlLanguages = 'https://cineutn-backend-deploy.onrender.com/api/languages';
+  //Desarrollo
+  //readonly urlLanguages = 'http://localhost:3000/api/languages';
 
   //HttpClient Se inyecta en el servicio a través del constructor para que pueda usarse dentro de los métodos del servicio
   constructor(private http: HttpClient) { }
