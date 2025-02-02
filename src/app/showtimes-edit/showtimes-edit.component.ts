@@ -70,13 +70,11 @@ export class ShowtimesEditComponent implements OnInit {
     this.showtimeForm = new FormGroup(
       {
         startDate: new FormControl('', [Validators.required]),
-        finishDate: new FormControl('', [Validators.required]),
         selectMovieId: new FormControl(null, [Validators.required]),
         selectTheaterId: new FormControl(null, [Validators.required]),
         selectFormatId: new FormControl(null, [Validators.required]),
         selectLanguageId: new FormControl(null, [Validators.required]),
-      },
-      { validators: this.checkDates }
+      }
     );
 
     if (!this.showtimeId) {
@@ -123,7 +121,6 @@ export class ShowtimesEditComponent implements OnInit {
           this.languages = this.showtime.movie.languages;
           this.showtimeForm.setValue({
             startDate: this.formatToDateTimeLocal(this.showtime.dayAndTime),
-            finishDate: this.formatToDateTimeLocal(this.showtime.finishTime),
             selectMovieId: this.showtime.movie.id,
             selectFormatId: this.showtime.format.id,
             selectLanguageId: this.showtime.language.id,
@@ -159,7 +156,6 @@ export class ShowtimesEditComponent implements OnInit {
 
   submit() {
     this.showtime.dayAndTime = this.showtimeForm.get('startDate')?.value;
-    this.showtime.finishTime = this.showtimeForm.get('finishDate')?.value;
     this.showtime.format = this.showtimeForm.get('selectFormatId')?.value;
     this.showtime.language = this.showtimeForm.get('selectLanguageId')?.value;
     this.showtime.movie = this.showtimeForm.get('selectMovieId')?.value;
@@ -192,23 +188,6 @@ export class ShowtimesEditComponent implements OnInit {
     }
   }
 
-  checkDates: ValidatorFn = (
-    group: AbstractControl
-  ): ValidationErrors | null => {
-    const start = group.get('startDate')?.value;
-    const end = group.get('finishDate')?.value;
-
-    if (!start || !end) {
-      return null; // No validar si no hay datos
-    }
-    const startDate = new Date(start);
-    const endDate = new Date(end);
-
-    return startDate && endDate && startDate < endDate
-      ? null
-      : { invalidDates: true };
-  };
-
   formatToDateTimeLocal(date2: Date): string {
     const date = new Date(date2);
     const year = date.getFullYear();
@@ -225,7 +204,6 @@ export class ShowtimesEditComponent implements OnInit {
     if (this.showtime != null) {
       this.showtimeForm.setValue({
         startDate: this.showtimeForm.get('startDate')?.value,
-        finishDate: this.showtimeForm.get('finishDate')?.value,
         selectMovieId: this.selectedMovieId,
         selectTheaterId: this.showtimeForm.get('selectTheaterId')?.value,
         selectFormatId: null,
