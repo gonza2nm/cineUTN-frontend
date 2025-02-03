@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ResponseOne, User } from '../interfaces/interfaces.js';
 import { BehaviorSubject, catchError, map, Observable, of, tap, } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,10 @@ export class AuthService {
   loggedIn = this.loggedInSubject.asObservable();
 
   //Produccion
-  readonly url = 'https://cineutn-backend-deploy.onrender.com/api/users';
+  //readonly url = 'https://cineutn-backend-deploy.onrender.com/api/users';
   //Desarrollo
   //readonly url = 'http://localhost:3000/api/users';
+  readonly url = `${environment.apiBaseUrl}/users`;
 
 
   constructor(private http: HttpClient) { }

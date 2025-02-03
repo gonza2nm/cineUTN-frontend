@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { Cinema, Format, Language, Movie, ResponseList, ResponseOne, ResponseWithError, Show } from '../interfaces/interfaces';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,17 +12,22 @@ export class MovieDetailsService {
   movieData!: Show;
 
   //Produccion
-  readonly urlShows = 'https://cineutn-backend-deploy.onrender.com/api/shows'
-  readonly urlMovies = 'https://cineutn-backend-deploy.onrender.com/api/movies'
-  readonly urlLanguages = 'https://cineutn-backend-deploy.onrender.com/api/languages'
-  readonly urlFormats = 'https://cineutn-backend-deploy.onrender.com/api/formats'
-  readonly urlCinemas = 'https://cineutn-backend-deploy.onrender.com/api/cinemas'
+  //readonly urlShows = 'https://cineutn-backend-deploy.onrender.com/api/shows'
+  //readonly urlMovies = 'https://cineutn-backend-deploy.onrender.com/api/movies'
+  //readonly urlLanguages = 'https://cineutn-backend-deploy.onrender.com/api/languages'
+  //readonly urlFormats = 'https://cineutn-backend-deploy.onrender.com/api/formats'
+  //readonly urlCinemas = 'https://cineutn-backend-deploy.onrender.com/api/cinemas'
   //Desarrollo
   //readonly urlShows = 'http://localhost:3000/api/shows';
   //readonly urlMovies = 'http://localhost:3000/api/movies'
   //readonly urlLanguages = 'http://localhost:3000/api/languages'
   //readonly urlFormats = 'http://localhost:3000/api/formats'
   //readonly urlCinemas = 'http://localhost:3000/api/cinemas'
+  readonly urlShows = `${environment.apiBaseUrl}/shows`;
+  readonly urlMovies = `${environment.apiBaseUrl}/movies`;
+  readonly urlLanguages = `${environment.apiBaseUrl}/languages`;
+  readonly urlFormats = `${environment.apiBaseUrl}/formats`;
+  readonly urlCinemas = `${environment.apiBaseUrl}/cinemas`;
 
   constructor(private http: HttpClient) { }
 

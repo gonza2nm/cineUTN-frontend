@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Genre, ResponseList, ResponseOne, ResponseWithError } from '../interfaces/interfaces.js';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +10,10 @@ import { Genre, ResponseList, ResponseOne, ResponseWithError } from '../interfac
 export class GenresService {
 
   //Produccion
-  readonly genresUrl = 'https://cineutn-backend-deploy.onrender.com/api/genres';
+  //readonly genresUrl = 'https://cineutn-backend-deploy.onrender.com/api/genres';
   //Desarrollo
   //readonly genresUrl = "http://localhost:3000/api/genres"
+  readonly genresUrl = `${environment.apiBaseUrl}/genres`;
 
   constructor(private http: HttpClient) { }
 

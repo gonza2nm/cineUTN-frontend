@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Buy, ResponseList, ResponseOne, ResponseQR, ResponseWithError, User } from '../interfaces/interfaces';
 import { forkJoin, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,10 @@ export class BuyService {
 
 
   //Produccion
-  readonly urlBuy = 'https://cineutn-backend-deploy.onrender.com/api/buys';
+  //readonly urlBuy = 'https://cineutn-backend-deploy.onrender.com/api/buys';
   //Desarrollo
   //readonly urlBuy = 'http://localhost:3000/api/buys';
+  readonly urlBuy = `${environment.apiBaseUrl}/buys`;
 
   getBuys(): Observable<any> {
     return this.http.get<ResponseList<Buy> | ResponseWithError>(this.urlBuy);
