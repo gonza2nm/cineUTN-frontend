@@ -11,10 +11,6 @@ export class ProductsService {
 
   constructor(private http: HttpClient) { }
 
-  //Produccion
-  //readonly urlProducts = 'https://cineutn-backend-deploy.onrender.com/api/snacks';
-  //Desarrollo
-  //readonly urlProducts = 'http://localhost:3000/api/snacks';
   readonly urlProducts = `${environment.apiBaseUrl}/snacks`;
 
   getAllProducts(): Observable<any> {

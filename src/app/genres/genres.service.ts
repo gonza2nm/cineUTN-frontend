@@ -9,10 +9,6 @@ import { environment } from 'src/environments/environment';
 })
 export class GenresService {
 
-  //Produccion
-  //readonly genresUrl = 'https://cineutn-backend-deploy.onrender.com/api/genres';
-  //Desarrollo
-  //readonly genresUrl = "http://localhost:3000/api/genres"
   readonly genresUrl = `${environment.apiBaseUrl}/genres`;
 
   constructor(private http: HttpClient) { }

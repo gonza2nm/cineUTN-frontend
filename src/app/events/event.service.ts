@@ -9,10 +9,6 @@ import { environment } from 'src/environments/environment';
 })
 export class EventService {
 
-  //Produccion
-  //readonly apiUrl = 'https://cineutn-backend-deploy.onrender.com/api/events';
-  //Desarrollo
-  //readonly apiUrl = 'http://localhost:3000/api/events';
   readonly apiUrl = `${environment.apiBaseUrl}/events`;
 
   //HttpClient Se inyecta en el servicio a través del constructor para que pueda usarse dentro de los métodos del servicio

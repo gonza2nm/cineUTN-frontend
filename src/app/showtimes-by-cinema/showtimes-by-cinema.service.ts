@@ -16,14 +16,6 @@ import { environment } from 'src/environments/environment';
 })
 export class ShowtimesByCinemaService {
 
-  //Produccion
-  //readonly showtimeUrl = 'https://cineutn-backend-deploy.onrender.com/api/shows'
-  //readonly movieUrl = 'https://cineutn-backend-deploy.onrender.com/api/movies'
-  //readonly cinemaUrl = 'https://cineutn-backend-deploy.onrender.com/api/cinemas'
-  //Desarrollo
-  //readonly showtimeUrl = 'http://localhost:3000/api/shows';
-  //readonly movieUrl = 'http://localhost:3000/api/movies';
-  //readonly cinemaUrl = 'http://localhost:3000/api/cinemas';
   readonly showtimeUrl = `${environment.apiBaseUrl}/shows`;
   readonly movieUrl = `${environment.apiBaseUrl}/movies`;
   readonly cinemaUrl = `${environment.apiBaseUrl}/cinemas`;

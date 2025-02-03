@@ -14,10 +14,6 @@ export class AuthService {
   user = this.userSubject.asObservable();
   loggedIn = this.loggedInSubject.asObservable();
 
-  //Produccion
-  //readonly url = 'https://cineutn-backend-deploy.onrender.com/api/users';
-  //Desarrollo
-  //readonly url = 'http://localhost:3000/api/users';
   readonly url = `${environment.apiBaseUrl}/users`;
 
 

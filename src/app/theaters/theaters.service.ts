@@ -10,10 +10,6 @@ import { environment } from 'src/environments/environment';
 })
 export class TheatersService {
 
-  //Produccion
-  //readonly cinemaUrl = 'https://cineutn-backend-deploy.onrender.com/api/cinemas';
-  //Desarrollo
-  //readonly cinemaUrl = 'http://localhost:3000/api/cinemas';
   readonly cinemaUrl = `${environment.apiBaseUrl}/cinemas`;
 
   constructor(private http: HttpClient) { }

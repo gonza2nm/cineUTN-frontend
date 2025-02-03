@@ -10,10 +10,6 @@ import { environment } from 'src/environments/environment';
 
 export class CinemaService {
 
-  //Produccion
-  //readonly apiUrl = 'https://cineutn-backend-deploy.onrender.com/api/cinemas';
-  //Desarrollo
-  //readonly apiUrl = 'http://localhost:3000/api/cinemas';
   readonly apiUrl = `${environment.apiBaseUrl}/cinemas`;
 
   //HttpClient Se inyecta en el servicio a través del constructor para que pueda usarse dentro de los métodos del servicio

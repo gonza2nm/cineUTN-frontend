@@ -8,14 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class HomeService {
-  //Produccion
-  //readonly urlCines = 'https://cineutn-backend-deploy.onrender.com/api/cinemas';
-  //readonly urlMovies = 'https://cineutn-backend-deploy.onrender.com/api/movies';
-  //readonly urlGenres = 'https://cineutn-backend-deploy.onrender.com/api/genres';
-  //Desarrollo
-  //readonly urlCines = 'http://localhost:3000/api/cinemas';
-  //readonly urlMovies = 'http://localhost:3000/api/movies';
-  //readonly urlGenres = 'http://localhost:3000/api/genres';
+
   readonly urlCines = `${environment.apiBaseUrl}/cinemas`;
   readonly urlMovies = `${environment.apiBaseUrl}/movies`;
   readonly urlGenres = `${environment.apiBaseUrl}/genres`;
