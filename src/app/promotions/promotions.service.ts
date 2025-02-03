@@ -12,10 +12,6 @@ export class PromotionsService {
 
   constructor(private http: HttpClient) { }
 
-  //Produccion
-  //readonly urlPromotion = 'https://cineutn-backend-deploy.onrender.com/api/promotions';
-  //Desarrollo
-  //readonly urlPromotion = 'http://localhost:3000/api/promotions';
   readonly urlPromotion = `${environment.apiBaseUrl}/promotions`;
 
 

@@ -11,10 +11,6 @@ export class TicketService {
 
   constructor(private http: HttpClient) { }
 
-  //Produccion
-  //readonly urlTicket = 'https://cineutn-backend-deploy.onrender.com/api/tickets';
-  //Desarrollo
-  //readonly urlTicket = "http://localhost:3000/api/tickets"
   readonly urlTicket = `${environment.apiBaseUrl}/tickets`;
 
 

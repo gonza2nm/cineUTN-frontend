@@ -11,12 +11,6 @@ export class BuyService {
 
   constructor(private http: HttpClient) { }
 
-
-
-  //Produccion
-  //readonly urlBuy = 'https://cineutn-backend-deploy.onrender.com/api/buys';
-  //Desarrollo
-  //readonly urlBuy = 'http://localhost:3000/api/buys';
   readonly urlBuy = `${environment.apiBaseUrl}/buys`;
 
   getBuys(): Observable<any> {

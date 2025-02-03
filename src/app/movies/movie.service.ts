@@ -9,10 +9,6 @@ import { environment } from 'src/environments/environment';
 })
 export class MovieService {
 
-  //Produccion
-  //readonly urlMovies = 'https://cineutn-backend-deploy.onrender.com/api/movies';
-  //Desarrollo
-  //readonly urlMovies = 'http://localhost:3000/api/movies';
   readonly urlMovies = `${environment.apiBaseUrl}/movies`;
 
   //HttpClient Se inyecta en el servicio a través del constructor para que pueda usarse dentro de los métodos del servicio

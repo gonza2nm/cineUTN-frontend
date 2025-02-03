@@ -9,12 +9,6 @@ import { environment } from 'src/environments/environment';
 })
 export class TheaterByCinemaService {
 
-  //Produccion
-  //readonly cinemaUrl = 'https://cineutn-backend-deploy.onrender.com/api/cinemas';
-  //readonly theaterUrl = 'https://cineutn-backend-deploy.onrender.com/api/theaters';
-  //Desarrollo
-  //readonly cinemaUrl = 'http://localhost:3000/api/cinemas';
-  //readonly theaterUrl = 'http://localhost:3000/api/theaters';
   readonly cinemaUrl = `${environment.apiBaseUrl}/cinemas`;
   readonly theaterUrl = `${environment.apiBaseUrl}/theaters`;
 
