@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ResponseList, ResponseOne, ResponseWithError, User } from '../interfaces/interfaces';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -9,8 +10,7 @@ import { ResponseList, ResponseOne, ResponseWithError, User } from '../interface
 })
 export class LoginService {
 
-  readonly url = 'http://localhost:3000/api/users';
-  readonly urlManager = 'http://localhost:4200/manager-home/managers';
+  readonly url = `${environment.apiBaseUrl}/users`;
 
   constructor(private http: HttpClient) { }
 

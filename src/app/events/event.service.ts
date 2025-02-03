@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Event, ResponseList, ResponseOne, ResponseWithError } from '../interfaces/interfaces.js';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
 
-  readonly apiUrl = 'http://localhost:3000/api/events';
+  readonly apiUrl = `${environment.apiBaseUrl}/events`;
 
   //HttpClient Se inyecta en el servicio a través del constructor para que pueda usarse dentro de los métodos del servicio
   constructor(private http: HttpClient) { }

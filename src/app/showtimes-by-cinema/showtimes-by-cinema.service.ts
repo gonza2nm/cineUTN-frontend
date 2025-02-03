@@ -9,14 +9,17 @@ import {
   ResponseWithError,
   Show,
 } from '../interfaces/interfaces';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ShowtimesByCinemaService {
-  readonly showtimeUrl = 'http://localhost:3000/api/shows';
-  readonly movieUrl = 'http://localhost:3000/api/movies';
-  readonly cinemaUrl = 'http://localhost:3000/api/cinemas';
+
+  readonly showtimeUrl = `${environment.apiBaseUrl}/shows`;
+  readonly movieUrl = `${environment.apiBaseUrl}/movies`;
+  readonly cinemaUrl = `${environment.apiBaseUrl}/cinemas`;
+
   constructor(private http: HttpClient) { }
 
   getCinema(id: number): Observable<any> {
