@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { Buy, ResponseList, ResponseOne, ResponseWithError, Show, Ticket } from '../interfaces/interfaces';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,10 @@ export class TicketService {
   constructor(private http: HttpClient) { }
 
   //Produccion
-  readonly urlTicket = 'https://cineutn-backend-deploy.onrender.com/api/tickets';
+  //readonly urlTicket = 'https://cineutn-backend-deploy.onrender.com/api/tickets';
   //Desarrollo
   //readonly urlTicket = "http://localhost:3000/api/tickets"
+  readonly urlTicket = `${environment.apiBaseUrl}/tickets`;
 
 
   getTicketsByBuy(id: number): Observable<any> {

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Snack, ResponseList, ResponseOne, ResponseWithError } from '../interfaces/interfaces';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,10 @@ export class ProductsService {
   constructor(private http: HttpClient) { }
 
   //Produccion
-  readonly urlProducts = 'https://cineutn-backend-deploy.onrender.com/api/snacks';
+  //readonly urlProducts = 'https://cineutn-backend-deploy.onrender.com/api/snacks';
   //Desarrollo
   //readonly urlProducts = 'http://localhost:3000/api/snacks';
+  readonly urlProducts = `${environment.apiBaseUrl}/snacks`;
 
   getAllProducts(): Observable<any> {
     return this.http.get<ResponseList<Snack> | ResponseWithError>(this.urlProducts);
