@@ -48,14 +48,14 @@
         <li *ngFor="let buy of buys">
           <div class="shadow-md border-t-2 border-gray-100 rounded-lg p-6 mb-4 text-left bg-white hover:shadow-xl ">
             <h3 class="text-xl font-semibold mb-2">{{buy.description}}</h3>
-            <p class="text-gray-600 mb-2">Fecha de la compra: {{buy.fechaHora | date:'medium'}}</p>
+            <p class="text-gray-600 mb-2">Fecha de la compra: {{formatDateAndHour(buy.fechaHora)}}</p>
             <p class="px-5 py-1 text-xs font-bold rounded-full w-1/3"
-              [ngClass]="{'bg-green-100 text-green-800': buy.status === 'Válida' || buy.status === 'valido', 
-              'bg-red-100 text-red-800': buy.status === 'Cancelada'|| buy.status === 'cancelado', 'bg-gray-300': buy.status === 'Expirada'}">
+              [ngClass]="{'bg-green-100 text-green-800': buy.status === 'Válida', 
+              'bg-red-100 text-red-800': buy.status === 'Cancelada', 'bg-gray-300': buy.status === 'Expirada'}">
               {{buy.status}}
             </p>
             <!-- ------------------ -->
-            <button *ngIf="buy.status !== 'cancelado'" (click)="showDetails(buy)" class="bg-blue-500 text-white font-semibold mt-5 px-6 py-1.5 rounded-lg hover:bg-blue-700">
+            <button *ngIf="buy.status !== 'Cancelada'" (click)="showDetails(buy)" class="bg-blue-500 text-white font-semibold mt-5 px-6 py-1.5 rounded-lg hover:bg-blue-700">
               Detalles
             </button>
           </div>

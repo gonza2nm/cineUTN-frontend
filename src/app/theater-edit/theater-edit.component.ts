@@ -13,6 +13,8 @@ export class TheaterEditComponent implements OnInit {
   editMode: boolean = true;
   theaterForm: FormGroup = new FormGroup({
     max_seats: new FormControl('', [Validators.required, Validators.min(1)]),
+    cantRows: new FormControl('', [Validators.required, Validators.min(1)]),
+    cantCols: new FormControl('', [Validators.required, Validators.min(1)]),
   });
   cinema: Cinema = {
     id: 0,
@@ -23,10 +25,13 @@ export class TheaterEditComponent implements OnInit {
   };
   errorMessage: null | string = null;
   theaterId: null | number = null;
+  maxSeats: number = 0;
   theater: Theater = {
     id: 0,
     cinema: 0,
     numChairs: 0,
+    cantRows: 0,
+    cantCols: 0
   };
 
   constructor(
@@ -44,6 +49,19 @@ export class TheaterEditComponent implements OnInit {
       this.editMode = true;
     }
     this.loadCinema();
+
+    this.theaterForm.get('cantRows')?.valueChanges.subscribe(() => this.updateMaxSeats());
+    this.theaterForm.get('cantCols')?.valueChanges.subscribe(() => this.updateMaxSeats());
+  }
+
+  updateMaxSeats(): void {
+    const cantRows = this.theaterForm.get('cantRows')?.value;
+    const cantCols = this.theaterForm.get('cantCols')?.value;
+
+    if (cantRows && cantCols) {
+      this.maxSeats = cantRows * cantCols;
+      this.theaterForm.get('max_seats')?.setValue(this.maxSeats);
+    }
   }
 
   loadCinema() {
@@ -79,6 +97,8 @@ export class TheaterEditComponent implements OnInit {
             this.errorMessage = null;
             this.theaterForm.setValue({
               max_seats: this.theater.numChairs,
+              cantRows: this.theater.cantRows,
+              cantCols: this.theater.cantCols
             });
           },
           error: () => {
@@ -112,6 +132,8 @@ export class TheaterEditComponent implements OnInit {
 
   submit() {
     this.theater.numChairs = this.theaterForm.get('max_seats')?.value;
+    this.theater.cantRows = this.theaterForm.get('cantRows')?.value;
+    this.theater.cantCols = this.theaterForm.get('cantCols')?.value;
     if (this.editMode) {
       if (this.theaterId) {
         this.service.updateTheater(this.theaterId, this.theater).subscribe({

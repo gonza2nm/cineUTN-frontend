@@ -30,7 +30,6 @@ import { PromotionsComponent } from './promotions/promotions.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductsEditComponent } from './products-edit/products-edit.component';
 import { PromotionsEditComponent } from './promotions-edit/promotions-edit.component';
-import { BuySnacksComponent } from './buy-snacks/buy-snacks.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -43,7 +42,6 @@ const routes: Routes = [
 
   { path: 'buy/:id', component: BuyComponent, canActivate: [AuthGuard("user")] },
   { path: 'buy-details/:id', component: BuyDetailsComponent, canActivate: [AuthGuard("user")] },
-  { path: 'buy-snacks', component: BuySnacksComponent, canActivate:[AuthGuard("user")]},
   
   { path: 'manager-home', component: ManagerHomeComponent, canActivate: [AuthGuard("manager")], },
 

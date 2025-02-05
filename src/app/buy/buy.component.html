@@ -25,7 +25,7 @@
         <div class="px-3">
           <div class="flex flex-col items-center gap-6 md:flex-row md:items-start md:gap-10">
             <img class="w-32 md:w-36" src="{{show.movie.imageLink}}" alt="{{show.movie.imageLink}}">
-            <div class="text-center md:mt-12 md:text-left">
+            <div class="text-center md:mt-6 md:text-left">
               <h3 class="text-xl font-semibold mb-5 md:text-2xl md:font-normal">{{show.movie.name}}</h3>
               <p class="mb-1">{{formatDateAndHour(show)}}</p>
               <p>{{show.language.languageName}} - {{show.format.formatName}}</p>
@@ -37,18 +37,20 @@
         <div class="bg-gray-100 py-3 px-3 mt-8 md:max-w-3xl">
 
           <ul class="flex flex-row">
-            <li class="font-bold px-4 py-2 cursor-pointer border-gray-400 md:text-lg" [ngClass]="purchaseChoice === 'entrada'
-              ? 'bg-gradient-to-r from-blue-500 to-blue-700 text-white': 'border' " (click)="handleChangeOption('entrada')">
+            <li class="font-bold px-4 py-2 cursor-pointer border-gray-400 md:text-lg" 
+            [ngClass]="purchaseChoice === 'entrada'
+            ? 'bg-gradient-to-r from-blue-500 to-blue-700 text-white': 'border' " 
+            (click)="handleChangeOption('entrada')">
               Entradas
             </li>
             <li class="font-bold px-4 py-2 cursor-pointer w-min border-gray-400 md:text-lg"
-              [ngClass]="purchaseChoice === 'comida' ? 'bg-gradient-to-r from-blue-500 to-blue-700 text-white' : 'border' "
-              (click)="handleChangeOption('comida')">
+            [ngClass]="purchaseChoice === 'comida' ? 'bg-gradient-to-r from-blue-500 to-blue-700 text-white' : 'border'"
+            (click)="handleChangeOption('comida')">
               Comida
             </li>
             <li class="font-bold px-4 py-2 cursor-pointer w-min border-gray-400 md:text-lg"
-              [ngClass]="purchaseChoice === 'promociones' ? 'bg-gradient-to-r from-blue-500 to-blue-700 text-white' : 'border' "
-              (click)="handleChangeOption('promociones')">
+            [ngClass]="purchaseChoice === 'promociones' ? 'bg-gradient-to-r from-blue-500 to-blue-700 text-white' : 'border' "
+            (click)="handleChangeOption('promociones')">
               Promociones
             </li>
             <span class="w-full border-gray-400 border-b-2"></span>
@@ -92,18 +94,31 @@
               <div *ngFor="let snack of snacks" class="mb-4 p-4 bg-white shadow rounded">
                 <h3 class="font-semibold text-gray-700">{{ snack.name }}</h3>
                 <div class="flex justify-between mt-2">
-                  <div>
-                    <span class="mr-2">Precio:</span>
-                    <span>{{snack.price | currency}}</span>
-                  </div>
-                  <div>
-                    <button (click)="addProductToList(snack)"
-                      class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                      {{snackIsInList(snack) ? 'Quitar' : 'Agregar'}}
+                  <span>Cantidad:</span>
+                  <div class="flex items-center space-x-2">
+                    <button (click)="addProductToList(snack, -1)"
+                      class="bg-blue-500 px-2 py-1 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+                      [disabled]="getSnackCount(snack) === 0">
+                      -
+                    </button>
+                    <span> {{getSnackCount(snack)}}</span>
+                    <button (click)="addProductToList(snack, 1)" class="bg-blue-500 px-2 py-1 text-white rounded hover:bg-blue-600">
+                      +
                     </button>
                   </div>
                 </div>
+
+                <div class="flex justify-between mt-2">
+                  <span>Precio:</span>
+                  <span>{{snack.price | currency}}</span>
+                </div>
+
+                <div class="flex justify-between mt-2 font-semibold">
+                  <span>Subtotal:</span>
+                  <span>{{ (snack.price * getSnackCount(snack)) | currency }}</span>
+                </div>
               </div>
+
               <div class="mt-4 text-right font-semibold">
                 Total: {{ getTotalSnacks() | currency }}
               </div>
@@ -113,17 +128,28 @@
               <div *ngFor="let promo of promotions" class="mb-4 p-4 bg-white shadow rounded">
                 <h3 class="font-semibold text-gray-700">{{ promo.name }}</h3>
                 <div class="flex justify-between mt-2">
-                  <div>
-                    <span class="mr-2">Precio:</span>
-                    <span>{{promo.price | currency }}</span>
-                  </div>
-                  <div>
-                    <button (click)="addPromotionToList(promo)"
-                      class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                      {{promoIsInList(promo) ? 'Quitar' : 'Agregar'}}
+                  <span>Cantidad:</span>
+                  <div class="flex items-center space-x-2">
+                    <button (click)="addPromotionToList(promo, -1)"
+                      class="bg-blue-500 px-2 py-1 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+                      [disabled]="getPomotionCount(promo) === 0">
+                      -
+                    </button>
+                    <span> {{getPomotionCount(promo)}}</span>
+                    <button (click)="addPromotionToList(promo, 1)" class="bg-blue-500 px-2 py-1 text-white rounded hover:bg-blue-600">
+                      +
                     </button>
                   </div>
                 </div>
+                <div class="flex justify-between mt-2">
+                  <span>Precio:</span>
+                  <span>{{promo.price | currency }}</span>
+                </div>
+                <div class="flex justify-between mt-2 font-semibold">
+                  <span>Subtotal:</span>
+                  <span>{{ (promo.price * getPomotionCount(promo)) | currency }}</span>
+                </div>
+
               </div>
               <div class="mt-4 text-right font-semibold">
                 Total: {{ getTotalPromos() | currency }}
@@ -174,25 +200,32 @@
             <div *ngIf="purchaseChoice === 'comida'">
               <table class="table-auto w-full border-collapse border border-gray-700 border-t-0">
                 <thead class="bg-gray-200 text-gray-700">
-                  <th class="p-4">Tipos de comida</th>
+                  <th class="p-4">Producto</th>
+                  <th class="p-4">Cantidad</th>
                   <th class="p-4">Precio</th>
-                  <th class="p-4"></th>
+                  <th class="p-4">Subtotal</th>
                 </thead>
                 <tbody class="text-center">
                   <tr *ngFor="let snack of snacks" class="space-y-5">
                     <td>{{snack.name}}</td>
-                    <td>{{snack.price | currency}}</td>
                     <td class="flex items-center justify-center space-x-2">
-                      <button (click)="addProductToList(snack)"
-                        class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        {{snackIsInList(snack) ? 'Quitar' : 'Agregar'}}
+                      <button (click)="addProductToList(snack, -1)"
+                        class="bg-blue-500 px-2 py-1 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+                        [disabled]="getSnackCount(snack) === 0">
+                        -
+                      </button>
+                      <span> {{getSnackCount(snack)}}</span>
+                      <button (click)="addProductToList(snack, 1)" class="bg-blue-500 px-2 py-1 text-white rounded hover:bg-blue-600">
+                        +
                       </button>
                     </td>
+                    <td>{{ snack.price | currency }}</td>
+                    <td>{{ (snack.price * getSnackCount(snack)) | currency }}</td>
                   </tr>
                 </tbody>
                 <tfoot>
                   <tr class="bg-gray-200 font-semibold text-lg">
-                    <td colspan="2" class="p-3 text-right">Total:</td>
+                    <td colspan="3" class="p-3 text-right">Total:</td>
                     <td class="p-3">{{ getTotalSnacks() | currency }}</td>
                   </tr>
                 </tfoot>
@@ -202,25 +235,32 @@
             <div *ngIf="purchaseChoice === 'promociones'">
               <table class="table-auto w-full border-collapse border border-gray-700 border-t-0">
                 <thead class="bg-gray-200 text-gray-700">
-                  <th class="p-4">Tipos de promociones</th>
+                  <th class="p-4">Promoción</th>
+                  <th class="p-4">Cantidad</th>
                   <th class="p-4">Precio</th>
-                  <th class="p-4"></th>
+                  <th class="p-4">Subtotal</th>
                 </thead>
                 <tbody class="text-center">
                   <tr *ngFor="let promo of promotions" class="space-y-5">
                     <td>{{promo.name}}</td>
-                    <td>{{promo.price | currency }}</td>
                     <td class="flex items-center justify-center space-x-2">
-                      <button (click)="addPromotionToList(promo)"
-                        class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        {{promoIsInList(promo) ? 'Quitar' : 'Agregar'}}
+                      <button (click)="addPromotionToList(promo, -1)"
+                        class="bg-blue-500 px-2 py-1 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+                        [disabled]="getPomotionCount(promo) === 0">
+                        -
+                      </button>
+                      <span> {{getPomotionCount(promo)}}</span>
+                      <button (click)="addPromotionToList(promo, 1)" class="bg-blue-500 px-2 py-1 text-white rounded hover:bg-blue-600">
+                        +
                       </button>
                     </td>
+                    <td>{{ promo.price | currency }}</td>
+                    <td>{{ (promo.price * getPomotionCount(promo)) | currency }}</td>
                   </tr>
                 </tbody>
                 <tfoot>
                   <tr class="bg-gray-200 font-semibold text-lg">
-                    <td colspan="2" class="p-3 text-right">Total:</td>
+                    <td colspan="3" class="p-3 text-right">Total:</td>
                     <td class="p-3">{{ getTotalPromos() | currency }}</td>
                   </tr>
                 </tfoot>
@@ -239,23 +279,49 @@
       </div>
 
       <!-- Paso 2: Seleccionar Ubicación -->
-      <div [ngClass]="{'block': step === 2, 'hidden': step !== 2}">
-        <h3 class="text-2xl mb-10">Elegir asiento</h3>
-        <!--
-              <p class="text-xl mb-10 text-blue-600">Acá estaría, si lo podemos hacer, la parte de los asientos :p.</p>
-              <p class="text-xl">Estas pelicula se proyecta en la sala: {{2}} que tiene {{32}}</p>
-            -->
-        <p class="text-xl mb-10 text-blue-600">Proximamente agregaremos esta seccion.</p>
-        <!--
-            <p>Total de entradas: {{totalEntradas}}</p>
-            <p>Estas pelicula se proyecta en la sala: {{show.theater.id}} que tiene {{showThaterCantSillas}}</p>
-            <p>Con las entradas que se comprar quedan: {{showThaterCantSillas2}} entradas disponibles</p>
-            -->
+      <div [ngClass]="{'block': step === 2, 'hidden': step !== 2}" 
+      class="">
+
+        <div class="flex flex-row flex-wrap gap-3 justify-center my-4 md:gap-6 md:text-lg">
+          <div class="flex items-center gap-1.5">
+            <div class="bg-gray-300 w-5 h-5 rounded"></div>
+            <p>Disponible</p>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <div class="bg-gray-500 w-5 h-5 rounded"></div>
+            <p>Ocupado</p>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <div class="bg-blue-500 w-5 h-5 rounded"></div>
+            <p>Seleccionado</p>
+          </div>
+        </div>
+
+        <!-- class="grid grid-cols-8 gap-x-2 gap-y-3 text-sm text-center mt-7 md:gap-4" -->
+
+        
+        <div class="max-w-md m-auto">
+          <div class="mt-8 border border-gray-400 rounded-xl px-4 tracking-widest text-center text-gray-500">
+            Pantalla
+          </div>
+          <div class="gap-x-2 gap-y-3 mt-7 md:gap-3.5"
+          [ngStyle]=" {'display': 'grid','grid-template-columns': 'repeat(' + show.theater.cantCols + ', 1fr)','grid-template-rows': 'repeat(' + show.theater.cantRows + ', auto)'}">
+            <button *ngFor="let seat of seats" class="bg-gray-300 rounded-md py-4 cursor-pointer md:py-5"
+            [class.selected]="selectedSeats.includes(seat)" 
+            [class.occupied]="seat.status === 'Ocupado'" 
+            (click)="toggleSeatSelect(seat)">
+            </button>
+          </div>
+        </div>
+        
+
         <div class="flex justify-between mt-20">
           <button (click)="previousStep()"
             class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Anterior</button>
-          <button (click)="nextStep()"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Siguiente</button>
+          <button (click)="nextStep()" 
+          [disabled]="selectedSeats.length !== totalCantTickets"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-500
+          disabled:text-white disabled:cursor-not-allowed">Siguiente</button>
         </div>
       </div>
 
@@ -292,6 +358,14 @@
               <p class="font-semibold text-gray-700">Fecha:</p>
               <p>{{formatDateAndHour(show)}}</p>
             </div>
+            <div class="flex space-x-2">
+              <p class="font-semibold text-gray-700">Asientos:</p>
+              <ul class="flex flex-row gap-1.5">
+                <li *ngFor="let seat of orderSeats() ; let i = index">
+                  <p>{{seat.seatNumber}}{{i < selectedSeats.length -1 ? ", " : '' }}</p>
+                </li>
+              </ul>
+            </div>
           </div>
 
           <div class="min-h-20 mt-10">
@@ -316,7 +390,7 @@
               <li *ngFor="let product of selectedSnacks">
                 <div class="flex justify-between">
                   <p>{{product.name}}</p>
-                  <p>{{product.price | currency}}</p>
+                  <p>{{product.price * product.cant| currency}}</p>
                 </div>
               </li>
             </ul>
@@ -325,7 +399,7 @@
               <li *ngFor="let promos of selectedPromotions">
                 <div class="flex justify-between">
                   <p>{{promos.name}}</p>
-                  <p>{{promos.price | currency}}</p>
+                  <p>{{promos.price * promos.cant| currency}}</p>
                 </div>
               </li>
             </ul>

@@ -1,0 +1,12 @@
+div {
+  transition: background-color 0.5s;
+}
+
+.selected {
+  background-color: #3b82f6;
+}
+
+.occupied {
+  background-color: #6b7280;
+  
+}

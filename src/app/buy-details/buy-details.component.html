@@ -10,15 +10,17 @@
   <div class="shadow-lg rounded-lg p-6 pb-16 bg-white">
 
     <div>
-      <h2 class="text-xl font-semibold md:text-2xl mb-2">Detalle de la Compra</h2>
-      <p class="text-gray-600 text-base md:text-lg mb-0">Revisa los detalles de tu compra.</p>
-      <p class="text-gray-600 text-sm md:text-base mb-10 italic">NOTA: La compra solo se puede cancelar con 12hs de antelación.</p>
+      <h2 class="text-xl font-semibold md:text-2xl mb-2">Detalles de la Compra</h2>
+      <p class="text-gray-600 text-base md:text-lg mb-0">Revisá los detalles de tu compra.</p>
+      <p class="text-gray-600 text-sm md:text-base mb-10 italic">
+        NOTA: La compra solo se puede cancelar con 12hs de antelación.
+      </p>
     </div>
 
     <!-- Detalles de la compra -->
     
     <!-- Para pantallas medianas y grandes-->
-    <div class="hidden md:block px-4 mb-8">
+    <div class="hidden md:block mx-24 mb-8">
       <div class="grid grid-cols-3 place-items-center rounded-xl border-2 border-gray-300 py-4">
     
         <div class="text-center w-full border-r-2 border-gray-300">
@@ -28,7 +30,7 @@
     
         <div class="text-center w-full border-r-2 border-gray-300">
           <h4 class="font-semibold py-1.5">Fecha de compra:</h4>
-          <p>{{buy.fechaHora | date: 'medium'}}</p>
+          <p>{{formatDateAndHour(buy.fechaHora)}}</p>
         </div>
     
         <div class="text-center w-full">
@@ -39,68 +41,79 @@
     </div>
 
     <!-- Detalles de la pelicula -->
-    <div class="flex flex-col items-center md:items-start md:px-8">
+    <div class="flex flex-col items-center md:items-start md:mx-28">
 
       <h3 class="text-xl font-semibold py-3 md:hidden">{{show.movie.name}}</h3>
-      <img src="{{show.movie.imageLink}}" alt="" class="w-32 py-3 md:hidden">
+      
+      <div class="md:flex md:flex-row md:gap-14">
 
-      <div class="md:flex md:flex-row md:gap-8">
-        <img src="{{show.movie.imageLink}}" alt="" class="hidden md:block md:w-44">
-        
+        <img src="{{show.movie.imageLink}}" alt="" class="w-32 m-auto md:w-40 md:h-56 rounded-lg shadow-md">
+
         <div class="md:py-3">
-          <h3 class="hidden md:block text-xl font-semibold py-3">{{show.movie.name}}</h3>
+          <h3 class="hidden md:block text-xl font-semibold">{{show.movie.name}}</h3>
+
+          <div class="mt-4 flex gap-2 mb-1">
+            <p class="font-semibold text-gray-700">Fecha:</p>
+            <p>{{formatDateAndHour(show.dayAndTime)}}</p>
+          </div>
+          <div class="flex gap-2 mb-1">
+            <p class="font-semibold text-gray-700">Formato:</p>
+            <p>{{show.format.formatName}}</p>
+          </div>
+          <div class="flex gap-2 mb-1">
+            <p class="font-semibold text-gray-700">Lenguaje:</p>
+            <p>{{show.language.languageName}}</p>
+          </div>
+          <div class="flex space-x-2">
+            <p class="font-semibold text-gray-700">Asientos:</p>
+            <ul class="flex flex-row gap-1.5">
+              <li *ngFor="let t of buy.tickets let i = index">
+                <p>{{t.seat.seatNumber}}{{i < buy.tickets.length -1 ? ", " : '' }}</p>
+              </li>
+            </ul>
+          </div>
           
-          <div class="py-3">
-            <div class="flex gap-2 mb-1">
-              <p class="font-semibold">Fecha y hora:</p>
-              <p class="text-gray-700">{{formatDateAndHour(show.dayAndTime)}}</p>
-            </div>
-            <div class="flex gap-2 mb-1">
-              <p class="font-semibold">Formato:</p>
-              <p class="text-gray-700">{{show.format.formatName}}</p>
-            </div>
-            <div class="flex gap-2 mb-1">
-              <p class="font-semibold">Lenguaje:</p>
-              <p class="text-gray-700">{{show.language.languageName}}</p>
-            </div>
-            <div class="flex gap-2 mb-1">
-              <p class="font-semibold">Entradas:</p>
-              <p class="text-gray-700">{{tickets.length}}</p>
-            </div>
+        </div>
+        
+      </div>
+      
+    </div>
+
+    <!-- Productos comprados -->
+    <div >
+      <div class="mt-6 md:mx-28">
+        <h3 class="text-lg font-semibold mb-3">Producto y Promociones</h3>
+        <div class="hidden ml-4 mb-3 md:grid grid-cols-[35px_1fr_2fr]">
+          <h4 class="font-semibold">Cant.</h4>
+          <h4 class="font-semibold flex justify-center">Descripcion</h4>
+          <h4 class="font-semibold flex justify-end pr-7">Total</h4>
+        </div>
+        
+        <div class="space-y-2">
+          <div *ngFor="let product of buy.snacksBuy" 
+          class="flex justify-between md:grid md:grid-cols-[35px_1fr_2fr] bg-gray-50 rounded-lg px-4 py-3">
+            <p class="hidden md:flex justify-center">{{product.quantity}}</p>
+            <p class="md:flex justify-center">{{product.snack.name}}</p>
+            <p class="md:flex justify-end">{{product.snack.price * product.quantity| currency}}</p>
+
+          </div>
+          <div *ngFor="let prom of buy.promotionsBuy" 
+          class="flex justify-between md:grid md:grid-cols-[35px_1fr_2fr] bg-gray-50 rounded-lg px-4 py-3">
+            <p class="hidden md:flex justify-center">{{prom.quantity}}</p>
+            <p class="md:flex justify-center">{{prom.promotion.name}}</p>
+            <p class="md:flex justify-end">{{prom.promotion.price * prom.quantity | currency}}</p>
           </div>
         </div>
       </div>
+    </div>
 
+    <!-- Precio total -->
+    <div class="flex justify-between items-center p-4 bg-gray-200 rounded-lg mt-4 md:hidden">
+      <span class="md:text-lg font-semibold">Total</span>
+      <span class="text-lg font-semibold">{{buy.total | currency}}</span>
     </div>
 
 
-    <div class="border border-pink-400 p-2 mt-10 max-w-xl md:mx-8">
-      <div class="flex flex-row items-center mb-4 gap-3">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 fill-blue-600" viewBox="0 0 576 512">
-          <path
-            d="M0 24C0 10.7 10.7 0 24 0L69.5 0c22 0 41.5 12.8 50.6 32l411 0c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3l-288.5 0 5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5L488 336c13.3 0 24 10.7 24 24s-10.7 24-24 24l-288.3 0c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5L24 48C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" />
-        </svg>
-        <h2 class="font-semibold text-lg">Tus productos:</h2>
-      </div>
-
-      <ul class="px-3">
-        <p class="font-semibold text-gray-700 mt-2">Comida:</p>
-        <li *ngFor="let product of snacks">
-          <div class="flex justify-between">
-            <p>{{product.name}}</p>
-          </div>
-        </li>
-      </ul>
-      <ul class="px-3">
-        <p class="font-semibold text-gray-700 mt-2">Promociones:</p>
-        <li *ngFor="let promos of promotions">
-          <div class="flex justify-between">
-            <p>{{promos.name}}</p>
-          </div>
-        </li>
-      </ul>
-    </div>
-    
 
     <div class="flex flex-col items-center rounded-lg p-4 mt-4 shadow-sm md:shadow-md">
       <div class="">
@@ -110,12 +123,6 @@
       <p class="mt-4 text-sm text-gray-600 italic">El encargado usara este codigo para validar tu compra</p>
     </div>
 
-    <div class="border-t-2 border-gray-300 px-2 py-3 md:hidden">
-      <div class="flex justify-between">
-        <p class="text-lg font-semibold">Total:</p>
-        <p>{{buy.total | currency}}</p>
-      </div>
-    </div>
 
     <div class="flex justify-center gap-4 mt-7">
       <button (click)="detailsOff()"
@@ -123,10 +130,28 @@
         Atras
       </button>
       <!-- Boton de cancelar compra -->
-      <button [disabled]="!isExpired" (click)="cancelPurchase()"
+      <button [disabled]="isExpired" (click)="isOpen = true"
       class="bg-red-600 text-white font-semibold px-5 py-1.5 rounded-lg hover:bg-red-800 transition duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed">
         Cancelar compra
       </button>
+    </div>
+
+    <!-- Modal -->
+    <div *ngIf="isOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      <div class="bg-gray-200 rounded-md shadow-lg">
+        <div class="flex justify-between gap-40 border-b border-gray-300 px-8 py-3.5 mb-4">
+          <p class="font-semibold text-red-700">Eliminar compra</p>
+          <button class="font-semibold text-lg px-2.5 hover:text-gray-600" (click)="isOpen = false">
+            x
+          </button>
+        </div>
+        <p class="px-8 text-xl font-bold mb-4">¿Desea continuar?</p>
+        <div class="mt-5 mb-4 pr-8 flex justify-end">
+          <button (click)="cancelPurchase()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800">
+            Aceptar
+          </button>
+        </div>
+      </div>
     </div>
     
     <!-- Muestra mensaje de error si hay algun error 

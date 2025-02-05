@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BuyService } from '../buy/buy.service';
-import { Buy, Movie, Promotion, Show, Snack, Ticket, User } from '../interfaces/interfaces';
+import { Buy, Movie, Promotion, Seat, Show, Snack, Ticket, User } from '../interfaces/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TicketService } from '../tickets/ticket.service';
 import { AuthService } from '../auth/auth.service';
@@ -12,6 +12,7 @@ import { MovieDetailsService } from '../movie-details/movie-details.service';
   styleUrls: ['./buy-details.component.css'],
 })
 export class BuyDetailsComponent implements OnInit {
+  isOpen = false;
   buy: Buy = {
     id: 0,
     description: '',
@@ -22,13 +23,11 @@ export class BuyDetailsComponent implements OnInit {
     fechaHora: new Date(),
     status: '',
     tickets: [],
-    snacks: []
+    snacksBuy: [],
+    promotionsBuy: []
   }
   user: User | null = null;
   buyId!: number;
-  tickets: Ticket[] = [];
-  snacks: Snack[] = [];
-  promotions: Promotion[] = []
   show: Show = {
     id: 0,
     dayAndTime: new Date(),
@@ -45,19 +44,15 @@ export class BuyDetailsComponent implements OnInit {
       languages: [],
       name: '',
     },
-    theater: { cinema: 0, id: 0, numChairs: 0 },
-    tickets: [],
+    theater: { cinema: 0, id: 0, numChairs: 0, cantRows: 0, cantCols:0 },
+    tickets: []
   };
-  movie!: Movie;
   errorMessage: string | null = null;
   messageCanceled = '';
   isExpired: boolean = false;
-  showDay: string = '';
-  showHour: string = '';
   qrCodeUrl: string = '';
 
   constructor(
-    private movieDatialsService: MovieDetailsService,
     private authService: AuthService,
     private ticketService: TicketService,
     private router: Router,
@@ -74,7 +69,6 @@ export class BuyDetailsComponent implements OnInit {
         'No se encontro el id de la compra, por favor retroceda y vuelva a seleccionarla';
     } else {
       this.loadPurchase();
-      this.loadTickets(this.buyId);
       this.loadQRcode();
     }
   }
@@ -89,7 +83,7 @@ export class BuyDetailsComponent implements OnInit {
       let dateToday = new Date();
       let date2 = showDate.getTime() - dateToday.getTime();
 
-      if (date2 > 12 * 60 * 60 * 1000) {
+      if (date2 < 12 * 60 * 60 * 1000) {
         this.isExpired = true;
       }
     }
@@ -98,49 +92,39 @@ export class BuyDetailsComponent implements OnInit {
   loadPurchase() {
     this.buyService.getOneBuy(this.buyId).subscribe({
       next: (response) => {
+        console.log('Datos de la compra', response.data)
         this.buy = response.data;
-        this.snacks = response.data.snacks;
-        this.promotions = response.data.promotions;
-        console.log(response);
+        this.show = response.data.tickets[0].show;
+        this.checkIfExpired();
       },
-
       error: () => {
         console.error('Ocurrio un error al buscar la compra');
       },
     });
   }
 
-  loadTickets(id: number): void {
-    this.ticketService.getTicketsByBuy(id).subscribe({
-      next: (response) => {
-        console.log(response.data);
-        this.tickets = response.data;
-        this.errorMessage = null;
-        if (this.tickets[0]) {
-          this.show = this.tickets[0].show;
-          this.checkIfExpired();
-        }
-      },
-
-      error: () => {
-        this.errorMessage = 'Ocurrio un error al buscar la funcion.';
-        console.error('Ocurrio un error al buscar la funcion.');
-      },
-    });
-  }
-
   cancelPurchase() {
     this.ticketService.deleteTickets(this.buyId).subscribe({
-      next: (response) => {
-        console.log(response.data);
+      next: (response) => {  
+        //Se actualiza el estado de la compra.
         let status = 'Cancelada';
         this.buyService.updatebuy(this.buyId, status).subscribe({
           next: () => {
-            console.log(response.data);
-            this.messageCanceled = 'La compra fue cancelada.';
-            this.router.navigate(['/my-account'])
+            //Se actualiza el estado de los asientos a disponible.
+            const seatIds = this.buy.tickets.map(ticket => ticket.seat.id);
+            this.buyService.updateSeatbyShow(this.show.id, seatIds).subscribe({
+              next: (response) => {
+                console.log(response.data);
+                this.messageCanceled = 'La compra fue cancelada.';
+                this.router.navigate(['/my-account'])
+              },
+              error: (err) => {
+                console.log('Error de Seat');
+                console.log(err.message);
+                console.log(err.error);
+              },
+            })
           },
-
           error: (err) => {
             console.log('Error de compra');
             console.log(err.message);
@@ -154,6 +138,7 @@ export class BuyDetailsComponent implements OnInit {
         console.log(err.error);
       },
     });
+    
   }
 
   formatDateAndHour(date: Date) {

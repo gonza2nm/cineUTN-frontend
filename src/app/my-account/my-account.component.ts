@@ -106,6 +106,16 @@ export class MyAccountComponent implements OnInit {
     });
   }
 
+  formatDateAndHour(date: Date) {
+    const fecha = new Date(date);
+    const year = fecha.getFullYear();
+    const diaMes = fecha.getDate().toString().padStart(2, '0');
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    let hour = fecha.getHours().toString().padStart(2, '0');
+    let minutes = fecha.getMinutes().toString().padStart(2, '0');
+    return `${diaMes}/${mes}/${year} - ${hour}:${minutes} hs`;
+  }
+
 
 
 }

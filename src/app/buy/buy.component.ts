@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Promotion, Show, Snack, User } from '../interfaces/interfaces.js';
+import { Promotion, Seat, Show, Snack, User } from '../interfaces/interfaces.js';
 import { MovieDetailsService } from '../movie-details/movie-details.service';
 import { BuyService } from './buy.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -40,7 +40,7 @@ export class BuyComponent implements OnInit {
       languages: [],
       name: ""
     },
-    theater: { cinema: 0, id: 0, numChairs: 0 },
+    theater: { cinema: 0, id: 0, numChairs: 0, cantRows: 0, cantCols:0 },
     tickets: []
   }
   loading = true;
@@ -52,18 +52,19 @@ export class BuyComponent implements OnInit {
 
   totalPrice = 0;
   totalCantTickets = 0;
-  numbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-  showDay = this.movieDatialsService.getFormattedWeekday(this.show.dayAndTime);
   step: number = 1;
   buyAcepted = false;
   errorMessageBuy: boolean = true;
 
   purchaseChoice: string = 'entrada';
   snacks: Snack[] = [];
-  selectedSnacks: { id: number, name: string, price: number}[] = []
+  selectedSnacks: { id: number, name: string, price: number, cant: number}[] = [];
 
   promotions: Promotion[] = [];
-  selectedPromotions: { code: string, name: string, price: number}[] = []
+  selectedPromotions: { code: string, name: string, price: number, cant:number}[] = [];
+
+  seats: Seat[] = [];
+  selectedSeats: Seat[] = [];
   
 
 
@@ -86,6 +87,7 @@ export class BuyComponent implements OnInit {
       this.errorMessage = 'No se encontro el id de esa funcion, por favor retroceda y vuelva a seleccionarla';
     } else {
       this.loadShow();
+      this.loadSeats();
       this.loading = false;
     }
     this.loadSnacks();
@@ -117,44 +119,49 @@ export class BuyComponent implements OnInit {
     );
   }
 
-  addProductToList(snack: Snack) {
+  addProductToList(snack: Snack, change: number) {
     const indexSnack = this.selectedSnacks.findIndex(item => item.id === snack.id)
     if(indexSnack === -1) {
-      this.selectedSnacks.push({id: snack.id, name: snack.name, price: snack.price});
+      this.selectedSnacks.push({id: snack.id, name: snack.name, price: snack.price, cant: 1});
       
     } else {
-      this.selectedSnacks.splice(indexSnack, 1)
-      
+      const newCant = this.selectedSnacks[indexSnack].cant + change;
+
+      if (newCant <= 0 ) {
+        this.selectedSnacks.splice(indexSnack, 1)
+      } else {
+        this.selectedSnacks[indexSnack].cant = newCant;
+      }
     }
   }
 
-  snackIsInList(snack: any) {
-    const indexSnack = this.selectedSnacks.findIndex(item => item.id === snack.id)
-    if(indexSnack === -1) {
-      return false
-    } else {
-      return true
-    }
+  getSnackCount(snack: Snack) {
+    const foundSnack = this.selectedSnacks.find(item => item.id === snack.id);
+    return foundSnack ? foundSnack.cant : 0;
   }
 
-  addPromotionToList(promo: Promotion) {
+
+
+  addPromotionToList(promo: Promotion, change: number) {
     const indexPromotion = this.selectedPromotions.findIndex(item => item.code === promo.code)
     if(indexPromotion === -1) {
-      this.selectedPromotions.push({code: promo.code, name: promo.name, price: promo.price});
+      this.selectedPromotions.push({code: promo.code, name: promo.name, price: promo.price, cant: 1});
       
     } else {
-      this.selectedPromotions.splice(indexPromotion, 1)
+      const newCant = this.selectedPromotions[indexPromotion].cant + change;
+
+      if (newCant <= 0 ) {
+        this.selectedPromotions.splice(indexPromotion, 1)
+      } else {
+        this.selectedPromotions[indexPromotion].cant = newCant;
+      }
       
     }
   }
 
-  promoIsInList(promo: Promotion) {
-    const indexPromo = this.selectedPromotions.findIndex(item => item.code === promo.code)
-    if(indexPromo === -1) {
-      return false
-    } else {
-      return true
-    }
+  getPomotionCount(promo: Promotion) {
+    const foundPromotion = this.selectedPromotions.find(item => item.code === promo.code);
+    return foundPromotion ? foundPromotion.cant : 0;
   }
 
   getTotalTickets() {
@@ -166,14 +173,14 @@ export class BuyComponent implements OnInit {
 
   getTotalSnacks() {
     return this.selectedSnacks.reduce(
-      (subtotal, snack) => subtotal + snack.price,
+      (subtotal, snack) => subtotal + snack.price * snack.cant,
       0
     );
   }
 
   getTotalPromos() {
     return this.selectedPromotions.reduce(
-      (subtotal, promo) => subtotal + promo.price,
+      (subtotal, promo) => subtotal + promo.price * promo.cant,
       0
     );
   }
@@ -195,6 +202,7 @@ export class BuyComponent implements OnInit {
   loadShow() {
     this.movieDatialsService.getOneShow(this.showId).subscribe({
         next: (response) => {
+          console.log('Datos del show', response)
           this.show = response;
           this.errorMessage = null;
         },
@@ -204,6 +212,21 @@ export class BuyComponent implements OnInit {
           this.router.navigate(['/']);
         },
       });
+  }
+
+  loadSeats() {
+    this.buyService.getSeatsbyShow(this.showId).subscribe({
+      next: (response) => {
+        this.seats = response.data ;
+        this.errorMessage = null;
+      },
+
+      error: () => {
+          this.errorMessage = 'Ocurrio un error al buscar los asientos';
+          console.error('Ocurrio un error al buscar los asientos');
+          this.router.navigate(['/']);
+        },
+    })
   }
 
   loadSnacks() {
@@ -232,8 +255,10 @@ export class BuyComponent implements OnInit {
 
   confirmPurchase() {
     this.calculateTotal();
+    this.selectedSnacks.map(snack => ({ id: snack.id, cant: snack.cant }));
+    this.selectedPromotions.map(promo => ({ code: promo.code, cant: promo.cant }));
     if(this.user) {
-      this.buyService.addBuy('Compra de entradas', this.totalPrice, this.user.id, this.show.id, this.totalCantTickets, this.selectedSnacks, this.selectedPromotions).subscribe({
+      this.buyService.addBuy('Compra de entradas', this.totalPrice, this.user.id, this.show.id, this.selectedSnacks, this.selectedPromotions, this.selectedSeats).subscribe({
         next: (response) => {
           console.log(response.data);
           this.errorMessageBuy = true;
@@ -254,6 +279,30 @@ export class BuyComponent implements OnInit {
           }, 3000);
         }
       })
+    }
+  }
+
+  toggleSeatSelect(seat: Seat) {
+    if(seat.status !== 'Ocupado') {
+      const index = this.selectedSeats.indexOf(seat);
+      if (index === -1) {
+        if (this.selectedSeats.length < this.totalCantTickets) {
+          this.selectedSeats.push(seat);
+        } else {
+          this.selectedSeats.shift(); 
+          this.selectedSeats.push(seat);
+        }
+      } else {
+        this.selectedSeats.splice(index, 1);
+      }
+    }
+  }
+
+  orderSeats() {
+    if (this.step === 3) {
+      return this.selectedSeats.sort((a, b) => a.seatNumber.localeCompare(b.seatNumber));
+    } else {
+      return this.selectedSeats;
     }
   }
 }

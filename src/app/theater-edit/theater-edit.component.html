@@ -7,17 +7,38 @@
     <h2>{{editMode ? "Edite los datos de su sala" : "Ingrese la cantidad maxima de sillas de su nueva sala"}}</h2>
   </div>
   <form class="my-10 flex flex-col justify-between gap-4 mx-3" [formGroup]="theaterForm" (ngSubmit)="submit()">
-    <div class="flex flex-row justify-center gap-3">
+
+
+
+    <div class="flex flex-col items-center md:flex-row md:justify-center md:gap-10">
+      
+      <div class="flex flex-col">
+        <label for="cantRows" class="font-semibold mb-1">Nº filas:</label>
+        <input class="w-40 border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500" type="number"
+          formControlName="cantRows" id="cantRows">
+      </div>
+    
+      <div class="mt-4 flex flex-col md:mt-0">
+        <label for="cantCols" class="font-semibold mb-1">Nº columnas:</label>
+        <input class="w-40 border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500" type="number"
+          formControlName="cantCols" id="cantCols">
+      </div>
+    </div>
+
+
+    <div class="flex flex-row justify-center gap-3 mt-9">
       <label for="max_seats"><img class="w-12" src="../../assets/seat.svg" /></label>
       <input placeholder="Cantidad de sillas"
-        class="w-36 border-2 rounded-md px-2 py-1 border-gray-400 outline-none focus:border-blue-500" type="number"
-        formControlName="max_seats" id="max_seats">
+        class="w-36 border-2 rounded-md px-2 py-1 border-gray-300 outline-none bg-gray-100 cursor-not-allowed text-gray-600" 
+        type="number"
+        formControlName="max_seats" id="max_seats" [value]="maxSeats" readonly>
       <span *ngIf="errorMessage" class="text-red-500">{{errorMessage}}</span>
     </div>
+
     <div class="flex flex-col items-end sm:flex-row sm:items-center gap-4"
       [ngClass]="!editMode ? 'sm:justify-end sm:items-end' : 'sm:justify-between' ">
       <button *ngIf="editMode"
-        class="rounded-md border-2 border-black mt-5 bg-red-600 text-white hover:bg-red-800 py-2 px-4" type="button"
+        class="rounded-md border-2 border-black mt-7 bg-red-600 text-white hover:bg-red-800 py-2 px-4" type="button"
         (click)="deleteTheater()">Eliminar sala</button>
       <button [ngClass]="!theaterForm.valid ? ' border-gray-400 text-gray-400' : 'hover:bg-gray-300'"
         class="border-2 py-2 px-4 rounded-md  border-black" [disabled]="!theaterForm.valid" type="submit">{{ editMode ?

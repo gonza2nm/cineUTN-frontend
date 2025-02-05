@@ -28,7 +28,7 @@ export class BuyValidateQrComponent implements OnDestroy {
     },
     status: '',
     tickets: [],
-    snacks: [],
+    snacksBuy: [],
 
   }
 
