@@ -33,6 +33,7 @@ export class BuyComponent implements OnInit {
     movie: {
       cinemas: [],
       description: "",
+      duration: 0,
       formats: [],
       genres: [],
       id: 0,
@@ -40,7 +41,15 @@ export class BuyComponent implements OnInit {
       languages: [],
       name: ""
     },
-    theater: { cinema: 0, id: 0, numChairs: 0, cantRows: 0, cantCols:0 },
+    theater: {
+      cinema: {
+        id: 0,
+        name: '',
+        address: '',
+        theaters: [],
+        movies: [],
+      }, id: 0, numChairs: 0, cantRows: 0, cantCols:0
+    },
     tickets: []
   }
   loading = true;
@@ -65,7 +74,6 @@ export class BuyComponent implements OnInit {
 
   seats: Seat[] = [];
   selectedSeats: Seat[] = [];
-  
 
 
   constructor(
@@ -194,8 +202,8 @@ export class BuyComponent implements OnInit {
     const year = fecha.getFullYear();
     const diaMes = fecha.getDate().toString().padStart(2, '0');
     const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
-    let hour = fecha.getHours().toString().padStart(2,'0');
-    let minutes = fecha.getMinutes().toString().padStart(2,'0');
+    let hour = fecha.getHours().toString().padStart(2, '0');
+    let minutes = fecha.getMinutes().toString().padStart(2, '0');
     return `${diaMes}/${mes}/${year} - ${hour}:${minutes} hs`;
   }
 
@@ -231,25 +239,25 @@ export class BuyComponent implements OnInit {
 
   loadSnacks() {
     this.snackService.getAllProducts().subscribe({
-        next: (response) => {
-          this.snacks = response.data;
-        },
-        error: () => {
-          this.errorMessage = 'Ocurrio un error al buscar los snacks';
-          console.error('Ocurrio un error al buscar los snacks');
-        },
+      next: (response) => {
+        this.snacks = response.data;
+      },
+      error: () => {
+        this.errorMessage = 'Ocurrio un error al buscar los snacks';
+        console.error('Ocurrio un error al buscar los snacks');
+      },
     });
   }
 
   loadPromotions() {
     this.promotionService.getAllPromotions().subscribe({
-        next: (response) => {
-          this.promotions = response.data;
-        },
-        error: () => {
-          this.errorMessage = 'Ocurrio un error al buscar las promociones';
-          console.error('Ocurrio un error al buscar las promociones');
-        },
+      next: (response) => {
+        this.promotions = response.data;
+      },
+      error: () => {
+        this.errorMessage = 'Ocurrio un error al buscar las promociones';
+        console.error('Ocurrio un error al buscar las promociones');
+      },
     });
   }
 
@@ -266,7 +274,7 @@ export class BuyComponent implements OnInit {
           setTimeout(() => {
             this.buyAcepted = false;
             this.router.navigate(['/my-account']);
-          }, 3000); 
+          }, 3000);
         },
         error: (err) => {
           console.log('No se pudo realizar la compra');

@@ -2,14 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cinema, ResponseList, ResponseOne, ResponseWithError, Theater } from '../interfaces/interfaces';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TheaterByCinemaService {
 
-  readonly cinemaUrl = 'http://localhost:3000/api/cinemas';
-  readonly theaterUrl = 'http://localhost:3000/api/theaters';
+  readonly cinemaUrl = `${environment.apiBaseUrl}/cinemas`;
+  readonly theaterUrl = `${environment.apiBaseUrl}/theaters`;
 
   constructor(private http: HttpClient) { }
 

@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Genre, ResponseList, ResponseOne, ResponseWithError } from '../interfaces/interfaces.js';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GenresService {
 
-  readonly genresUrl = "http://localhost:3000/api/genres"
+  readonly genresUrl = `${environment.apiBaseUrl}/genres`;
 
   constructor(private http: HttpClient) { }
 

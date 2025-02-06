@@ -28,17 +28,17 @@ export class TheaterEditComponent implements OnInit {
   maxSeats: number = 0;
   theater: Theater = {
     id: 0,
-    cinema: 0,
     numChairs: 0,
     cantRows: 0,
-    cantCols: 0
+    cantCols: 0,
+    cinema: { id: 0, name: '', address: '', theaters: [], movies: [] },
   };
 
   constructor(
     private service: TheaterByCinemaService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.cinema.id = this.route.snapshot.params['cid'];
@@ -134,6 +134,9 @@ export class TheaterEditComponent implements OnInit {
     this.theater.numChairs = this.theaterForm.get('max_seats')?.value;
     this.theater.cantRows = this.theaterForm.get('cantRows')?.value;
     this.theater.cantCols = this.theaterForm.get('cantCols')?.value;
+    //le ponemos a cinema un objeto cine solo con el id y sus propiedades vacias.Para despues en el back usar el getReference()
+    this.theater.cinema = { id: this.cinema.id, name: '', address: '', theaters: [], movies: [] };
+
     if (this.editMode) {
       if (this.theaterId) {
         this.service.updateTheater(this.theaterId, this.theater).subscribe({
@@ -148,15 +151,14 @@ export class TheaterEditComponent implements OnInit {
         });
       }
     } else {
-      this.theater.cinema = this.cinema.id;
       this.service.addTheater(this.theater).subscribe({
         next: () => {
           this.errorMessage = null;
           this.router.navigate(['/manager-home/theaters/', this.cinema.id]);
         },
-        error: () => {
+        error: (err) => {
           this.errorMessage = 'Ocurrio un error al agregar la sala.';
-          console.error('Error creating theater:');
+          console.error('Error creating theater:', err.error);
         },
       });
     }

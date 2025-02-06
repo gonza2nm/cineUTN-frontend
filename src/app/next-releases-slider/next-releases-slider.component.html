@@ -1,30 +1,45 @@
 <div class="py-5 bg-slate-600">
   <!--Titulo-->
-  <h1 class="text-2xl font-bold text-center">Proximos Estrenoss</h1>
+  <h1 class="text-2xl font-bold text-center">Proximos Estrenos</h1>
 
   <!--Slider con los proximos estrenos-->
-  <div *ngIf="currentRelease" class="flex justify-center items-center">
+  <div *ngIf="displayedMovies.length > 0" class="flex justify-center items-center">
 
     <!--Boton anterior-->
-    <button (click)="prevMovie()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-left-circle-fill text-gray-400 hover:text-gray-500"
+    <button (click)="prevMovies()" [disabled]="currentIndex === 0" class="pr-4 text-gray-400 hover:text-gray-500  disabled:text-gray-700 disabled:cursor-not-allowed">
+      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"  class="bi bi-arrow-left-circle-fill"
         viewBox="0 0 16 16">
         <path
           d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z" />
       </svg>
     </button>
 
-    <!--Imagen y titulo del proximo release-->
+  <!-- Películas visibles en el slider -->
+  <div class="flex">
+    <div *ngFor="let movie of displayedMovies" class="flex w-40 cursor-pointer flex-wrap my-5 mx-2"
+      (click)="navigateToMovie(movie)" [title]="movie.name">
+  
+      <img [src]="movie.imageLink" [alt]="movie.name">
+  
+      <p
+        class="text-center text-white max-h-8 py-0.5 px-2 bg-blue-900 overflow-hidden text-ellipsis whitespace-nowrap min-w-full">
+        {{ movie.name }}
+      </p>
+    </div>
+  </div>
+
+
+    <!--Imagen y titulo del proximo release
     <div class="flex w-40 cursor-pointer flex-wrap my-5 mx-4" (click)="navigateToMovie(currentRelease)" [title]="currentRelease.name" >
       <img src="{{ currentRelease.imageLink }}" alt="{{currentRelease.name}}">
       <p class="text-center  text-white max-h-8 py-0.5 px-2 bg-blue-900 overflow-hidden text-ellipsis whitespace-nowrap min-w-full ">
         {{currentRelease.name }}
       </p>
     </div>
-
+    -->
     <!--Boton proximo-->
-    <button (click)="nextMovie()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-right-circle-fill text-gray-400 hover:text-gray-500"
+    <button (click)="nextMovies()" [disabled]="currentIndex + moviesPerView >= nextReleases.length" class="pl-4 text-gray-400 hover:text-gray-500  disabled:text-gray-700 disabled:cursor-not-allowed">
+      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-right-circle-fill"
         viewBox="0 0 16 16">
         <path
           d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
@@ -34,7 +49,7 @@
   </div>
 
   <!--Si no hay proximos extrenos-->
-  <p *ngIf="!currentRelease && !loading" class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+  <p *ngIf="!displayedMovies.length && !loading" class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
     No hay proximos extrenos.
   </p>
 

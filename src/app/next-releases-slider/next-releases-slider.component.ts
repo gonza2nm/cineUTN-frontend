@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MovieService } from '../movies/movie.service';
 import { Movie } from '../interfaces/interfaces';
 import { Router } from '@angular/router';
@@ -10,9 +10,10 @@ import { Router } from '@angular/router';
 })
 export class NextReleasesSliderComponent implements OnInit {
 
-  nextReleases: Movie[] = [];
-  currentRelease: Movie | null = null; //typescript obliga a que sea inicializado con un valor. Por eso le pongo el tipo nulo y lo pongo en nulo
-  currentReleaseIndex: number = 0;
+  nextReleases: Movie[] = []; //todas las peliculas proximas
+  displayedMovies: Movie[] = []; // peliculas que se muestran actualmente
+  currentIndex: number = 0; // indice de la pelicula donde se encuentra el slider en ese momento (posicion donde empezamos a mostrar las peliculas)
+  moviesPerView: number = 1;
   errorMessage: string | null = null;
   loading: boolean = true //para no mostrar error antes de que carge la pagina
 
@@ -23,18 +24,22 @@ export class NextReleasesSliderComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadNextReleases();
+    this.updateMoviesPerView(); // calcula cuantas peliculas mostrar segun el tamaño de pantalla
   }
 
-  //BORAR TODOS LOS COMENTARIOS QUE NO USO, QUEDARON VIEJOS
+  @HostListener('window:resize')
+  onResize() {
+    this.updateMoviesPerView();
+    this.adjustCurrentIndex(); //para solucionar problemas en el final de la lista
+  }
+
   loadNextReleases() {
     this.movieService.getNextReleases().subscribe({
       next: (response) => {
         this.nextReleases = response.data;
-        if (this.nextReleases.length > 0) {
-          this.currentRelease = this.nextReleases[0];
-        }
         this.errorMessage = null;
         this.loading = false;
+        this.updateDisplayedMovies();
       },
       error: (err) => {
         this.errorMessage = 'An error occurred while fetching next realeases.';
@@ -44,22 +49,46 @@ export class NextReleasesSliderComponent implements OnInit {
     });
   }
 
-  nextMovie() {
-    if (this.currentReleaseIndex < this.nextReleases.length - 1) { // si es menor que el limite muestra la proxima
-      this.currentReleaseIndex++;
-    } else { // si esta en el limite lo devuelvo al primero
-      this.currentReleaseIndex = 0;
+  updateMoviesPerView() {
+    const width = window.innerWidth;
+    if (width < 680) {
+      this.moviesPerView = 1;
+    } else if (width < 908) {
+      this.moviesPerView = 3;
+    } else if (width < 1024) {
+      this.moviesPerView = 4;
+    } else if (width < 1280) {
+      this.moviesPerView = 5;
+    } else {
+      this.moviesPerView = 6;
     }
-    this.currentRelease = this.nextReleases[this.currentReleaseIndex];
+    this.updateDisplayedMovies();
   }
 
-  prevMovie() {
-    if (this.currentReleaseIndex > 0) { //si todavia no llego al limite del arreglo sigue banjando.
-      this.currentReleaseIndex--;
-    } else { //si llego al limite va la vuelta al limite superior.
-      this.currentReleaseIndex = this.nextReleases.length - 1;
+  updateDisplayedMovies() {
+    this.displayedMovies = this.nextReleases.slice(this.currentIndex, this.currentIndex + this.moviesPerView);
+  }
+
+  nextMovies() {
+    if (this.currentIndex + this.moviesPerView < this.nextReleases.length) {
+      this.currentIndex++;
     }
-    this.currentRelease = this.nextReleases[this.currentReleaseIndex];
+    this.updateDisplayedMovies();
+  }
+
+  prevMovies() {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+    }
+    this.updateDisplayedMovies();
+  }
+
+  adjustCurrentIndex() {
+    // Verifica que el currentIndex no se pase del rango de la lista después de un cambio de tamaño
+    if (this.currentIndex + this.moviesPerView > this.nextReleases.length) {
+      this.currentIndex = Math.max(0, this.nextReleases.length - this.moviesPerView);
+    }
+    this.updateDisplayedMovies();
   }
 
   navigateToMovie(movie: Movie): void {

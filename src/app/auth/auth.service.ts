@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ResponseOne, User } from '../interfaces/interfaces.js';
 import { BehaviorSubject, catchError, map, Observable, of, tap, } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,17 +10,18 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
 
   private loggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private userSubject : BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
+  private userSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
   user = this.userSubject.asObservable();
   loggedIn = this.loggedInSubject.asObservable();
-  readonly url = 'http://localhost:3000/api/users';
-  
+
+  readonly url = `${environment.apiBaseUrl}/users`;
+
 
   constructor(private http: HttpClient) { }
 
   login(userData: any): Observable<ResponseOne<User>> {
     return this.http.post<ResponseOne<User>>(`${this.url}/login`, userData, { withCredentials: true }).pipe(
-      tap((response) =>{
+      tap((response) => {
         const user = response.data;
         this.userSubject.next(user);
         this.loggedInSubject.next(true)
@@ -34,16 +36,16 @@ export class AuthService {
   }
 
   logout(): Observable<boolean> {
-    return this.http.post<any>(`${this.url}/logout`,{}).pipe(
-    map(() => {
+    return this.http.post<any>(`${this.url}/logout`, {}).pipe(
+      map(() => {
         this.userSubject.next(null);
         this.loggedInSubject.next(false);
-        return true; 
+        return true;
       }),
       catchError((error) => {
         console.error('Error en login:', error.error);
         return of(false);
-      })  
+      })
     );
   }
 
@@ -69,11 +71,11 @@ export class AuthService {
     );
   }
 
-  isLoggedIn():Observable<boolean> {
+  isLoggedIn(): Observable<boolean> {
     return this.loggedIn;
   }
 
-  isManager(): Observable<boolean>{
+  isManager(): Observable<boolean> {
     return this.user.pipe(map(user => user?.type === "manager"));
   }
 }

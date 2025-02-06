@@ -30,6 +30,7 @@ import { PromotionsComponent } from './promotions/promotions.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductsEditComponent } from './products-edit/products-edit.component';
 import { PromotionsEditComponent } from './promotions-edit/promotions-edit.component';
+import { PromotionslistComponent } from './promotionslist/promotionslist.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: 'my-account', component: MyAccountComponent, canActivate: [AuthGuard("user")] },
   { path: 'events', component: EventsUserViewComponent },
   { path: 'movies/:id', component: MovieDetailsComponent },
+  { path: 'promociones', component: PromotionslistComponent },
 
   { path: 'buy/:id', component: BuyComponent, canActivate: [AuthGuard("user")] },
   { path: 'buy-details/:id', component: BuyDetailsComponent, canActivate: [AuthGuard("user")] },

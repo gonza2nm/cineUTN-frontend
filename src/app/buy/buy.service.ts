@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Buy, ResponseList, ResponseOne, ResponseQR, ResponseWithError, Seat, User } from '../interfaces/interfaces';
 import { forkJoin, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,8 @@ export class BuyService {
   constructor(private http: HttpClient) { }
 
 
-  readonly urlBuy = 'http://localhost:3000/api/buys';
-  readonly urlSeat = 'http://localhost:3000/api/seats';
-
+  readonly urlBuy = `${environment.apiBaseUrl}/buys`;
+  readonly urlSeat = `${environment.apiBaseUrl}/seats`;
 
   getBuys(): Observable<any> {
     return this.http.get<ResponseList<Buy> | ResponseWithError>(this.urlBuy);
@@ -34,7 +34,7 @@ export class BuyService {
   ):Observable<any> {
     return this.http.post<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}`, {description, total, user, show, snacks, promotions, seats} )
   }
-  
+
   getQRCodeBuy(id: number): Observable<any> {
     return this.http.get<ResponseQR | ResponseWithError>(`${this.urlBuy}/generateQr/${id}`)
   }

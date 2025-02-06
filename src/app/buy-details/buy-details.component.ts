@@ -37,6 +37,7 @@ export class BuyDetailsComponent implements OnInit {
     movie: {
       cinemas: [],
       description: '',
+      duration: 0,
       formats: [],
       genres: [],
       id: 0,
@@ -44,8 +45,16 @@ export class BuyDetailsComponent implements OnInit {
       languages: [],
       name: '',
     },
-    theater: { cinema: 0, id: 0, numChairs: 0, cantRows: 0, cantCols:0 },
-    tickets: []
+    theater: {
+      cinema: {
+        id: 0,
+        name: '',
+        address: '',
+        theaters: [],
+        movies: [],
+      }, id: 0, numChairs: 0, cantRows: 0, cantCols:0
+    },
+    tickets: [],
   };
   errorMessage: string | null = null;
   messageCanceled = '';

@@ -35,14 +35,15 @@ export interface Genre {
 export interface Theater {
   id: number;
   numChairs: number;
-  cinema: number;
   cantRows: number;
   cantCols: number;
+  cinema: Cinema;
 }
 
 export interface Movie {
   id: number;
   name: string;
+  duration: number;
   description: string;
   imageLink: string;
   genres: Genre[];
