@@ -21,6 +21,7 @@ import { AuthService } from '../auth/auth.service';
 
 export class MovieDetailsComponent implements OnInit {
 
+  isOpen = false;
   movieId: number = 0;
   cinemaId: number | null = null;
   movie: Movie | null = null;
@@ -188,22 +189,14 @@ export class MovieDetailsComponent implements OnInit {
   }
 
 
-
-  /* Pensar si se puede hacer una ventana modal.
-  warninModal(show: Show) {
-    let showDay = this.getShowHourAndDay(show)
-    let fecha = this.obtenerdia(show.dayAndTime)
-    this.messageWarning = `Usted ha elegido:\n ${show.movie.name} en formato ${show.format.formatName} \n ${fecha} - ${showDay} HS`
-  }
-  */
-
   warningModal(show: Show) {
     if (this.isLoggedIn) {
       this.router.navigate([`/buy/${show.id}`]);
     } else {
-      this.messageWarning = 'Atencion!!\nNecesita estar logueado para poder comprar le entradas.'
+      this.isOpen = true;
     }
   }
+  
 
   loguearse() {
     this.router.navigate(['/login']);
