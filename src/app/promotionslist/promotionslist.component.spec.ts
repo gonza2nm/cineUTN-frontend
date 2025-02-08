@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PromotionslistComponent } from './promotionslist.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { PromotionsService } from '../promotions/promotions.service';
 
 describe('PromotionslistComponent', () => {
   let component: PromotionslistComponent;
@@ -8,7 +10,9 @@ describe('PromotionslistComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PromotionslistComponent]
+      imports: [HttpClientTestingModule],
+      declarations: [PromotionslistComponent],
+      providers: [PromotionsService]
     });
     fixture = TestBed.createComponent(PromotionslistComponent);
     component = fixture.componentInstance;

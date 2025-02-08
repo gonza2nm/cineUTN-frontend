@@ -27,7 +27,7 @@
             <img class="w-32 md:w-36" src="{{show.movie.imageLink}}" alt="{{show.movie.imageLink}}">
             <div class="text-center md:mt-6 md:text-left">
               <h3 class="text-xl font-semibold mb-5 md:text-2xl md:font-normal">{{show.movie.name}}</h3>
-              <p class="mb-1">{{formatDateAndHour(show)}}</p>
+              <p class="mb-1">{{formatDateAndHour(show.dayAndTime)}}</p>
               <p>{{show.language.languageName}} - {{show.format.formatName}}</p>
             </div>
           </div>
@@ -356,7 +356,7 @@
             </div>
             <div class="flex space-x-2">
               <p class="font-semibold text-gray-700">Fecha:</p>
-              <p>{{formatDateAndHour(show)}}</p>
+              <p>{{formatDateAndHour(show.dayAndTime)}}</p>
             </div>
             <div class="flex space-x-2">
               <p class="font-semibold text-gray-700">Asientos:</p>

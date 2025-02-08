@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NextReleasesSliderComponent } from './next-releases-slider.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MovieService } from '../movies/movie.service';
 
 describe('NextReleasesSliderComponent', () => {
   let component: NextReleasesSliderComponent;
@@ -8,7 +10,11 @@ describe('NextReleasesSliderComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [NextReleasesSliderComponent]
+      imports: [HttpClientTestingModule],
+      declarations: [NextReleasesSliderComponent],
+      providers: [
+        MovieService,
+      ]
     });
     fixture = TestBed.createComponent(NextReleasesSliderComponent);
     component = fixture.componentInstance;

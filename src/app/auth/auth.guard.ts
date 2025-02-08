@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { of } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
 
+
 export const AuthGuard: (permisosNecesarios: "manager" | "user") => CanActivateFn = (permisosNecesarios: "manager" | "user") => 
   (route, state) => {
     const authService = inject(AuthService);
@@ -45,3 +46,50 @@ export const AuthGuard: (permisosNecesarios: "manager" | "user") => CanActivateF
       })
     );
   };
+
+
+//---------------------De chatgpt ---------------------
+/*
+export const AuthGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  return authService.checkTokenFindData().pipe(
+    switchMap(() => authService.isLoggedIn()),
+    switchMap(isLoggedIn => {
+      if (isLoggedIn) {
+        return authService.isManager().pipe(
+          map(isManager => {
+            if (state.url === "/login") {
+              router.navigate(["/"]);
+              return false;
+            }
+
+            if (route.data['permisosNecesarios'] === "manager" && isManager) {
+              return true;
+            } else if (route.data['permisosNecesarios'] === "user") {
+              return true;
+            } else {
+              router.navigate(["/"]);
+              return false;
+            }
+          })
+        );
+      } else {
+        if (state.url === "/login") {
+          return of(true);
+        } else {
+          router.navigate(["/login"]);
+          return of(false);
+        }
+      }
+    }),
+    catchError(() => {
+      router.navigate(["/login"]);
+      return of(false);
+    })
+  );
+};
+
+*/
+

@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManagersComponent } from './managers.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { LoginService } from '../login/login.service';
 
 describe('ManagersComponent', () => {
   let component: ManagersComponent;
@@ -8,7 +10,9 @@ describe('ManagersComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ManagersComponent]
+      imports: [HttpClientTestingModule],
+      declarations: [ManagersComponent],
+      providers: [LoginService]
     });
     fixture = TestBed.createComponent(ManagersComponent);
     component = fixture.componentInstance;
