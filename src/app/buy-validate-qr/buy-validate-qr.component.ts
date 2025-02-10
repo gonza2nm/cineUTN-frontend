@@ -29,6 +29,7 @@ export class BuyValidateQrComponent implements OnDestroy {
     status: '',
     tickets: [],
     snacksBuy: [],
+    promotionsBuy: [],
 
   }
 
@@ -62,10 +63,12 @@ export class BuyValidateQrComponent implements OnDestroy {
       next: (response) => {
         this.buyData = response.data;
         this.errorMessage = null;
+        this.scrollToDetails()
       },
       error: (error) => {
         this.errorMessage = 'El QR no es válido o ha expirado. Intente recargando el detalle de la compra';
         console.error('Error validating QR:', error);
+        this.scrollToDetails()
       },
     });
   }
@@ -74,5 +77,12 @@ export class BuyValidateQrComponent implements OnDestroy {
     if (this.scannerControls) {
       this.scannerControls.stop(); // detenemos la camara
     }
+  }
+
+  scrollToDetails() {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: 'smooth'
+    });
   }
 }

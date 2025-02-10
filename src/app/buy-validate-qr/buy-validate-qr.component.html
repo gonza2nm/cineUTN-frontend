@@ -40,7 +40,6 @@
 
       <h2 class="text-lg font-bold">Compra {{buyData.status}}</h2>
       <p><strong>Fecha compra:</strong> {{ buyData.fechaHora | date: 'short' }}</p>
-      <p><strong>Descripción:</strong> {{ buyData.description }}</p>
       <p><strong>Total:</strong> {{ buyData.total | currency }}</p>
 
       <!-- Entradas: -->
@@ -52,17 +51,24 @@
         <p><strong>Sala:</strong> {{ buyData.tickets[0].show.theater.id }}</p>
         <p><strong>Fecha-hora Inicio:</strong> {{ buyData.tickets[0].show.dayAndTime | date: 'short'}}</p>
         <p><strong>Fecha-hora Final:</strong> {{ buyData.tickets[0].show.finishTime | date: 'short' }}</p>
-        <!-- Productos: 
-        <div *ngIf="buyData.snacks.length > 0">
+        <!-- Productos: -->
+        <div *ngIf="buyData.snacksBuy.length > 0">
           <h3 class="text-lg font-bold mt-4">Productos:</h3>
           <ul>
-            <li *ngFor="let snack of buyData.snacks">
-              <p><strong>{{ snack.name }}:</strong> ${{ snack.price }}</p>
+            <li *ngFor="let snackB of buyData.snacksBuy">
+              <p><strong>{{ snackB.snack.name }}:</strong> {{ snackB.quantity }} unidades</p>
             </li>
           </ul>
         </div>
-        -->
-
+        <!-- Promociones: -->
+        <div *ngIf="buyData.promotionsBuy !== undefined and buyData.promotionsBuy.length > 0 ">
+          <h3 class="text-lg font-bold mt-4">Promociones:</h3>
+          <ul>
+            <li *ngFor="let promo of buyData.promotionsBuy">
+              <p><strong>{{ promo.promotion.name }}:</strong> {{ promo.quantity}} unidades</p>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
