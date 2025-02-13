@@ -55,7 +55,7 @@ export class RegisterComponent {
       name: new FormControl('', [Validators.required]),
       surname: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
+      password: new FormControl('', this.getPasswordValidators()), //si es managerEdit no es necesaria la contraseña
       dni: new FormControl('', [Validators.required]),
       type: new FormControl('user')
     });
@@ -78,6 +78,8 @@ export class RegisterComponent {
         }
       }
     });
+    // Actualizo los validadores de la contraseña una vez exista isManagerModeEdit
+    this.updatePasswordValidators();
   }
 
   //Registra un usuario en la base de datos
@@ -106,7 +108,7 @@ export class RegisterComponent {
             name: this.userData.name,
             surname: this.userData.surname,
             email: this.userData.email,
-            password: this.userData.password,
+            password: '',
             dni: this.userData.dni,
             type: this.userData.type,
           });
@@ -188,5 +190,18 @@ export class RegisterComponent {
 
   selectCinema(cinemaId: number) {
     this.managerCinemaId = cinemaId;
+  }
+
+  updatePasswordValidators() {
+    const passwordControl = this.registerForm.get('password');
+    if (passwordControl) {
+      passwordControl.setValidators(this.getPasswordValidators()); // Actualiza validadores de la contraseña
+      passwordControl.updateValueAndValidity(); // Vuelve a validar el campo con los nuevos validadores
+    }
+  }
+
+  getPasswordValidators() {
+    console.log(this.isManagerModeEdit);
+    return this.isManagerModeEdit ? [] : [Validators.required];
   }
 }
