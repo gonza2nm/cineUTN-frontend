@@ -3,7 +3,7 @@
     class="text-center text-2xl font-bold bg-black text-white w-full px-12 py-4 md:text-4xl md:py-7">{{movie.name}}</h1>
   <div class=" mx-4 pb-6 flex flex-col items-start gap-4 md:justify-center md:flex-row sm:mx-8">
     <div *ngIf="movie != null" class="mt-6 flex flex-col gap-4 md:max-w-lg">
-      <img src="{{movie.imageLink}}" alt="{{movie.name}}" [title]="movie.name" />
+      <img class="w-96 h-auto" src="{{movie.imageLink}}" alt="{{movie.name}}" [title]="movie.name" />
       <div>
         <ul class="flex flex-row">
           <li class="font-bold text-xl px-4 py-2 cursor-pointer border-gray-400" [ngClass]="!isDetailsOpen
@@ -74,8 +74,8 @@
         </ul>
       </div>
       <div>
-        <p class="text-red-600" *ngIf="!cinema">Por Favor seleccione un cine</p>
-        <p class="text-red-600" *ngIf="filteredShows.length === 0 && cinema">Lo sentimos, no hay funciones para este
+        <p class="m-2 text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto shadow-lg" *ngIf="!cinema">Por favor seleccione un cine.</p>
+        <p class="m-2 text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto shadow-lg" *ngIf="filteredShows.length === 0 && cinema">Lo sentimos, no hay funciones para este
           dia.</p>
         <ul class="flex flex-row flex-wrap sm:flex-row justify-start items-center gap-1">
           <li (click)="warningModal(show)" *ngFor="let show of filteredShows"
