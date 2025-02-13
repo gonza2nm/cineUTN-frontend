@@ -201,7 +201,6 @@ export class RegisterComponent {
   }
 
   getPasswordValidators() {
-    console.log(this.isManagerModeEdit);
     return this.isManagerModeEdit ? [] : [Validators.required];
   }
 }
