@@ -80,9 +80,9 @@
     </div>
 
     <!-- Productos comprados -->
-    <div >
+    <div *ngIf="buy.snacksBuy.length !== 0 && buy.promotionsBuy?.length !== 0">
       <div class="mt-6 md:mx-28">
-        <h3 class="text-lg font-semibold mb-3">Producto y Promociones</h3>
+        <h3 class="text-lg font-semibold mb-3">Productos y Promociones</h3>
         <div class="hidden ml-4 mb-3 md:grid grid-cols-[35px_1fr_2fr]">
           <h4 class="font-semibold">Cant.</h4>
           <h4 class="font-semibold flex justify-center">Descripcion</h4>
