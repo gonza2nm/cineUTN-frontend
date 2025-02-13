@@ -43,12 +43,12 @@
             (click)="handleChangeOption('entrada')">
               Entradas
             </li>
-            <li class="font-bold px-4 py-2 cursor-pointer w-min border-gray-400 md:text-lg"
+            <li class="font-bold px-2 py-2 cursor-pointer w-min border-gray-400 md:text-lg"
             [ngClass]="purchaseChoice === 'comida' ? 'bg-gradient-to-r from-blue-500 to-blue-700 text-white' : 'border'"
             (click)="handleChangeOption('comida')">
-              Comida
+              Productos
             </li>
-            <li class="font-bold px-4 py-2 cursor-pointer w-min border-gray-400 md:text-lg"
+            <li class="font-bold px-3 py-2 cursor-pointer w-min border-gray-400 md:text-lg"
             [ngClass]="purchaseChoice === 'promociones' ? 'bg-gradient-to-r from-blue-500 to-blue-700 text-white' : 'border' "
             (click)="handleChangeOption('promociones')">
               Promociones
@@ -86,7 +86,7 @@
                 </div>
               </div>
               <div class="mt-4 text-right font-semibold">
-                Total: {{ getTotalTickets() | currency }}
+                Total entradas: {{ getTotalTickets() | currency }}
               </div>
             </div>
 
@@ -120,7 +120,7 @@
               </div>
 
               <div class="mt-4 text-right font-semibold">
-                Total: {{ getTotalSnacks() | currency }}
+                Total productos: {{ getTotalSnacks() | currency }}
               </div>
             </div>
 
@@ -152,7 +152,7 @@
 
               </div>
               <div class="mt-4 text-right font-semibold">
-                Total: {{ getTotalPromos() | currency }}
+                Total promociones: {{ getTotalPromos() | currency }}
               </div>
             </div>
           </div>
@@ -190,7 +190,7 @@
                 </tbody>
                 <tfoot>
                   <tr class="bg-gray-200 font-semibold text-lg">
-                    <td colspan="3" class="p-3 text-right">Total:</td>
+                    <td colspan="3" class="p-3 text-right">Total entradas:</td>
                     <td class="p-3">{{ getTotalTickets() | currency }}</td>
                   </tr>
                 </tfoot>
@@ -225,7 +225,7 @@
                 </tbody>
                 <tfoot>
                   <tr class="bg-gray-200 font-semibold text-lg">
-                    <td colspan="3" class="p-3 text-right">Total:</td>
+                    <td colspan="3" class="p-3 text-right">Total productos:</td>
                     <td class="p-3">{{ getTotalSnacks() | currency }}</td>
                   </tr>
                 </tfoot>
@@ -260,7 +260,7 @@
                 </tbody>
                 <tfoot>
                   <tr class="bg-gray-200 font-semibold text-lg">
-                    <td colspan="3" class="p-3 text-right">Total:</td>
+                    <td colspan="3" class="p-3 text-right">Total promociones:</td>
                     <td class="p-3">{{ getTotalPromos() | currency }}</td>
                   </tr>
                 </tfoot>
