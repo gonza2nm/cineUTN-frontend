@@ -95,8 +95,14 @@ export class MyAccountComponent implements OnInit {
     this.myAccountservice.getBuyByUser(id).subscribe({
       next: (response) => {
         console.log(response.data);
-        this.buys = response.data;
         this.errorMessage = null;
+
+        //ordena las compras por estado
+        this.buys = response.data.sort((a: any, b: any) => {
+          const stateOrder = ['Válida', 'Expirada', 'Cancelada'];
+          const stateComparison = stateOrder.indexOf(a.status) - stateOrder.indexOf(b.status);
+          return stateComparison
+        })
       },
 
       error: () => {

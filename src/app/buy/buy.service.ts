@@ -24,7 +24,6 @@ export class BuyService {
   }
   
   addBuy(
-    description: string, 
     total: number, 
     user:number, 
     show: number, 
@@ -32,7 +31,7 @@ export class BuyService {
     promotions: {code:string, cant: number}[],
     seats: Seat[]
   ):Observable<any> {
-    return this.http.post<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}`, {description, total, user, show, snacks, promotions, seats} )
+    return this.http.post<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}`, {total, user, show, snacks, promotions, seats} )
   }
 
   getQRCodeBuy(id: number): Observable<any> {

@@ -55,8 +55,8 @@ export class BuyComponent implements OnInit {
   loading = true;
   items: Item[] = [
     { descripcion: 'Entrada general', costo: 4500, counter: 0 },
-    { descripcion: 'Para niños', costo: 3000, counter: 0 },
-    { descripcion: 'Para adultos', costo: 3500, counter: 0 },
+    { descripcion: 'Niño', costo: 3000, counter: 0 },
+    { descripcion: 'Jubilados', costo: 3500, counter: 0 },
   ];
 
   totalPrice = 0;
@@ -119,13 +119,20 @@ export class BuyComponent implements OnInit {
     this.purchaseChoice = option;
   }
 
+  countSeatsAvailables() {
+    return this.seats.reduce((count, seat) => seat.status === "Disponible" ? count + 1 : count, 0 )
+  }
+
   updateQuantityTickets(ticket: Item, change: number) {
+    if (this.totalCantTickets + change > this.countSeatsAvailables()) {
+    console.log('No puedes comprar más tickets que asientos disponibles');
+    return;
+  }
     ticket.counter = Math.max(0, ticket.counter + change);
     this.totalCantTickets = this.items.reduce(
-      (sum, ticket) => sum + ticket.counter,
-      0
-    );
+      (sum, ticket) => sum + ticket.counter, 0);
   }
+
 
   addProductToList(snack: Snack, change: number) {
     const indexSnack = this.selectedSnacks.findIndex(item => item.id === snack.id)
@@ -147,7 +154,6 @@ export class BuyComponent implements OnInit {
     const foundSnack = this.selectedSnacks.find(item => item.id === snack.id);
     return foundSnack ? foundSnack.cant : 0;
   }
-
 
 
   addPromotionToList(promo: Promotion, change: number) {
@@ -267,7 +273,7 @@ export class BuyComponent implements OnInit {
     this.selectedSnacks.map(snack => ({ id: snack.id, cant: snack.cant }));
     this.selectedPromotions.map(promo => ({ code: promo.code, cant: promo.cant }));
     if(this.user) {
-      this.buyService.addBuy('Compra de entradas', this.totalPrice, this.user.id, this.show.id, this.selectedSnacks, this.selectedPromotions, this.selectedSeats).subscribe({
+      this.buyService.addBuy(this.totalPrice, this.user.id, this.show.id, this.selectedSnacks, this.selectedPromotions, this.selectedSeats).subscribe({
         next: (response) => {
           console.log(response.data);
           this.errorMessageBuy = true;

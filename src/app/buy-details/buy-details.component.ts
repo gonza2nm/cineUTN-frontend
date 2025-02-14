@@ -15,7 +15,6 @@ export class BuyDetailsComponent implements OnInit {
   isOpen = false;
   buy: Buy = {
     id: 0,
-    description: '',
     user: {
       id: 0
     } as User,

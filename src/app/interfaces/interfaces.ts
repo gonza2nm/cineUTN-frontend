@@ -82,7 +82,6 @@ export interface Ticket {
 
 export interface Buy {
   id: number;
-  description: string;
   total: number;
   fechaHora: Date;
   user: User;

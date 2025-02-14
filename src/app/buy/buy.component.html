@@ -19,7 +19,7 @@
     <div class="mt-16">
   
       <!-- Paso 1: seleccionar las entradas -->
-      <div [ngClass]="{'block': step === 1, 'hidden': step !== 1}">
+      <div [ngClass]="{'block': step === 1, 'hidden': step !== 1}" class="">
   
         <!-- Datos de la pelicula -->
         <div class="px-3">
@@ -32,6 +32,9 @@
             </div>
           </div>
         </div>
+
+        <p class="px-5 mt-10 italic">Seleccione la cantidad y el tipo de entradas a comprar.</p>
+        <p class="px-5 mt-1 italic">Entrada Niño se considera menores de 12 años.</p>
   
         <!-- Tablas donde se muestras los tickets y productos -->
         <div class="bg-gray-100 py-3 px-3 mt-8 md:max-w-3xl">
@@ -46,7 +49,7 @@
             <li class="font-bold px-4 py-2 cursor-pointer w-min border-gray-400 md:text-lg"
             [ngClass]="purchaseChoice === 'comida' ? 'bg-gradient-to-r from-blue-500 to-blue-700 text-white' : 'border'"
             (click)="handleChangeOption('comida')">
-              Comida
+              Productos
             </li>
             <li class="font-bold px-4 py-2 cursor-pointer w-min border-gray-400 md:text-lg"
             [ngClass]="purchaseChoice === 'promociones' ? 'bg-gradient-to-r from-blue-500 to-blue-700 text-white' : 'border' "
@@ -71,7 +74,8 @@
                     </button>
                     <span> {{ticket.counter}}</span>
                     <button (click)="updateQuantityTickets(ticket, 1)"
-                      class="bg-blue-500 px-2 py-1 text-white rounded hover:bg-blue-600">
+                      class="bg-blue-500 px-2 py-1 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+                      [disabled]="totalCantTickets >= countSeatsAvailables()">
                       +
                     </button>
                   </div>
@@ -180,7 +184,8 @@
                       </button>
                       <span> {{ticket.counter}}</span>
                       <button (click)="updateQuantityTickets(ticket, 1)"
-                        class="bg-blue-500 px-2 py-1 text-white rounded hover:bg-blue-600">
+                        class="bg-blue-500 px-2 py-1 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+                        [disabled]="totalCantTickets >= countSeatsAvailables()">
                         +
                       </button>
                     </td>

@@ -13,7 +13,6 @@ export class BuyValidateQrComponent implements OnDestroy {
   errorMessage: string | null = null;
   buyData: Buy = {
     id: 0,
-    description: '',
     total: 0,
     fechaHora: new Date(),
     user: {
