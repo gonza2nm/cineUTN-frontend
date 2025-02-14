@@ -50,7 +50,7 @@
         <p><strong>Cantidad entradas:</strong> {{ buyData.tickets.length }}</p>
         <p><strong>Sala:</strong> {{ buyData.tickets[0].show.theater.id }}</p>
         <p><strong>Fecha-hora Inicio:</strong> {{ buyData.tickets[0].show.dayAndTime | date: 'short'}}</p>
-        <p><strong>Fecha-hora Final:</strong> {{ buyData.tickets[0].show.finishTime | date: 'short' }}</p>
+        <p *ngIf="buyData.status === 'Expirada'"><strong>Fecha-hora Final:</strong> {{ buyData.tickets[0].show.finishTime | date: 'short' }}</p>
         <!-- Productos: -->
         <div *ngIf="buyData.snacksBuy.length > 0">
           <h3 class="text-lg font-bold mt-4">Productos:</h3>
@@ -61,7 +61,7 @@
           </ul>
         </div>
         <!-- Promociones: -->
-        <div *ngIf="buyData.promotionsBuy !== undefined and buyData.promotionsBuy.length > 0 ">
+        <div *ngIf="buyData.promotionsBuy !== undefined && buyData.promotionsBuy.length > 0 ">
           <h3 class="text-lg font-bold mt-4">Promociones:</h3>
           <ul>
             <li *ngFor="let promo of buyData.promotionsBuy">

@@ -3,7 +3,7 @@
   <p class="pl-4 text-2xl font-medium text-white cursor-pointer" [routerLink]="['/']" (click)="closeMenu()">
     Cine UTN
   </p>
-  <button class="text-white focus:outline-none xl:hidden" (click)="toggleMenu()">
+  <button class="text-white focus:outline-none xl:hidden btn-menu" (click)="toggleMenu()">
     <svg *ngIf="isMenuOpen" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 8 8"
       class="mr-4 fill-white">
       <path
@@ -21,7 +21,7 @@
       block: isMenuOpen,
       hidden: !isMenuOpen
     }" class="mt-1.5 w-full text-white xl:flex xl:items-center xl:w-auto hidden xl:pr-4">
-    <a class="text-white px-3 gap-3 py-2 xl:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 xl:hover:bg-inherit xl:hover:text-slate-900 xl:hover: duration-300 xl:pl-0 xl:ml-2"
+    <a class="btn-login text-white px-3 gap-3 py-2 xl:py-0 text-lg flex flex-nowrap flex-row items-center pl-4 cursor-pointer hover:bg-slate-900 xl:hover:bg-inherit xl:hover:text-slate-900 xl:hover: duration-300 xl:pl-0 xl:ml-2"
       [routerLink]="isLoggedIn ? ['/my-account'] : ['/login']" (click)="closeMenu()">
       <div class="w-8 h-8 flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle"
