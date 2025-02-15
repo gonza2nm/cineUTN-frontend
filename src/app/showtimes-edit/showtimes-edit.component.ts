@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  AbstractControl,
   FormControl,
   FormGroup,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { ShowtimesByCinemaService } from '../showtimes-by-cinema/showtimes-by-cinema.service';
@@ -176,9 +173,8 @@ export class ShowtimesEditComponent implements OnInit {
             this.errorMessage = null;
             this.router.navigate(['/manager-home/showtimes/', this.cinemaId]);
           },
-          error: () => {
-            this.errorMessage =
-              'An error occurred while updating the showtime.';
+          error: (err) => {
+            this.errorMessage = err.error.message;;
             console.error('Error updating showtime:');
           },
         });
@@ -190,7 +186,7 @@ export class ShowtimesEditComponent implements OnInit {
           this.router.navigate(['/manager-home/showtimes/', this.cinemaId]);
         },
         error: (err) => {
-          this.errorMessage = 'An error occurred while creating the showtime.';
+          this.errorMessage = err.error.message;
           console.error('Error creating showtime:', err.error.message);
         },
       });
