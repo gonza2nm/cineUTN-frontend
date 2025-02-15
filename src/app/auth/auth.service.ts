@@ -57,13 +57,13 @@ export class AuthService {
           this.loggedInSubject.next(true);
         },
         error: (error: any) => {
-          console.error('Error verificando token:', error);
+          console.error('Error verificando token:', error.error);
           this.loggedInSubject.next(false);
           this.userSubject.next(null);
         }
       }),
       catchError((error) => {
-        console.error('Error en verificación de token:', error);
+        console.error('Error en verificación de token:', error.error);
         this.loggedInSubject.next(false);
         this.userSubject.next(null);
         return of(null);
