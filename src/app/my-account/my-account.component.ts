@@ -37,7 +37,6 @@ export class MyAccountComponent implements OnInit {
       this.user = user;
     });
     if (this.user !== null) {
-      console.log(this.user.id);
       this.loadBuys(this.user.id); // Cargar las compras si el usuario está disponible
     }
 
@@ -47,7 +46,7 @@ export class MyAccountComponent implements OnInit {
       email: new FormControl(this.user?.email, [Validators.required]),
       password: new FormControl(''),
       dni: new FormControl(this.user?.dni, [Validators.required]),
-      type: new FormControl('user')
+      type: new FormControl(this.user?.type)
     });
 
   }
@@ -64,14 +63,13 @@ export class MyAccountComponent implements OnInit {
 
   updateUser() {
     this.loginService.updateUser(this.user?.id, this.userEditForm.value).subscribe({
-      next: (response) => {
+      next: () => {
         this.band = true;
         this.messageError = '¡Los cambios se guardaron correctamente!';
-        console.log(response);
       },
       error: (error) => {
         this.messageError = 'Ocurrio un error, por favor intente mas tarde.';
-        console.log(error);
+        console.error(error);
       }
     })
 
@@ -79,13 +77,12 @@ export class MyAccountComponent implements OnInit {
 
   deleteUser() {
     this.loginService.deleteUser(this.user?.id).subscribe({
-      next: (response) => {
-        console.log(response);
+      next: () => {
         this.router.navigate(['/login']);
       },
 
       error: (err) => {
-        console.log(err)
+        console.error(err)
       }
     })
   }
@@ -94,7 +91,6 @@ export class MyAccountComponent implements OnInit {
   loadBuys(id: number): void {
     this.myAccountservice.getBuyByUser(id).subscribe({
       next: (response) => {
-        console.log(response.data);
         this.errorMessage = null;
 
         //ordena las compras por estado
