@@ -62,9 +62,13 @@
       {{ errorMessage }}
     </p>
 
-    <p *ngIf="!eventForm.valid ||eventCinemasIds.length === 0"
+    <p *ngIf="(!eventForm.valid ||eventCinemasIds.length === 0) && !eventForm.errors?.['invalidDates']"
       class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
       El evento debe tener al menos un valor en cada campo.
+    </p>
+    <p *ngIf="eventForm.errors?.['invalidDates']"
+      class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
+      La fecha de inicio no puede ser posterior a la fecha de fin.
     </p>
 
     <!--Boton-->
