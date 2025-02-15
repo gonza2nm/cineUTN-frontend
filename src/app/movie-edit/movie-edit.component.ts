@@ -56,6 +56,7 @@ export class MovieEditComponent implements OnInit {
     this.movieForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
+      duration: new FormControl('', [Validators.required]),
       imageLink: new FormControl('', [Validators.required]),
     });
 
@@ -90,6 +91,7 @@ export class MovieEditComponent implements OnInit {
           this.movieForm.setValue({
             name: this.movieData.name,
             description: this.movieData.description,
+            duration: this.movieData.duration,
             imageLink: this.movieData.imageLink,
           });
 
@@ -164,6 +166,7 @@ export class MovieEditComponent implements OnInit {
   saveMovie() {
     this.movieData.name = this.movieForm.get('name')?.value; //pongo los datos de del form en la movieData
     this.movieData.description = this.movieForm.get('description')?.value;
+    this.movieData.duration = this.movieForm.get('duration')?.value;
     this.movieData.imageLink = this.movieForm.get('imageLink')?.value;
 
     // Guardamos los id de los generos actuales en movieData antes de guardarlo y le ponemos los datos que le faltan vacios para que no genere problemas de tipo.

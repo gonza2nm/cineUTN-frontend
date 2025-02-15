@@ -56,6 +56,7 @@ export interface Show {
   id: number;
   dayAndTime: Date;
   finishTime: Date;
+  duration?: number
   theater: Theater;
   movie: Movie;
   tickets: Ticket[];

@@ -54,13 +54,13 @@
     </div>
 
     <div *ngIf="!filterbyCinema.length" class="text-xl text-center">
-      <p>El cine seleccionado no tiene promociones.</p>
+      <p>El cine seleccionado no tiene promociones vigentes.</p>
     </div>
   </div>
 
   <p *ngIf="promotions.length === 0 && !errorMessage && !loading"
     class="text-xl font-bold text-center text-red-600 bg-red-100 border border-red-600 rounded-md p-2 mx-auto w-4/5 shadow-lg">
-    No existen productos creados. Por favor, intente crear uno.
+    No existen promociones creados. Por favor, intente crear uno.
   </p>
 
   <p *ngIf="errorMessage"
