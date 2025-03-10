@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ProductsService } from './products.service';
-import { Snack } from '../interfaces/interfaces';
+import { Snack } from '../interfaces/snack.interface.js';
 
 @Component({
   selector: 'app-products',
@@ -14,7 +14,7 @@ export class ProductsComponent {
   loading: boolean = true
 
 
-  constructor(private productsSerive: ProductsService) {}
+  constructor(private productsSerive: ProductsService) { }
 
   ngOnInit(): void {
     this.loadProducts();

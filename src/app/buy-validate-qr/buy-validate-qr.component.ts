@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Buy } from '../interfaces/interfaces.js';
 import { BuyService } from '../buy/buy.service';
 import { BrowserQRCodeReader, IScannerControls } from '@zxing/browser';
+import { Buy } from '../interfaces/buy.interface.js';
 
 @Component({
   selector: 'app-buy-validate-qr',

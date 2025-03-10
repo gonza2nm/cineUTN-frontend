@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TheaterByCinemaService } from '../theaters-by-cinema/theater-by-cinema.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Cinema, Theater } from '../interfaces/interfaces';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Cinema } from '../interfaces/cinema.interface.js';
+import { Theater } from '../interfaces/theater.interface.js';
 
 @Component({
   selector: 'app-theater-edit',

@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Movie } from '../interfaces/interfaces.js';
+import { Movie } from '../interfaces/movie.interface.js';
+
 
 @Component({
   selector: 'app-slider',

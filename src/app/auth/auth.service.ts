@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ResponseOne, User } from '../interfaces/interfaces.js';
 import { BehaviorSubject, catchError, map, Observable, of, tap, } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { User } from '../interfaces/user.interface.js';
+import { ResponseOne } from '../interfaces/response-one.interface.js';
 
 @Injectable({
   providedIn: 'root'

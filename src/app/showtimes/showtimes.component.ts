@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Cinema } from '../interfaces/interfaces.js';
 import { CinemaService } from '../cinemas/cinema.service';
+import { Cinema } from '../interfaces/cinema.interface.js';
 
 @Component({
   selector: 'app-showtimes',

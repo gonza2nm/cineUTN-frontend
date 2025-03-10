@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Cinema } from '../interfaces/interfaces';
 import { CinemaService } from './cinema.service';
+import { Cinema } from '../interfaces/cinema.interface.js';
 
 @Component({
   selector: 'app-cinemas',

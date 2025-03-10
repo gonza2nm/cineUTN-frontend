@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CinemaService } from '../cinemas/cinema.service';
-import { Cinema } from '../interfaces/interfaces';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Cinema } from '../interfaces/cinema.interface.js';
 
 @Component({
   selector: 'app-cinema-edit',

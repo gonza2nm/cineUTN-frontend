@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Genre, ResponseList, ResponseOne, ResponseWithError } from '../interfaces/interfaces.js';
 import { environment } from 'src/environments/environment';
+import { ResponseList } from '../interfaces/response-list.interface.js';
+import { Genre } from '../interfaces/genre.interface.js';
+import { ResponseWithError } from '../interfaces/response-with-error.interface.ts.js';
+import { ResponseOne } from '../interfaces/response-one.interface.js';
 
 @Injectable({
   providedIn: 'root'
