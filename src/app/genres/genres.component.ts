@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Genre } from '../interfaces/interfaces';
 import { GenresService } from './genres.service';
 import { Router } from '@angular/router';
+import { Genre } from '../interfaces/genre.interface.js';
 
 @Component({
   selector: 'app-genres',

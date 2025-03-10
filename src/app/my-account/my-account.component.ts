@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { User, Buy, Ticket } from '../interfaces/interfaces';
 import { MyAccountService } from './my-account.service';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../login/login.service';
+import { User } from '../interfaces/user.interface.js';
+import { Buy } from '../interfaces/buy.interface.js';
 
 @Component({
   selector: 'app-my-account',
@@ -47,7 +48,7 @@ export class MyAccountComponent implements OnInit {
       email: new FormControl(this.user?.email, [Validators.required]),
       password: new FormControl(''),
       dni: new FormControl(this.user?.dni, [Validators.required]),
-      type: new FormControl('user')
+      type: new FormControl(this.user?.type)
     });
 
   }
@@ -64,14 +65,13 @@ export class MyAccountComponent implements OnInit {
 
   updateUser() {
     this.loginService.updateUser(this.user?.id, this.userEditForm.value).subscribe({
-      next: (response) => {
+      next: () => {
         this.band = true;
         this.messageError = '¡Los cambios se guardaron correctamente!';
-        console.log(response);
       },
       error: (error) => {
         this.messageError = 'Ocurrio un error, por favor intente mas tarde.';
-        console.log(error);
+        console.error(error);
       }
     })
 
@@ -79,13 +79,12 @@ export class MyAccountComponent implements OnInit {
 
   deleteUser() {
     this.loginService.deleteUser(this.user?.id).subscribe({
-      next: (response) => {
-        console.log(response);
+      next: () => {
         this.router.navigate(['/login']);
       },
 
       error: (err) => {
-        console.log(err)
+        console.error(err)
       }
     })
   }
@@ -94,7 +93,6 @@ export class MyAccountComponent implements OnInit {
   loadBuys(id: number): void {
     this.myAccountservice.getBuyByUser(id).subscribe({
       next: (response) => {
-        console.log(response.data);
         this.errorMessage = null;
 
         //ordena las compras por estado

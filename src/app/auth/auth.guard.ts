@@ -4,8 +4,12 @@ import { AuthService } from './auth.service';
 import { of } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
 
+export enum Role {
+  MANAGER = "manager",
+  USER = "user"
+}
 
-export const AuthGuard: (permisosNecesarios: "manager" | "user") => CanActivateFn = (permisosNecesarios: "manager" | "user") => 
+export const AuthGuard: (permisosNecesarios: Role) => CanActivateFn = (permisosNecesarios: Role) =>
   (route, state) => {
     const authService = inject(AuthService);
     const router = inject(Router);
@@ -21,9 +25,9 @@ export const AuthGuard: (permisosNecesarios: "manager" | "user") => CanActivateF
                 return false;
               }
 
-              if (permisosNecesarios === "manager" && isManager) {
+              if (permisosNecesarios === Role.MANAGER && isManager) {
                 return true;
-              } else if (permisosNecesarios === "user") {
+              } else if (permisosNecesarios === Role.USER) {
                 return true;
               } else {
                 router.navigate(["/"]);

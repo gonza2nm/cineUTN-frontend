@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BuyService } from '../buy/buy.service';
-import { Buy, Movie, Promotion, Seat, Show, Snack, Ticket, User } from '../interfaces/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TicketService } from '../tickets/ticket.service';
 import { AuthService } from '../auth/auth.service';
 import { MovieDetailsService } from '../movie-details/movie-details.service';
+import { Buy } from '../interfaces/buy.interface.js';
+import { User } from '../interfaces/user.interface.js';
+import { Show } from '../interfaces/show.interface.js';
 
 @Component({
   selector: 'app-buy-details',
@@ -51,7 +53,7 @@ export class BuyDetailsComponent implements OnInit {
         address: '',
         theaters: [],
         movies: [],
-      }, id: 0, numChairs: 0, cantRows: 0, cantCols:0
+      }, id: 0, numChairs: 0, cantRows: 0, cantCols: 0
     },
     tickets: [],
   };
@@ -113,7 +115,7 @@ export class BuyDetailsComponent implements OnInit {
 
   cancelPurchase() {
     this.ticketService.deleteTickets(this.buyId).subscribe({
-      next: (response) => {  
+      next: (response) => {
         //Se actualiza el estado de la compra.
         let status = 'Cancelada';
         this.buyService.updatebuy(this.buyId, status).subscribe({
@@ -146,7 +148,7 @@ export class BuyDetailsComponent implements OnInit {
         console.log(err.error);
       },
     });
-    
+
   }
 
   formatDateAndHour(date: Date) {

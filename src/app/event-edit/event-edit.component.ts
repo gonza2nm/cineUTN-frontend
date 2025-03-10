@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { Cinema, Event } from '../interfaces/interfaces.js';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../events/event.service';
 import { CinemaService } from '../cinemas/cinema.service';
+import { Cinema } from '../interfaces/cinema.interface.js';
+import { Event } from '../interfaces/event.interface.js';
 
 @Component({
   selector: 'app-event-edit',
@@ -165,14 +166,15 @@ export class EventEditComponent implements OnInit {
 
   formatToDateTimeLocal(date2: Date): string {
     const date = new Date(date2);
-    const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-    const hours = ('0' + date.getHours()).slice(-2);
-    const minutes = ('0' + date.getMinutes()).slice(-2);
+    // Ajustar la fecha eliminando la diferencia de zona horaria
+    const year = date.getUTCFullYear();
+    const month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+    const day = ('0' + date.getUTCDate()).slice(-2);
 
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
+    return `${year}-${month}-${day}`;
   }
+
+
 
   toggleCinemaSelection(cinemaId: number) {
     const index = this.eventCinemasIds.indexOf(cinemaId);

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Cinema, Promotion, Show } from '../interfaces/interfaces';
 import { PromotionsService } from './promotions.service';
 import { Router } from '@angular/router';
 import { CinemaService } from '../cinemas/cinema.service';
+import { Promotion } from '../interfaces/promotion.interface.js';
+import { Cinema } from '../interfaces/cinema.interface.js';
 
 @Component({
   selector: 'app-promotions',
@@ -18,18 +19,18 @@ export class PromotionsComponent {
   filterbyCinema: Promotion[] = [];
   selectedOption: any = '';
 
-  
+
   constructor(
     private promotionService: PromotionsService,
     private router: Router,
     private cinemaService: CinemaService
-  ) {}
-  
+  ) { }
+
   ngOnInit(): void {
     this.loadPromotions();
     this.loadCinemas();
   }
-  
+
   loadPromotions() {
     this.promotionService.getAllPromotions().subscribe({
       next: (response) => {
@@ -50,10 +51,10 @@ export class PromotionsComponent {
     this.cinemaService.getAllCinemas().subscribe({
       next: (response) => {
         this.cinemas = response.data.map((cinema: Cinema) => ({
-        id: cinema.id,
-        name: cinema.name,
-        addres: cinema.address
-      }));
+          id: cinema.id,
+          name: cinema.name,
+          addres: cinema.address
+        }));
         this.errorMessage = null;
         this.loading = false;
       },
@@ -98,6 +99,6 @@ export class PromotionsComponent {
     }
   }
 
-  
+
 }
 

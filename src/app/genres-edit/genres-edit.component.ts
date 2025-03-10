@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Genre } from '../interfaces/interfaces';
 import { GenresService } from '../genres/genres.service';
+import { Genre } from '../interfaces/genre.interface.js';
 
 @Component({
   selector: 'app-genres-edit',
@@ -23,7 +23,7 @@ export class GenresEditComponent implements OnInit {
     private service: GenresService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.genreId = Number.parseInt(this.route.snapshot.params['gid']);

@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { MovieService } from '../movies/movie.service';
-import { Movie } from '../interfaces/interfaces';
 import { Router } from '@angular/router';
+import { Movie } from '../interfaces/movie.interface.js';
 
 @Component({
   selector: 'app-next-releases-slider',

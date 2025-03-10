@@ -1,8 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Buy, ResponseList, ResponseOne, ResponseQR, ResponseWithError, Seat, User } from '../interfaces/interfaces';
 import { forkJoin, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ResponseList } from '../interfaces/response-list.interface.js';
+import { Buy } from '../interfaces/buy.interface.js';
+import { ResponseWithError } from '../interfaces/response-with-error.interface.ts.js';
+import { ResponseOne } from '../interfaces/response-one.interface.js';
+import { ResponseQR } from '../interfaces/response-qr.interface.js';
+import { Seat } from '../interfaces/seat.interface.js';
 
 @Injectable({
   providedIn: 'root'
@@ -22,16 +27,16 @@ export class BuyService {
   getOneBuy(id: number): Observable<any> {
     return this.http.get<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}/${id}`)
   }
-  
+
   addBuy(
-    total: number, 
-    user:number, 
-    show: number, 
-    snacks: { id: number, cant: number }[], 
-    promotions: {code:string, cant: number}[],
+    total: number,
+    user: number,
+    show: number,
+    snacks: { id: number, cant: number }[],
+    promotions: { code: string, cant: number }[],
     seats: Seat[]
-  ):Observable<any> {
-    return this.http.post<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}`, {total, user, show, snacks, promotions, seats} )
+  ): Observable<any> {
+    return this.http.post<ResponseOne<Buy> | ResponseWithError>(`${this.urlBuy}`, { total, user, show, snacks, promotions, seats })
   }
 
   getQRCodeBuy(id: number): Observable<any> {
@@ -56,7 +61,7 @@ export class BuyService {
     return this.http.get<ResponseList<Seat> | ResponseWithError>(`${this.urlSeat}/byShow/${id}`)
   }
 
-  updateSeatbyShow( id: number, seatsId: number[]): Observable<any> {
+  updateSeatbyShow(id: number, seatsId: number[]): Observable<any> {
     return this.http.patch<ResponseOne<Seat> | ResponseWithError>(`${this.urlSeat}/update/${id}`, { seatsId });
   }
 

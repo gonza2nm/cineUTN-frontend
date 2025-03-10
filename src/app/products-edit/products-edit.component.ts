@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../products/products.service';
-import { Snack } from '../interfaces/interfaces';
+import { Snack } from '../interfaces/snack.interface.js';
 
 @Component({
   selector: 'app-products-edit',
@@ -22,14 +22,14 @@ export class ProductsEditComponent {
   isEditMode: boolean = false;
   productsForm!: FormGroup;
   urlPhoto: string = "";
-  errorMessage:string | null = null;
+  errorMessage: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductsService,
     private router: Router
   ) {
-    
+
     this.productsForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       price: new FormControl('', [Validators.required]),
@@ -44,14 +44,14 @@ export class ProductsEditComponent {
 
   ngOnInit(): void {
     this.productId = this.route.snapshot.params['id']
-    if(this.productId) {
+    if (this.productId) {
       this.isEditMode = true;
       this.loadOneProduct();
     }
   }
 
   loadOneProduct() {
-    if(this.productId) {
+    if (this.productId) {
       this.productService.getOneProduct(this.productId).subscribe({
         next: (response) => {
           this.productData = response.data;
@@ -62,7 +62,7 @@ export class ProductsEditComponent {
             urlPhoto: this.productData.urlPhoto,
             price: this.productData.price,
           })
-        }, 
+        },
         error: (err) => {
           this.errorMessage = 'An error occurred while fetching the movie.'
           console.error('Error getting movie:', err.error.message);
@@ -73,8 +73,8 @@ export class ProductsEditComponent {
   }
 
   saveProduct() {
-    if(this.isEditMode) {
-      if(this.productId) {
+    if (this.isEditMode) {
+      if (this.productId) {
         this.productService.updateProduct(this.productId, this.productsForm.value).subscribe({
           next: (response) => {
             console.log(response.data);
@@ -90,20 +90,20 @@ export class ProductsEditComponent {
     } else {
       this.productService.addProduct(this.productsForm.value).subscribe({
         next: (response) => {
-            console.log(response.data);
-            this.errorMessage = null;
-            this.router.navigate(['/manager-home/products'])
-          },
-          error: (err) => {
-            this.errorMessage = 'Ocurrio un error guardar el producto.'
-            console.error('Error saving product:', err.error.message);
-          }
+          console.log(response.data);
+          this.errorMessage = null;
+          this.router.navigate(['/manager-home/products'])
+        },
+        error: (err) => {
+          this.errorMessage = 'Ocurrio un error guardar el producto.'
+          console.error('Error saving product:', err.error.message);
+        }
       })
     }
   }
 
   deleteProduct() {
-    if(this.productId) {
+    if (this.productId) {
       this.productService.deleteProduct(this.productId).subscribe({
         next: (response) => {
           this.errorMessage = null;

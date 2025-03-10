@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { Cinema, Snack, Promotion } from '../interfaces/interfaces';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ɵDomAdapter } from '@angular/common';
 import { PromotionsService } from '../promotions/promotions.service';
 import { CinemaService } from '../cinemas/cinema.service';
 import { ProductsService } from '../products/products.service';
+import { Promotion } from '../interfaces/promotion.interface.js';
+import { Cinema } from '../interfaces/cinema.interface.js';
+import { Snack } from '../interfaces/snack.interface.js';
 
 @Component({
   selector: 'app-promotions-edit',
@@ -35,7 +37,7 @@ export class PromotionsEditComponent {
 
   allProducts: Snack[] = [];
   productsIds: number[] = [];
-  
+
   constructor(
     private route: ActivatedRoute,
     private promotionService: PromotionsService,
@@ -58,7 +60,7 @@ export class PromotionsEditComponent {
 
   ngOnInit(): void {
     this.promotionCode = this.route.snapshot.params['code']
-    if(this.promotionCode) {
+    if (this.promotionCode) {
       this.isEditMode = true;
       this.loadOnePromotion();
     } else {
@@ -67,38 +69,38 @@ export class PromotionsEditComponent {
     }
   }
 
-  
-  
-  
+
+
+
   loadOnePromotion() {
-    if(this.promotionCode) {
+    if (this.promotionCode) {
       this.promotionService.getOnePromotions(this.promotionCode).subscribe({
         next: (response) => {
-            this.promotionData = response.data;
-            this.errorMessage = null;
-            this.promotionsForm.setValue({
-              name: this.promotionData.name,
-              description: this.promotionData.description,
-              promotionStartDate: this.formatToDateTimeLocal(this.promotionData.promotionStartDate),
-              promotionFinishDate: this.formatToDateTimeLocal(this.promotionData.promotionFinishDate),
-              price: this.promotionData.price
-            })
-            
-            this.cinemasIds = this.promotionData.cinemas.map(cinema => cinema.id).filter((id): id is number => id !== undefined)
-            this.loadAllCinemas();
-            this.productsIds = this.promotionData.snacks.map(snack => snack.id).filter((id): id is number => id !== undefined)
-            this.loadAllProducts();
-          }, 
-          error: (err) => {
-            this.errorMessage = 'An error occurred while fetching the promotion.'
-            console.error('Error getting promotion:', err.error.message);
-            this.router.navigate(['/manager-home/promotions']);
-          }
+          this.promotionData = response.data;
+          this.errorMessage = null;
+          this.promotionsForm.setValue({
+            name: this.promotionData.name,
+            description: this.promotionData.description,
+            promotionStartDate: this.formatToDateTimeLocal(this.promotionData.promotionStartDate),
+            promotionFinishDate: this.formatToDateTimeLocal(this.promotionData.promotionFinishDate),
+            price: this.promotionData.price
+          })
+
+          this.cinemasIds = this.promotionData.cinemas.map(cinema => cinema.id).filter((id): id is number => id !== undefined)
+          this.loadAllCinemas();
+          this.productsIds = this.promotionData.snacks.map(snack => snack.id).filter((id): id is number => id !== undefined)
+          this.loadAllProducts();
+        },
+        error: (err) => {
+          this.errorMessage = 'An error occurred while fetching the promotion.'
+          console.error('Error getting promotion:', err.error.message);
+          this.router.navigate(['/manager-home/promotions']);
+        }
       })
     }
   }
 
-  
+
   savePromotion() {
     this.promotionData.name = this.promotionsForm.get('name')?.value;
     this.promotionData.description = this.promotionsForm.get('description')?.value;
@@ -108,8 +110,8 @@ export class PromotionsEditComponent {
     this.promotionData.cinemas = this.cinemasIds.map(id => ({ id, name: '', address: '', theaters: [], movies: [] }));
     this.promotionData.snacks = this.productsIds.map(id => ({ id, name: '', description: "", urlPhoto: "", price: 0 }));
 
-    if(this.isEditMode) {
-      if(this.promotionCode) {
+    if (this.isEditMode) {
+      if (this.promotionCode) {
         this.promotionService.updatePromotion(this.promotionCode, this.promotionData).subscribe({
           next: (response) => {
             console.log(response.data);
@@ -136,9 +138,9 @@ export class PromotionsEditComponent {
       })
     }
   }
-  
+
   deletePromotion() {
-    if(this.promotionCode) {
+    if (this.promotionCode) {
       this.promotionService.deletePromotion(this.promotionCode).subscribe({
         next: (response) => {
           this.errorMessage = null;
@@ -205,15 +207,15 @@ export class PromotionsEditComponent {
     const startDate = this.promotionsForm.value.promotionStartDate;
     const endDate = this.promotionsForm.value.promotionFinishDate;
     const today = this.formatToDateTimeLocal(new Date());
+    if (startDate !== '' && endDate !== '') {
+      if (startDate < today || endDate < today) {
+        return 'La fecha de inicio o de fin no puede ser anterior a la fecha de hoy.';
+      }
 
-    if (startDate < today || endDate < today) {
-      return 'La fecha de inicio o de fin no puede ser anterior a la fecha de hoy.';
+      if (endDate < startDate) {
+        return 'La fecha de fin no puede ser anterior a la fecha de inicio.';
+      }
     }
-
-    if (endDate < startDate) {
-      return 'La fecha de fin no puede ser anterior a la fecha de inicio.';
-    }
-
     return ''; // No hay errores
   }
 

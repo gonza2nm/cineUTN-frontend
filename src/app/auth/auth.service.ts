@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ResponseOne, User } from '../interfaces/interfaces.js';
 import { BehaviorSubject, catchError, map, Observable, of, tap, } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { User } from '../interfaces/user.interface.js';
+import { ResponseOne } from '../interfaces/response-one.interface.js';
 
 @Injectable({
   providedIn: 'root'
@@ -57,13 +58,13 @@ export class AuthService {
           this.loggedInSubject.next(true);
         },
         error: (error: any) => {
-          console.error('Error verificando token:', error);
+          console.error('Error verificando token:', error.error);
           this.loggedInSubject.next(false);
           this.userSubject.next(null);
         }
       }),
       catchError((error) => {
-        console.error('Error en verificación de token:', error);
+        console.error('Error en verificación de token:', error.error);
         this.loggedInSubject.next(false);
         this.userSubject.next(null);
         return of(null);

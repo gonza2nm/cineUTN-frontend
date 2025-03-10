@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../interfaces/interfaces.js';
 import { LoginService } from '../login/login.service';
+import { User } from '../interfaces/user.interface.js';
 
 @Component({
   selector: 'app-managers',

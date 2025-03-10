@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Theater } from '../interfaces/interfaces.js';
 import { TheaterByCinemaService } from './theater-by-cinema.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Theater } from '../interfaces/theater.interface.js';
 
 @Component({
   selector: 'app-theaters-by-cinema',
@@ -9,39 +9,39 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./theaters-by-cinema.component.css']
 })
 export class TheatersByCinemaComponent implements OnInit {
-  theaters : Theater[] = [];  
+  theaters: Theater[] = [];
   errorMessage: string | null = null;
   loading: boolean = true;
-  cinemaId : number | null = null;
-  
+  cinemaId: number | null = null;
+
 
   constructor(
-    private service : TheaterByCinemaService,
+    private service: TheaterByCinemaService,
     private route: ActivatedRoute,
-    private router : Router
-  ){}
-  
+    private router: Router
+  ) { }
+
   ngOnInit(): void {
     this.cinemaId = this.route.snapshot.params['cid'];
     this.loadTheaters();
   }
 
-  loadTheaters(){
-    if(this.cinemaId !== null){
+  loadTheaters() {
+    if (this.cinemaId !== null) {
       this.service.getCinema(this.cinemaId).subscribe({
         next: (response) => {
           this.theaters = response.data.theaters;
           this.errorMessage = null;
           this.loading = false;
         },
-        error: () => {  
+        error: () => {
           this.errorMessage = 'An error occurred while fetching cinemas.';
           console.error('Error getting cinemas:');
           this.loading = false;
           this.router.navigate(["/manager-home/theaters"]);
         }
       });
-    }else{
+    } else {
       this.router.navigate(["/manager-home/theaters"]);
     }
   }
