@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Promotion, Seat, Show, Snack, User } from '../interfaces/interfaces.js';
 import { MovieDetailsService } from '../movie-details/movie-details.service';
 import { BuyService } from './buy.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { ProductsService } from '../products/products.service';
 import { PromotionsService } from '../promotions/promotions.service';
+import { User } from '../interfaces/user.interface.js';
+import { Show } from '../interfaces/show.interface.js';
+import { Snack } from '../interfaces/snack.interface.js';
+import { Seat } from '../interfaces/seat.interface.js';
+import { Promotion } from '../interfaces/promotion.interface.js';
 
 interface Item {
   descripcion: string;
@@ -48,7 +52,7 @@ export class BuyComponent implements OnInit {
         address: '',
         theaters: [],
         movies: [],
-      }, id: 0, numChairs: 0, cantRows: 0, cantCols:0
+      }, id: 0, numChairs: 0, cantRows: 0, cantCols: 0
     },
     tickets: []
   }
@@ -67,10 +71,10 @@ export class BuyComponent implements OnInit {
 
   purchaseChoice: string = 'entrada';
   snacks: Snack[] = [];
-  selectedSnacks: { id: number, name: string, price: number, cant: number}[] = [];
+  selectedSnacks: { id: number, name: string, price: number, cant: number }[] = [];
 
   promotions: Promotion[] = [];
-  selectedPromotions: { code: string, name: string, price: number, cant:number}[] = [];
+  selectedPromotions: { code: string, name: string, price: number, cant: number }[] = [];
 
   seats: Seat[] = [];
   selectedSeats: Seat[] = [];
@@ -120,14 +124,14 @@ export class BuyComponent implements OnInit {
   }
 
   countSeatsAvailables() {
-    return this.seats.reduce((count, seat) => seat.status === "Disponible" ? count + 1 : count, 0 )
+    return this.seats.reduce((count, seat) => seat.status === "Disponible" ? count + 1 : count, 0)
   }
 
   updateQuantityTickets(ticket: Item, change: number) {
     if (this.totalCantTickets + change > this.countSeatsAvailables()) {
-    console.log('No puedes comprar más tickets que asientos disponibles');
-    return;
-  }
+      console.log('No puedes comprar más tickets que asientos disponibles');
+      return;
+    }
     ticket.counter = Math.max(0, ticket.counter + change);
     this.totalCantTickets = this.items.reduce(
       (sum, ticket) => sum + ticket.counter, 0);
@@ -136,13 +140,13 @@ export class BuyComponent implements OnInit {
 
   addProductToList(snack: Snack, change: number) {
     const indexSnack = this.selectedSnacks.findIndex(item => item.id === snack.id)
-    if(indexSnack === -1) {
-      this.selectedSnacks.push({id: snack.id, name: snack.name, price: snack.price, cant: 1});
-      
+    if (indexSnack === -1) {
+      this.selectedSnacks.push({ id: snack.id, name: snack.name, price: snack.price, cant: 1 });
+
     } else {
       const newCant = this.selectedSnacks[indexSnack].cant + change;
 
-      if (newCant <= 0 ) {
+      if (newCant <= 0) {
         this.selectedSnacks.splice(indexSnack, 1)
       } else {
         this.selectedSnacks[indexSnack].cant = newCant;
@@ -158,18 +162,18 @@ export class BuyComponent implements OnInit {
 
   addPromotionToList(promo: Promotion, change: number) {
     const indexPromotion = this.selectedPromotions.findIndex(item => item.code === promo.code)
-    if(indexPromotion === -1) {
-      this.selectedPromotions.push({code: promo.code, name: promo.name, price: promo.price, cant: 1});
-      
+    if (indexPromotion === -1) {
+      this.selectedPromotions.push({ code: promo.code, name: promo.name, price: promo.price, cant: 1 });
+
     } else {
       const newCant = this.selectedPromotions[indexPromotion].cant + change;
 
-      if (newCant <= 0 ) {
+      if (newCant <= 0) {
         this.selectedPromotions.splice(indexPromotion, 1)
       } else {
         this.selectedPromotions[indexPromotion].cant = newCant;
       }
-      
+
     }
   }
 
@@ -208,7 +212,7 @@ export class BuyComponent implements OnInit {
     const year = fecha.getFullYear();
     const diaMes = fecha.getDate().toString().padStart(2, '0');
     const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
-    
+
     let hour = fecha.getHours().toString().padStart(2, '0');
     let minutes = fecha.getMinutes().toString().padStart(2, '0');
     return `${diaMes}/${mes}/${year} - ${hour}:${minutes} hs`;
@@ -216,31 +220,31 @@ export class BuyComponent implements OnInit {
 
   loadShow() {
     this.movieDatialsService.getOneShow(this.showId).subscribe({
-        next: (response) => {
-          console.log('Datos del show', response)
-          this.show = response;
-          this.errorMessage = null;
-        },
-        error: () => {
-          this.errorMessage = 'Ocurrio un error al buscar la funcion';
-          console.error('Ocurrio un error al buscar la funcion');
-          this.router.navigate(['/']);
-        },
-      });
+      next: (response) => {
+        console.log('Datos del show', response)
+        this.show = response;
+        this.errorMessage = null;
+      },
+      error: () => {
+        this.errorMessage = 'Ocurrio un error al buscar la funcion';
+        console.error('Ocurrio un error al buscar la funcion');
+        this.router.navigate(['/']);
+      },
+    });
   }
 
   loadSeats() {
     this.buyService.getSeatsbyShow(this.showId).subscribe({
       next: (response) => {
-        this.seats = response.data ;
+        this.seats = response.data;
         this.errorMessage = null;
       },
 
       error: () => {
-          this.errorMessage = 'Ocurrio un error al buscar los asientos';
-          console.error('Ocurrio un error al buscar los asientos');
-          this.router.navigate(['/']);
-        },
+        this.errorMessage = 'Ocurrio un error al buscar los asientos';
+        console.error('Ocurrio un error al buscar los asientos');
+        this.router.navigate(['/']);
+      },
     })
   }
 
@@ -272,7 +276,7 @@ export class BuyComponent implements OnInit {
     this.calculateTotal();
     this.selectedSnacks.map(snack => ({ id: snack.id, cant: snack.cant }));
     this.selectedPromotions.map(promo => ({ code: promo.code, cant: promo.cant }));
-    if(this.user) {
+    if (this.user) {
       this.buyService.addBuy(this.totalPrice, this.user.id, this.show.id, this.selectedSnacks, this.selectedPromotions, this.selectedSeats).subscribe({
         next: (response) => {
           console.log(response.data);
@@ -298,13 +302,13 @@ export class BuyComponent implements OnInit {
   }
 
   toggleSeatSelect(seat: Seat) {
-    if(seat.status !== 'Ocupado') {
+    if (seat.status !== 'Ocupado') {
       const index = this.selectedSeats.indexOf(seat);
       if (index === -1) {
         if (this.selectedSeats.length < this.totalCantTickets) {
           this.selectedSeats.push(seat);
         } else {
-          this.selectedSeats.shift(); 
+          this.selectedSeats.shift();
           this.selectedSeats.push(seat);
         }
       } else {
