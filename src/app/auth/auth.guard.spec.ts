@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard, Role } from './auth.guard';
 
 //-----------
 
@@ -42,7 +42,7 @@ describe('authGuard', () => {
   let router: Router;
 
   // Función que ejecuta el guard en el contexto de la prueba
-  const executeGuard = (permisosNecesarios: "manager" | "user") => 
+  const executeGuard = (permisosNecesarios: Role) =>
     AuthGuard(permisosNecesarios);
 
   beforeEach(() => {
@@ -56,7 +56,7 @@ describe('authGuard', () => {
   });
 
   it('should be created', () => {
-    const guard = executeGuard('user');
+    const guard = executeGuard(Role.USER);
     expect(guard).toBeTruthy();
   });
 
