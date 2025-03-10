@@ -6,15 +6,12 @@ import {
 } from '@angular/forms';
 import { ShowtimesByCinemaService } from '../showtimes-by-cinema/showtimes-by-cinema.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  Show,
-  Movie,
-  Cinema,
-  Language,
-  Format,
-  Theater,
-} from '../interfaces/interfaces';
 import { FormatWidth, getLocaleDateTimeFormat } from '@angular/common';
+import { Theater } from '../interfaces/theater.interface.js';
+import { Movie } from '../interfaces/movie.interface.js';
+import { Format } from '../interfaces/format.interface.js';
+import { Language } from '../interfaces/language.interface.js';
+import { Show } from '../interfaces/show.interface.js';
 
 @Component({
   selector: 'app-showtimes-edit',
@@ -59,7 +56,7 @@ export class ShowtimesEditComponent implements OnInit {
         address: '',
         theaters: [],
         movies: [],
-      }, id: 0, numChairs: 0, cantRows: 0, cantCols:0
+      }, id: 0, numChairs: 0, cantRows: 0, cantCols: 0
     },
     tickets: [],
   };

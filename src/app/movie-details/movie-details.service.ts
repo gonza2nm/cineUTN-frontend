@@ -1,8 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
-import { Cinema, Format, Language, Movie, ResponseList, ResponseOne, ResponseWithError, Show } from '../interfaces/interfaces';
 import { environment } from 'src/environments/environment';
+import { ResponseList } from '../interfaces/response-list.interface.js';
+import { Cinema } from '../interfaces/cinema.interface.js';
+import { ResponseOne } from '../interfaces/response-one.interface.js';
+import { Movie } from '../interfaces/movie.interface.js';
+import { Format } from '../interfaces/format.interface.js';
+import { Language } from '../interfaces/language.interface.js';
+import { Show } from '../interfaces/show.interface.js';
 
 @Injectable({
   providedIn: 'root'

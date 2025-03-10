@@ -1,14 +1,12 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { MovieDetailsService } from './movie-details.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  Cinema,
-  Format,
-  Language,
-  Movie,
-  Show,
-} from '../interfaces/interfaces';
 import { AuthService } from '../auth/auth.service';
+import { Movie } from '../interfaces/movie.interface.js';
+import { Cinema } from '../interfaces/cinema.interface.js';
+import { Show } from '../interfaces/show.interface.js';
+import { Format } from '../interfaces/format.interface.js';
+import { Language } from '../interfaces/language.interface.js';
 
 
 @Component({
@@ -60,7 +58,7 @@ export class MovieDetailsComponent implements OnInit {
     this.loadLanguages();
     this.loadFormats();
     this.authService.isLoggedIn().subscribe(isLoggedIn => {
-        this.isLoggedIn = isLoggedIn;
+      this.isLoggedIn = isLoggedIn;
     });
   }
 
@@ -196,7 +194,7 @@ export class MovieDetailsComponent implements OnInit {
       this.isOpen = true;
     }
   }
-  
+
 
   loguearse() {
     this.router.navigate(['/login']);

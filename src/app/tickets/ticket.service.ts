@@ -1,8 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
-import { Buy, ResponseList, ResponseOne, ResponseWithError, Show, Ticket } from '../interfaces/interfaces';
 import { environment } from 'src/environments/environment';
+import { ResponseList } from '../interfaces/response-list.interface.js';
+import { Ticket } from '../interfaces/ticket.interface.js';
+import { ResponseWithError } from '../interfaces/response-with-error.interface.ts.js';
+import { Buy } from '../interfaces/buy.interface.js';
+import { ResponseOne } from '../interfaces/response-one.interface.js';
 
 @Injectable({
   providedIn: 'root'

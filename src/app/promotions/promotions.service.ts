@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Promotion, ResponseList, ResponseOne, ResponseWithError, Ticket } from '../interfaces/interfaces';
 import { Observable } from 'rxjs';
 import { ReturnStatement } from '@angular/compiler';
 import { environment } from 'src/environments/environment';
+import { ResponseList } from '../interfaces/response-list.interface.js';
+import { Promotion } from '../interfaces/promotion.interface.js';
+import { ResponseWithError } from '../interfaces/response-with-error.interface.ts.js';
+import { ResponseOne } from '../interfaces/response-one.interface.js';
 
 @Injectable({
   providedIn: 'root'

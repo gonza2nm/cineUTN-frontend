@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from './home.service';
-import { Cinema, Genre, Movie } from '../interfaces/interfaces.js';
+
 import { Router } from '@angular/router';
+import { Cinema } from '../interfaces/cinema.interface.js';
+import { Movie } from '../interfaces/movie.interface.js';
+import { Genre } from '../interfaces/genre.interface.js';
 
 @Component({
   selector: 'app-home',

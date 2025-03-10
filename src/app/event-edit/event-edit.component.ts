@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { Cinema, Event } from '../interfaces/interfaces.js';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../events/event.service';
 import { CinemaService } from '../cinemas/cinema.service';
+import { Cinema } from '../interfaces/cinema.interface.js';
+import { Event } from '../interfaces/event.interface.js';
 
 @Component({
   selector: 'app-event-edit',

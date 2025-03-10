@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Cinema, Format, Genre, Language, Movie } from '../interfaces/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../movies/movie.service';
 import { GenresService } from '../genres/genres.service';
 import { FormatService } from '../formats/format.service';
 import { LanguageService } from '../language/language.service';
 import { CinemaService } from '../cinemas/cinema.service';
+import { Movie } from '../interfaces/movie.interface.js';
+import { Genre } from '../interfaces/genre.interface.js';
+import { Format } from '../interfaces/format.interface.js';
+import { Language } from '../interfaces/language.interface.js';
+import { Cinema } from '../interfaces/cinema.interface.js';
 
 @Component({
   selector: 'app-movie-edit',

@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { Cinema, Snack, Promotion } from '../interfaces/interfaces';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ɵDomAdapter } from '@angular/common';
 import { PromotionsService } from '../promotions/promotions.service';
 import { CinemaService } from '../cinemas/cinema.service';
 import { ProductsService } from '../products/products.service';
+import { Promotion } from '../interfaces/promotion.interface.js';
+import { Cinema } from '../interfaces/cinema.interface.js';
+import { Snack } from '../interfaces/snack.interface.js';
 
 @Component({
   selector: 'app-promotions-edit',

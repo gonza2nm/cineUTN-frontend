@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
-import { Buy, ResponseList, ResponseOne, ResponseWithError, Ticket, User } from '../interfaces/interfaces';
 import { environment } from 'src/environments/environment';
+import { ResponseList } from '../interfaces/response-list.interface.js';
+import { Buy } from '../interfaces/buy.interface.js';
+import { ResponseWithError } from '../interfaces/response-with-error.interface.ts.js';
 
 @Injectable({
   providedIn: 'root'

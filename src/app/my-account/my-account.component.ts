@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { User, Buy, Ticket } from '../interfaces/interfaces';
 import { MyAccountService } from './my-account.service';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../login/login.service';
+import { User } from '../interfaces/user.interface.js';
+import { Buy } from '../interfaces/buy.interface.js';
 
 @Component({
   selector: 'app-my-account',

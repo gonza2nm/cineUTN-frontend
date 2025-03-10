@@ -2,8 +2,9 @@ import { Component, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoginService } from '../login/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Cinema, User } from '../interfaces/interfaces';
 import { CinemaService } from '../cinemas/cinema.service';
+import { User } from '../interfaces/user.interface.js';
+import { Cinema } from '../interfaces/cinema.interface.js';
 
 @Component({
   selector: 'app-register',
