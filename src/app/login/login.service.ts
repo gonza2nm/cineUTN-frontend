@@ -15,10 +15,6 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
 
-  user!: User;
-
-
-
   getUser(userData: any): Observable<any> {
     return this.http.post<ResponseOne<User> | ResponseWithError>(`${this.url}/login`, userData);
   }

@@ -38,7 +38,7 @@ export class MyAccountComponent implements OnInit {
     });
     if (this.user !== null) {
       console.log(this.user.id);
-      this.loadBuys(this.user.id); // Cargar las compras si el usuario está disponible
+      this.loadBuys(this.user.id);
     }
 
     this.userEditForm = new FormGroup({
