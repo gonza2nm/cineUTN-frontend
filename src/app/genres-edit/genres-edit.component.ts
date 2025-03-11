@@ -7,7 +7,6 @@ import { Genre } from '../interfaces/genre.interface.js';
 @Component({
   selector: 'app-genres-edit',
   templateUrl: './genres-edit.component.html',
-  styleUrls: ['./genres-edit.component.css'],
 })
 export class GenresEditComponent implements OnInit {
   editMode: boolean = false;

@@ -6,7 +6,6 @@ import { Movie } from '../interfaces/movie.interface.js';
 @Component({
   selector: 'app-next-releases-slider',
   templateUrl: './next-releases-slider.component.html',
-  styleUrls: ['./next-releases-slider.component.css']
 })
 export class NextReleasesSliderComponent implements OnInit {
 

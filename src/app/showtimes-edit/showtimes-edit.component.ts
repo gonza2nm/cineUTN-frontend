@@ -16,7 +16,6 @@ import { Show } from '../interfaces/show.interface.js';
 @Component({
   selector: 'app-showtimes-edit',
   templateUrl: './showtimes-edit.component.html',
-  styleUrls: ['./showtimes-edit.component.css'],
 })
 export class ShowtimesEditComponent implements OnInit {
   editMode: boolean = true;

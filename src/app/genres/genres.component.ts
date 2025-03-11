@@ -6,7 +6,6 @@ import { Genre } from '../interfaces/genre.interface.js';
 @Component({
   selector: 'app-genres',
   templateUrl: './genres.component.html',
-  styleUrls: ['./genres.component.css']
 })
 export class GenresComponent implements OnInit {
   genres: Genre[] = [];

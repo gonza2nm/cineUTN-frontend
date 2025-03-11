@@ -3,14 +3,13 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 @Component({
   selector: 'app-selector',
   templateUrl: './selector.component.html',
-  styleUrls: ['./selector.component.css'],
 })
 export class SelectorComponent {
   @Input({ required: true }) filter: string = '';
   @Input({ required: true }) items: any[] = [];
   @Input({ required: true }) placeholder: string = '';
   @Output() selectionChange: EventEmitter<any> = new EventEmitter<any>();
-  @Input({ required: true })selectedValue: any = null;
+  @Input({ required: true }) selectedValue: any = null;
 
   //avisa al componente padre si se cambio un valor de genero o de cine
   onSelectChange() {

@@ -15,7 +15,6 @@ import { Cinema } from '../interfaces/cinema.interface.js';
 @Component({
   selector: 'app-movie-edit',
   templateUrl: './movie-edit.component.html',
-  styleUrls: ['./movie-edit.component.css']
 })
 export class MovieEditComponent implements OnInit {
 

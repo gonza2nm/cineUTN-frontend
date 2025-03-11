@@ -5,7 +5,6 @@ import { Cinema } from '../interfaces/cinema.interface.js';
 @Component({
   selector: 'app-theaters',
   templateUrl: './theaters.component.html',
-  styleUrls: ['./theaters.component.css']
 })
 export class TheatersComponent implements OnInit {
 

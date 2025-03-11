@@ -6,7 +6,6 @@ import { Theater } from '../interfaces/theater.interface.js';
 @Component({
   selector: 'app-theaters-by-cinema',
   templateUrl: './theaters-by-cinema.component.html',
-  styleUrls: ['./theaters-by-cinema.component.css']
 })
 export class TheatersByCinemaComponent implements OnInit {
   theaters: Theater[] = [];

@@ -6,7 +6,6 @@ import { Event } from '../interfaces/event.interface.js';
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
-  styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
 

@@ -6,7 +6,6 @@ import { Promotion } from '../interfaces/promotion.interface.js';
 @Component({
   selector: 'app-promotionslist',
   templateUrl: './promotionslist.component.html',
-  styleUrls: ['./promotionslist.component.css']
 })
 export class PromotionslistComponent implements OnInit {
 

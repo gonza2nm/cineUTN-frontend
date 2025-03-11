@@ -7,7 +7,6 @@ import { Snack } from '../interfaces/snack.interface.js';
 @Component({
   selector: 'app-products-edit',
   templateUrl: './products-edit.component.html',
-  styleUrls: ['./products-edit.component.css']
 })
 export class ProductsEditComponent {
 

@@ -8,7 +8,6 @@ import { Cinema } from '../interfaces/cinema.interface.js';
 @Component({
   selector: 'app-promotions',
   templateUrl: './promotions.component.html',
-  styleUrls: ['./promotions.component.css']
 })
 export class PromotionsComponent {
 

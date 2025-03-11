@@ -6,7 +6,6 @@ import { Show } from '../interfaces/show.interface.js';
 @Component({
   selector: 'app-showtimes-by-cinema',
   templateUrl: './showtimes-by-cinema.component.html',
-  styleUrls: ['./showtimes-by-cinema.component.css']
 })
 export class ShowtimesByCinemaComponent implements OnInit {
   showtimes: Show[] = [];
