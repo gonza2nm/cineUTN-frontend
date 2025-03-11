@@ -114,7 +114,6 @@ export class PromotionsEditComponent {
       if (this.promotionCode) {
         this.promotionService.updatePromotion(this.promotionCode, this.promotionData).subscribe({
           next: (response) => {
-            console.log(response.data);
             this.errorMessage = null;
             this.router.navigate(['/manager-home/promotions'])
           },
@@ -127,7 +126,6 @@ export class PromotionsEditComponent {
     } else {
       this.promotionService.addPromotion(this.promotionData).subscribe({
         next: (response) => {
-          console.log(response.data);
           this.errorMessage = null;
           this.router.navigate(['/manager-home/promotions'])
         },

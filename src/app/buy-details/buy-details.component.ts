@@ -102,13 +102,11 @@ export class BuyDetailsComponent implements OnInit {
   loadPurchase() {
     this.buyService.getOneBuy(this.buyId).subscribe({
       next: (response) => {
-        console.log('Datos de la compra', response.data)
         this.buy = response.data;
         this.show = response.data.tickets[0].show;
         this.checkIfExpired();
       },
       error: () => {
-        console.error('Ocurrio un error al buscar la compra');
       },
     });
   }
@@ -124,28 +122,18 @@ export class BuyDetailsComponent implements OnInit {
             const seatIds = this.buy.tickets.map(ticket => ticket.seat.id);
             this.buyService.updateSeatbyShow(this.show.id, seatIds).subscribe({
               next: (response) => {
-                console.log(response.data);
                 this.messageCanceled = 'La compra fue cancelada.';
                 this.router.navigate(['/my-account'])
               },
               error: (err) => {
-                console.log('Error de Seat');
-                console.log(err.message);
-                console.log(err.error);
               },
             })
           },
           error: (err) => {
-            console.log('Error de compra');
-            console.log(err.message);
-            console.log(err.error);
           },
         });
       },
       error: (err) => {
-        console.log('Error de Tickets');
-        console.log(err.message);
-        console.log(err.error);
       },
     });
 

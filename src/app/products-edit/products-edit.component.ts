@@ -77,7 +77,6 @@ export class ProductsEditComponent {
       if (this.productId) {
         this.productService.updateProduct(this.productId, this.productsForm.value).subscribe({
           next: (response) => {
-            console.log(response.data);
             this.errorMessage = null;
             this.router.navigate(['/manager-home/products'])
           },
@@ -90,7 +89,6 @@ export class ProductsEditComponent {
     } else {
       this.productService.addProduct(this.productsForm.value).subscribe({
         next: (response) => {
-          console.log(response.data);
           this.errorMessage = null;
           this.router.navigate(['/manager-home/products'])
         },

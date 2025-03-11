@@ -46,7 +46,6 @@ export class ShowtimesByCinemaComponent implements OnInit {
     if (this.cinemaId !== null) {
       this.service.getShowtimesByCinema(this.cinemaId).subscribe({
         next: (response) => {
-          console.log(response.data)
           this.showtimes = response.data;
           this.errorMessage = null;
           this.loading = false;

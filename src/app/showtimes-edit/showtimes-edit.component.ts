@@ -117,7 +117,6 @@ export class ShowtimesEditComponent implements OnInit {
           this.errorMessage = null;
           if (!this.validate()) {
             this.errorMessage = 'Url with incorrect data';
-            console.log(this.errorMessage);
             this.router.navigate(['/manager-home/showtimes']);
           }
           this.formats = this.showtime.movie.formats;

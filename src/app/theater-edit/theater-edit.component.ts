@@ -89,7 +89,6 @@ export class TheaterEditComponent implements OnInit {
       let isValid = this.validate();
       if (!isValid) {
         this.errorMessage = 'Url with incorrect data';
-        console.log(this.errorMessage);
         this.router.navigate(['/manager-home/theaters']);
       } else {
         this.service.getTheater(this.theaterId).subscribe({

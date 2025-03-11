@@ -39,10 +39,8 @@ export class NavBarComponent implements OnInit {
   logout() {
     this.authService.logout().subscribe(success => {
       if(success){
-        console.log("se deslogeo")
         this.router.navigate(["/login"]);
       }else{
-        console.log("no se logeo")
       }
     });
   }

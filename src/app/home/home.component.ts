@@ -82,7 +82,6 @@ export class HomeComponent implements OnInit {
           this.selectedCinema = response.data;
           resolve();
         }, error: () => {
-          console.log('Ocurrio un error al buscar el cine seleccionado');
           this.selectedCinema = null;
           this.filteredMovies = [];
           reject();

@@ -38,7 +38,6 @@ export class MyAccountComponent implements OnInit {
       this.user = user;
     });
     if (this.user !== null) {
-      console.log(this.user.id);
       this.loadBuys(this.user.id);
     }
 

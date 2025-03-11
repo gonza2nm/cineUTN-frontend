@@ -107,7 +107,6 @@ export class MovieDetailsComponent implements OnInit {
         this.filterShows();
       },
       error: () => {
-        console.log('Ocurrio un error al buscar el cine seleccionado');
       },
     });
   }
@@ -118,7 +117,6 @@ export class MovieDetailsComponent implements OnInit {
         this.movie = movie;
       },
       error: () => {
-        console.log('Ocurrio un error al buscar la pelicula');
         this.movie = null;
       },
     });
@@ -130,7 +128,6 @@ export class MovieDetailsComponent implements OnInit {
         this.formats = format;
       },
       error: () => {
-        console.log('Ocurrio un error al buscar el cine seleccionado');
         this.formats = [];
       },
     });
@@ -142,7 +139,6 @@ export class MovieDetailsComponent implements OnInit {
         this.languages = language;
       },
       error: () => {
-        console.log('Ocurrio un error al buscar el cine seleccionado');
         this.languages = [];
       },
     });
@@ -154,9 +150,6 @@ export class MovieDetailsComponent implements OnInit {
       (show) => new Date(show.dayAndTime).getDate() === day?.date.getDate()
     );
     if (this.filteredShows.length === 0) {
-      console.log(
-        'no se encontraron funciones que cumplan esas caracteristicas'
-      );
     }
   }
 

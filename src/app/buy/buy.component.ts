@@ -129,7 +129,6 @@ export class BuyComponent implements OnInit {
 
   updateQuantityTickets(ticket: Item, change: number) {
     if (this.totalCantTickets + change > this.countSeatsAvailables()) {
-      console.log('No puedes comprar más tickets que asientos disponibles');
       return;
     }
     ticket.counter = Math.max(0, ticket.counter + change);
@@ -221,7 +220,6 @@ export class BuyComponent implements OnInit {
   loadShow() {
     this.movieDatialsService.getOneShow(this.showId).subscribe({
       next: (response) => {
-        console.log('Datos del show', response)
         this.show = response;
         this.errorMessage = null;
       },
@@ -279,7 +277,6 @@ export class BuyComponent implements OnInit {
     if (this.user) {
       this.buyService.addBuy(this.totalPrice, this.user.id, this.show.id, this.selectedSnacks, this.selectedPromotions, this.selectedSeats).subscribe({
         next: (response) => {
-          console.log(response.data);
           this.errorMessageBuy = true;
           this.buyAcepted = true;
           setTimeout(() => {
@@ -288,8 +285,6 @@ export class BuyComponent implements OnInit {
           }, 3000);
         },
         error: (err) => {
-          console.log('No se pudo realizar la compra');
-          console.log('Error', err.error)
           this.errorMessageBuy = false;
           this.buyAcepted = true;
           setTimeout(() => {
